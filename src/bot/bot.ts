@@ -3,6 +3,11 @@ import { secretsPromise } from "@/src/secrets.ts";
 import { z } from "zod";
 import { s3Promise } from "@/src/s3/s3.ts";
 
+const whitelistedUsers = [
+  1722753347, //@Bloodiko
+  641861927, //@bjesuiter
+];
+
 // Create bot object
 /*console.debug(
   `Memory usage before init bot: ${Deno.memoryUsage().rss / 1024}kb`,
@@ -29,7 +34,10 @@ async function initBot() {
 
     const userIDSender = ctx.message.from.id;
 
-    // TODO: Check if user is allowed to upload
+    if (!whitelistedUsers.includes(userIDSender)) {
+      ctx.reply("You are not allowed to upload files!");
+      return;
+    }
 
     const s3 = await s3Promise;
 
