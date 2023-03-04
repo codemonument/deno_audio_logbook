@@ -15,6 +15,7 @@
     "@planetscale/database": "https://esm.sh/*@planetscale/database@1.4.0",
     "doppler_client": "https://deno.land/x/doppler_client@0.2.0/mod.ts",
     "date-fns-esmsh": "https://esm.sh/*date-fns@2.29.3",
-    "date-fns": "npm:date-fns@2.29.3"
+    "date-fns": "npm:date-fns@2.29.3",
+    "grammy": "https://deno.land/x/grammy@v1.14.1/mod.ts"
   }
 }
