@@ -64,11 +64,11 @@ async function initBot() {
           metadata: {
             "Content-Type": z.string().parse(voice.mime_type),
           },
-          size: voice.file_size,
+          //size: voice.file_size,
         },
       );
     } catch (error) {
-      reply = error.message;
+      reply = "An Error occured while handling the upload: \n" + error.message;
     }
 
     ctx.reply(reply);
