@@ -1,6 +1,8 @@
 {
   "tasks": {
-    "start": "deno run -A --watch=static/,routes/ dev.ts"
+    "start": "doppler run -- deno run -A --watch=static/,routes/ dev.ts",
+    "db-reset": "deno task db-base ./scripts/db/reset-db.ts",
+    "db-base": "doppler run -- deno run --unstable --allow-env=DOPPLER_TOKEN --allow-net=aws.connect.psdb.cloud,api.doppler.com "
   },
   "importMap": "./import_map.json",
   "compilerOptions": {

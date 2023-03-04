@@ -17,6 +17,6 @@ export type UserTable = {
 };
 
 export type DbSchema = {
-  audioRecordings: AudioRecordingsTable;
-  users: UserTable;
+  audiobook_recordings: AudioRecordingsTable;
+  audiobook_users: UserTable;
 };
