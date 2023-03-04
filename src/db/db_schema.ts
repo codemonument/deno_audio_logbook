@@ -3,7 +3,7 @@ export type AudioRecordingsTable = {
   audioId: number;
 
   // userId is string or number???
-  userId: string;
+  userId: number;
 
   /**
    * The Path of the file on the storage
