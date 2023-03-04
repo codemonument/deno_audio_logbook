@@ -60,16 +60,16 @@ async function initBot() {
         );
       }
 
-      console.log("FilePath: " + fileMetadataJSON.result.file_path);
-      console.log("FilePath_noResult: " + fileMetadataJSON.file_path);
+      //   console.log("FilePath: " + fileMetadataJSON.result.file_path);
+      //   console.log("FilePath_noResult: " + fileMetadataJSON.file_path);
 
-      console.log("Fileheader length: " + file.headers.get("Content-Length"));
-      console.log("Metadata length: " + fileMetadataJSON.file_size);
-      console.log("Voice length: " + voice.file_size);
+      //   console.log("Fileheader length: " + file.headers.get("Content-Length"));
+      //   console.log("Metadata length: " + fileMetadataJSON.file_size);
+      //   console.log("Voice length: " + voice.file_size);
 
-      console.log("MetadataJSON: " + JSON.stringify(fileMetadataJSON));
+      //   console.log("MetadataJSON: " + JSON.stringify(fileMetadataJSON));
 
-      console.log("File Return Code: " + file.status);
+      //   console.log("File Return Code: " + file.status);
 
       const fileName = `${ctx.message.date}.ogg`;
 
@@ -81,7 +81,7 @@ async function initBot() {
           metadata: {
             "Content-Type": z.string().parse(voice.mime_type),
           },
-          size: fileMetadataJSON.result.file_size,
+          //   size: fileMetadataJSON.result.file_size, // DONT use size if readable stream is used
           partSize: 20 * 1024 * 1024,
         },
       );
