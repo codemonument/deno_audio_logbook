@@ -9,7 +9,7 @@ await db.schema
   .addColumn("userId", "integer", (col) => col.primaryKey())
   .execute();
 
-const showTables = sql<void>`SHOW TABLES`.execute(db);
+const showTables = await sql<void>`SHOW TABLES`.execute(db);
 
 console.log(showTables);
 
