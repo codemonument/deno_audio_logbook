@@ -1,6 +1,7 @@
 import { Bot } from "grammy";
 import { secretsPromise } from "@/src/secrets.ts";
 import { z } from "zod";
+import { s3Promise } from "@/src/s3/s3.ts";
 
 // Create bot object
 export const botPromise = initBot();
@@ -20,22 +21,55 @@ async function initBot() {
   bot.command("start", (ctx) => ctx.reply("Welcome! Send me a photo!"));
   bot.on("message:text", (ctx) => ctx.reply("That is text and not a photo!"));
   bot.on("message:photo", (ctx) => ctx.reply("Nice photo! Is that you?"));
-  bot.on("message:voice", (ctx) => {
+  bot.on("message:voice", async (ctx) => {
     const voice = ctx.message.voice;
 
     // Extract voice object -  https://core.telegram.org/bots/api#voice
-    const reply = ` Got a new Voice Message! 
-        Duration: ${voice.duration},
-        File ID: ${voice.file_id},
-        File Size: ${voice.file_size},
-        File Unique Id: ${voice.file_unique_id},
-        File Mime Type: ${voice.mime_type},
-        Full Voice Object.toString()
-        ${JSON.stringify(voice, undefined, "\t")},
-        UserID: ${ctx.message.from.id},
-        `;
 
-    // Download the voice file via: https://core.telegram.org/bots/api#getfile
+    const userIDSender = ctx.message.from.id;
+
+    const s3 = await s3Promise;
+
+    //fetch the file from telegram
+
+    let reply = "Voice file saved successfully!";
+
+    try {
+      // Download the voice file via: https://core.telegram.org/bots/api#getfile
+
+      // Get file metadata
+      const fileMetadata = await fetch(
+        `https://api.telegram.org/bot${telegramToken}/getFile?file_id=${voice.file_id}`,
+      );
+
+      const fileMetadataJSON = await fileMetadata.json();
+
+      // Download file
+
+      const file = await fetch(
+        `https://api.telegram.org/file/bot${telegramToken}/${fileMetadataJSON.file_path}`,
+      );
+
+      if (file.body === null) {
+        throw new Error(
+          "File download unsuccessful. File body is null. Please send 500$ to devs to resolve this issue.",
+        );
+      }
+
+      // Upload to S3
+      await s3.putObject(
+        "${userIDSender}/${voice.file_id}.ogg",
+        file.body,
+        {
+          metadata: {
+            "Content-Type": z.string().parse(voice.mime_type),
+          },
+          size: voice.file_size,
+        },
+      );
+    } catch (error) {
+      reply = error.message;
+    }
 
     ctx.reply(reply);
   });
