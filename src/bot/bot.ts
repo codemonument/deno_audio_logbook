@@ -4,6 +4,9 @@ import { z } from "zod";
 import { s3Promise } from "@/src/s3/s3.ts";
 
 // Create bot object
+console.debug(
+  `Memory usage before init bot: ${Deno.memoryUsage().rss * 1024}kb`,
+);
 export const botPromise = initBot();
 
 async function initBot() {
@@ -19,14 +22,14 @@ async function initBot() {
 
   // Listen for messages
   bot.command("start", (ctx) => ctx.reply("Welcome! Send me a photo!"));
-  bot.on("message:text", (ctx) => ctx.reply("That is text and not a photo!"));
-  bot.on("message:photo", (ctx) => ctx.reply("Nice photo! Is that you?"));
   bot.on("message:voice", async (ctx) => {
     const voice = ctx.message.voice;
 
     // Extract voice object -  https://core.telegram.org/bots/api#voice
 
     const userIDSender = ctx.message.from.id;
+
+    // TODO: Check if user is allowed to upload
 
     const s3 = await s3Promise;
 

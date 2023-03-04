@@ -2,6 +2,9 @@ import { S3Client } from "s3";
 import { secretsPromise } from "@/src/secrets.ts";
 import { z } from "zod";
 
+console.debug(
+  `Memory usage before s3 init: ${Deno.memoryUsage().rss * 1024}kb`,
+);
 export const s3Promise = initS3();
 
 async function initS3() {
