@@ -19,6 +19,10 @@ async function initBot() {
     bot.command("start", (ctx) => ctx.reply("Welcome! Send me a photo!"));
     bot.on("message:text", (ctx) => ctx.reply("That is text and not a photo!"));
     bot.on("message:photo", (ctx) => ctx.reply("Nice photo! Is that you?"));
+    bot.on("message:audio", (ctx) => {
+        console.log(ctx);
+        ctx.reply("Received audio")
+    });
     bot.on(
         "edited_message",
         (ctx) =>
