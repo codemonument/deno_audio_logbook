@@ -59,10 +59,13 @@ async function initBot() {
         );
       }
 
-      // Check if file size is correct
       console.log("Fileheader length: " + file.headers.get("Content-Length"));
       console.log("Metadata length: " + fileMetadataJSON.file_size);
       console.log("Voice length: " + voice.file_size);
+
+      console.log("MetadataJSON: " + JSON.stringify(fileMetadataJSON));
+
+      console.log("File Return Code: " + file.status);
 
       // Upload to S3
       await s3.putObject(
