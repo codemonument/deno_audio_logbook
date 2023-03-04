@@ -1,6 +1,6 @@
 import { sql } from "kysely";
-
 import { dbPromise } from "@/src/db/db.ts";
+
 const db = await dbPromise;
 
 await db.schema
