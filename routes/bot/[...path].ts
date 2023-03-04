@@ -6,11 +6,10 @@ import { botPromise } from "@/src/bot/bot.ts";
 
 /**
  * The adapter path for the telegram bot
- * 
- * How to use grammy webhooks: 
+ *
+ * How to use grammy webhooks:
  * https://grammy.dev/guide/deployment-types.html#how-to-use-webhooks
  */
-
 
 const bot = await botPromise;
 const handleUpdate = webhookCallback(bot, "std/http");
@@ -33,6 +32,5 @@ export const handler: Handlers = {
             console.error(err);
             return ctx.renderNotFound();
         }
-    }
+    },
 };
-
