@@ -50,7 +50,7 @@ async function initBot() {
       // Download file
 
       const file = await fetch(
-        `https://api.telegram.org/file/bot${telegramToken}/${fileMetadataJSON.file_path}`,
+        `https://api.telegram.org/file/bot${telegramToken}/${fileMetadataJSON.result.file_path}`,
       );
 
       if (file.body === null) {
@@ -58,6 +58,9 @@ async function initBot() {
           "File download unsuccessful. File body is null. Please send 500$ to devs to resolve this issue.",
         );
       }
+
+      console.log("FilePath: " + fileMetadataJSON.result.file_path);
+      console.log("FilePath_noResult: " + fileMetadataJSON.file_path);
 
       console.log("Fileheader length: " + file.headers.get("Content-Length"));
       console.log("Metadata length: " + fileMetadataJSON.file_size);
