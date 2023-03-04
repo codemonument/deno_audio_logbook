@@ -9,7 +9,15 @@ await db.schema
   .addColumn("userId", "integer", (col) => col.primaryKey())
   .execute();
 
-const showTables = sql<void>`SHOW TABLES`.execute(db);
+await db.schema
+  .createTable("audiobook_recordings")
+  .ifNotExists()
+  .addColumn("audioId", "integer", (col) => col.primaryKey())
+  .addColumn("userId", "integer")
+  .addColumn("filePath", "varchar(250)")
+  .execute();
+
+const showTables = await sql<void>`SHOW TABLES`.execute(db);
 
 console.log(showTables);
 

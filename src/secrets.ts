@@ -9,7 +9,7 @@ async function loadSecrets() {
   const token = Deno.env.get("DOPPLER_TOKEN");
   if (!token) throw new Error(`Missing DOPPLER_TOKEN env var!`);
 
-  const DOPPLER_PROJECT = "planetscale-in-deno";
+  const DOPPLER_PROJECT = "deno_audio_logbook";
 
   const doppler = new DopplerService({ token });
   const { configs } = await doppler.getConfigs(DOPPLER_PROJECT);

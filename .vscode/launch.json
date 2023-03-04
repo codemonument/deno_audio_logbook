@@ -1,0 +1,42 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "request": "launch",
+      "name": "Launch Program",
+      "type": "node",
+      "program": "${workspaceFolder}/main.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "doppler",
+      "runtimeArgs": [
+        "run",
+        "--",
+        "/home/ebiko/.deno/bin/deno",
+        "run",
+        "--inspect-wait",
+        "--allow-all"
+      ],
+      "attachSimplePort": 9229
+    },
+    {
+      "request": "launch",
+      "name": "Launch Reset DB",
+      "type": "node",
+      "program": "${workspaceFolder}/scripts/db/reset-db.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "doppler",
+      "runtimeArgs": [
+        "run",
+        "--",
+        "/home/ebiko/.deno/bin/deno",
+        "run",
+        "--inspect-wait",
+        "--allow-all"
+      ],
+      "attachSimplePort": 9229
+    }
+  ]
+}
