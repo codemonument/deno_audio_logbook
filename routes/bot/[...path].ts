@@ -1,4 +1,5 @@
 import { HandlerContext } from "$fresh/server.ts";
+import { Handlers } from "$fresh/server.ts";
 import { webhookCallback } from "grammy";
 import { botPromise } from "@/src/bot/bot.ts";
 
@@ -10,12 +11,33 @@ import { botPromise } from "@/src/bot/bot.ts";
  */
 
 
-export const handler = async (_req: Request, ctx: HandlerContext): Promise<Response> => {
-    const path = ctx.params.path;
+const bot = await botPromise;
+const handleUpdate = webhookCallback(bot, "std/http");
 
-    const bot = await botPromise;
-    const result = webhookCallback(bot, "callback");
-    console.log(result);
+export const handler: Handlers = {
+    GET(req) {
+        return new Response("This is a POST-only route");
+    },
 
-    return new Response(path);
+    async POST(req: Request, ctx: HandlerContext) {
+        const path = ctx.params.path;
+        console.log(`Bot Input Path: `, path)
+
+        // TODO: Validate that path startsWith bot.token
+        // if (url.pathname.slice(1) === bot.token) {
+        //     try {
+        //       return await handleUpdate(req);
+        //     } catch (err) {
+        //       console.error(err);
+        //     }
+        //   }
+
+        try {
+            return await handleUpdate(req);
+        } catch (err) {
+            console.error(err);
+            return ctx.renderNotFound();
+        }
+    }
 };
+
