@@ -1,7 +1,7 @@
 {
   "imports": {
     "@/": "./",
-    "doppler_client": "https://deno.land/x/doppler_client@0.2.0/mod.ts",
+    "doppler_client": "https://deno.land/x/doppler_client@0.2.1/mod.ts",
     "$fresh/": "https://deno.land/x/fresh@1.1.3/",
     "grammy": "https://deno.land/x/grammy@v1.14.1/mod.ts",
     "@planetscale/database": "https://esm.sh/v110/@planetscale/database@1.4.1",
