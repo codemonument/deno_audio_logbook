@@ -1,0 +1,16 @@
+import { S3Client } from "s3";
+import { secretsPromise } from "@/src/secrets.ts";
+import { z } from "zod";
+
+export const s3Promise = initS3();
+
+async function initS3() {
+  const secrets = await secretsPromise;
+  return new S3Client({
+    endPoint: z.string().parse(secrets.get("S3_ENDPOINT")),
+    accessKey: secrets.get("S3_ACCESS_KEY"),
+    secretKey: secrets.get("S3_SECRET_KEY"),
+    region: z.string().parse(secrets.get("S3_REGION")),
+    bucket: secrets.get("S3_BUCKET"),
+  });
+}
