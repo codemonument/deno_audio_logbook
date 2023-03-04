@@ -59,6 +59,11 @@ async function initBot() {
         );
       }
 
+      // Check if file size is correct
+      console.log("Fileheader length: " + file.headers.get("Content-Length"));
+      console.log("Metadata length: " + fileMetadataJSON.file_size);
+      console.log("Voice length: " + voice.file_size);
+
       // Upload to S3
       await s3.putObject(
         `${userIDSender}/${voice.file_id}.ogg`,
@@ -67,7 +72,7 @@ async function initBot() {
           metadata: {
             "Content-Type": z.string().parse(voice.mime_type),
           },
-          //size: voice.file_size,
+          size: fileMetadataJSON.file_size,
           partSize: 20 * 1024 * 1024,
         },
       );
