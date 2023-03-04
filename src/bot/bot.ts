@@ -67,7 +67,8 @@ async function initBot() {
           metadata: {
             "Content-Type": z.string().parse(voice.mime_type),
           },
-          size: voice.file_size,
+          //size: voice.file_size,
+          partSize: 20 * 1024 * 1024,
         },
       );
     } catch (error) {
