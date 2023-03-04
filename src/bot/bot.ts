@@ -67,7 +67,7 @@ async function initBot() {
           metadata: {
             "Content-Type": z.string().parse(voice.mime_type),
           },
-          //size: voice.file_size,
+          size: voice.file_size,
         },
       );
     } catch (error) {
@@ -76,13 +76,6 @@ async function initBot() {
 
     ctx.reply(reply);
   });
-  bot.on(
-    "edited_message",
-    (ctx) =>
-      ctx.reply("Ha! Gotcha! You just edited this!", {
-        reply_to_message_id: ctx.editedMessage.message_id,
-      }),
-  );
 
   return bot;
 }
