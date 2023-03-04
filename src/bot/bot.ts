@@ -11,6 +11,9 @@ async function initBot() {
 
     const bot = new Bot(z.string().parse(telegramToken));
 
+    // Register Webhook
+    await fetch(`https://api.telegram.org/bot${telegramToken}/setWebhook?url=https://deno-audio-logbook.deno.dev/bot`);
+
 
     // Listen for messages
     bot.command("start", (ctx) => ctx.reply("Welcome! Send me a photo!"));
