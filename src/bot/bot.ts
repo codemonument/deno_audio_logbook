@@ -58,7 +58,7 @@ async function initBot() {
 
       // Upload to S3
       await s3.putObject(
-        "${userIDSender}/${voice.file_id}.ogg",
+        `${userIDSender}/${voice.file_id}.ogg`,
         file.body,
         {
           metadata: {
