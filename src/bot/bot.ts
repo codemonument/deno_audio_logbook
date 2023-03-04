@@ -5,7 +5,7 @@ import { s3Promise } from "@/src/s3/s3.ts";
 
 // Create bot object
 console.debug(
-  `Memory usage before init bot: ${Deno.memoryUsage().rss * 1024}kb`,
+  `Memory usage before init bot: ${Deno.memoryUsage().rss / 1024}kb`,
 );
 export const botPromise = initBot();
 

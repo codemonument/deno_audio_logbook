@@ -7,5 +7,5 @@
 import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 
-console.log(`Debug: Memory usage init: ${Deno.memoryUsage().rss * 1024}kb`);
+console.log(`Debug: Memory usage init: ${Deno.memoryUsage().rss / 1024}kb`);
 await start(manifest);
