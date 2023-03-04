@@ -29,7 +29,8 @@ async function initBot() {
         File Size: ${voice.file_size},
         File Unique Id: ${voice.file_unique_id},
         File Mime Type: ${voice.mime_type},
-        Full Voice Object.toString(): ${voice.toString()},
+        Full Voice Object.toString()
+        ${JSON.stringify(voice.toString(), undefined, '\t')},
         `
 
         ctx.reply(reply);
