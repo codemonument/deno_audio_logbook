@@ -23,6 +23,23 @@
     },
     {
       "request": "launch",
+      "name": "Launch Main (Benny)",
+      "type": "node",
+      "program": "${workspaceFolder}/main.ts",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "doppler",
+      "runtimeArgs": [
+        "run",
+        "--",
+        "/Users/bjesuiter/.deno/bin/deno",
+        "run",
+        "--inspect-wait",
+        "--allow-all"
+      ],
+      "attachSimplePort": 9229
+    },
+    {
+      "request": "launch",
       "name": "Launch Reset DB",
       "type": "node",
       "program": "${workspaceFolder}/scripts/db/reset-db.ts",
