@@ -30,8 +30,10 @@ async function initBot() {
         File Unique Id: ${voice.file_unique_id},
         File Mime Type: ${voice.mime_type},
         Full Voice Object.toString()
-        ${JSON.stringify(voice.toString(), undefined, '\t')},
+        ${JSON.stringify(voice, undefined, '\t')},
         `
+
+        // Download the voice file via: https://core.telegram.org/bots/api#getfile
 
         ctx.reply(reply);
     });
