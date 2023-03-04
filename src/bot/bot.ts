@@ -12,7 +12,7 @@ async function initBot() {
     const bot = new Bot(z.string().parse(telegramToken));
 
     // Register Webhook
-    await fetch(`https://api.telegram.org/bot${telegramToken}/setWebhook?url=https://deno-audio-logbook.deno.dev/bot`);
+    await fetch(`https://api.telegram.org/bot${telegramToken}/setWebhook?url=https://deno-audio-logbook.deno.dev/bot/${telegramToken}`);
 
 
     // Listen for messages
