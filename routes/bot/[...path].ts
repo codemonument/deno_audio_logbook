@@ -12,9 +12,9 @@ import { botPromise } from "@/src/bot/bot.ts";
  */
 
 const bot = await botPromise;
-console.debug(
-  `Memory usage after init bot: ${Deno.memoryUsage().rss / 1024}kb`,
-);
+// console.debug(
+//   `Memory usage after init bot: ${Deno.memoryUsage().rss / 1024}kb`,
+// );
 const handleUpdate = webhookCallback(bot, "std/http");
 
 export const handler: Handlers = {

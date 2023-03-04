@@ -4,9 +4,9 @@ import { z } from "zod";
 import { s3Promise } from "@/src/s3/s3.ts";
 
 // Create bot object
-console.debug(
+/*console.debug(
   `Memory usage before init bot: ${Deno.memoryUsage().rss / 1024}kb`,
-);
+);*/
 export const botPromise = initBot();
 
 async function initBot() {
