@@ -27,11 +27,9 @@ export async function handler(
         maybeAccessToken,
       );
     const maybeUser = await maybeUserQuery.executeTakeFirst();
-    console.log("MaybeUser", maybeUser);
     const user = UserSession.safeParse(maybeUser);
 
     if (user.success) {
-      console.log("Parsed User", user.data);
       return ctx.render(user.data);
     }
   }
