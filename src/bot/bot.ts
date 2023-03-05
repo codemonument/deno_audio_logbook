@@ -12,7 +12,10 @@ import { dbPromise } from "@/src/db/db.ts";
 );*/
 export const botPromise = initBot();
 
-/**+
+/**
+ * Telegram API Guide for Bots: 
+ * https://core.telegram.org/bots/api
+ * 
  * In-Depth guide for avoiding problems with webhook based telegram bots: 
  * https://core.telegram.org/bots/webhooks
  * 
