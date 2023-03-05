@@ -1,7 +1,7 @@
-import { HandlerContext, Handlers } from "$fresh/server.ts";
+import { HandlerContext, Handlers, PageProps } from "$fresh/server.ts";
 import { getCookies, setCookie } from "$std/http/cookie.ts";
 import { log } from "axiom";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { AUDIO_LOGBOOK_AUTH_COOKIE_NAME } from "@/src/constants.ts";
@@ -54,7 +54,7 @@ export const handler: Handlers = {
     setCookie(response.headers, {
       name: AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
       value: payload.data.hash,
-      path: '/',
+      path: "/",
       maxAge: 60 * 60 * 24 * 7,
       httpOnly: true,
     });
@@ -68,13 +68,12 @@ export const handler: Handlers = {
   },
 };
 
-export default function OauthCallbackPage({ error }: { error: Error }) {
+export default function OauthCallbackPage(
+  { data: error }: PageProps<ZodError>,
+) {
   return (
     <>
-      <h1>Oauth Failed?</h1>
-
-      <p>Has Error: {(error) ? "true" : "false"}</p>
-
+      <h1>Auth Failed {error ? "!" : "?"}</h1>
       <pre>{JSON.stringify(error, undefined,  ' \t')}</pre>
 
       <a href="/auth/login">Go back to Login</a>
