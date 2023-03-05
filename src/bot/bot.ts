@@ -12,6 +12,12 @@ import { dbPromise } from "@/src/db/db.ts";
 );*/
 export const botPromise = initBot();
 
+/**+
+ * In-Depth guide for avoiding problems with webhook based telegram bots: 
+ * https://core.telegram.org/bots/webhooks
+ * 
+ * TODO: Read and follow!
+ */
 async function initBot() {
   const secrets = await secretsPromise;
   const telegramToken = secrets.get("TELEGRAM_TOKEN");
