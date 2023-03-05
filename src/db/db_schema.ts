@@ -32,8 +32,8 @@ export type AudioRecording = {
 
 export const UserSession = z.object({
   /**
-   * The hash of this one loggin request 
-   * Will be the primary key for this table 
+   * The hash of this one loggin request
+   * Will be the primary key for this table
    */
   hash: z.string(),
 
@@ -48,11 +48,15 @@ export const UserSession = z.object({
   unixAuthDate: z.coerce.number(),
 
   /**
+   * The Telegram Username
+   */
+  username: z.string(),
+
+  /**
    * Some user information for pretty display
    */
   firstName: z.string().optional(),
   lastName: z.string().optional(),
-  username: z.string().optional(),
   photoUrl: z.string().optional(),
 });
 
