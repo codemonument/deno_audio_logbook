@@ -50,9 +50,11 @@ export const handler: Handlers = {
       ]),
     });
 
+    // Cookie Instructions: https://medium.com/deno-the-complete-reference/handling-cookies-in-deno-df42df28d222
     setCookie(response.headers, {
       name: AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
       value: payload.data.hash,
+      path: '/',
       maxAge: 60 * 60 * 24 * 7,
       httpOnly: true,
     });
