@@ -15,8 +15,8 @@ export async function handler(
   // Get cookie from request header and parse it
   const maybeAccessToken =
     getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME];
-    
-    if (maybeAccessToken) {
+
+  if (maybeAccessToken) {
     const db = await dbPromise;
     const maybeUserQuery = db
       .selectFrom("audiobook_sessions")
@@ -27,9 +27,11 @@ export async function handler(
         maybeAccessToken,
       );
     const maybeUser = await maybeUserQuery.executeTakeFirst();
+    console.log("MaybeUser", maybeUser);
     const user = UserSession.safeParse(maybeUser);
 
     if (user.success) {
+      console.log("Parsed User", user.data);
       return ctx.render({ user: user.data });
     }
   }
