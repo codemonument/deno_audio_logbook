@@ -16,7 +16,7 @@
     "preact/": "https://esm.sh/v110/preact@10.11.3/",
     "zod": "https://deno.land/x/zod@v3.21.0/mod.ts",
     "s3": "https://deno.land/x/s3_lite_client@0.4.0/mod.ts",
-    "axiom": "https://deno.land/x/axiom@v0.1.0alpha6/mod.ts"
+    "axiom": "https://deno.land/x/axiom@v0.1.0alpha6/logger.ts"
   },
   "scopes": {
     "https://esm.sh/v110/": {
