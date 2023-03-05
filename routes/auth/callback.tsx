@@ -26,7 +26,7 @@ export const handler: Handlers = {
     if (!payload.success) {
       log.error(`Problem while parsing oauth callback payload`, payload.error);
       log.flush();
-      return ctx.render(false);
+      return ctx.render(payload.error);
     }
 
     // TODO: Verify auth response https://core.telegram.org/widgets/login#checking-authorization
@@ -58,3 +58,15 @@ export const handler: Handlers = {
     // return new Response(msg, { status: 200 });
   },
 };
+
+export default function OauthCallbackPage({ error }: { error: Error }) {
+  return (
+    <>
+      <h1>Oauth Failed!</h1>
+
+      <pre>{JSON.stringify(error, undefined,  ' \t')}</pre>
+
+      <a href="/auth/login">Go back to Login</a>
+    </>
+  );
+}
