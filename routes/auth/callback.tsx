@@ -7,8 +7,8 @@ import { UserSession } from "@/src/db/db_schema.ts";
 import { AUDIO_LOGBOOK_AUTH_COOKIE_NAME } from "@/src/constants.ts";
 
 export const handler: Handlers = {
-  async POST(req: Request, ctx: HandlerContext) {
-    const msg = `Received Auth Callback via POST`;
+  async GET(req: Request, ctx: HandlerContext) {
+    const msg = `Received Auth Callback via GET`;
     log.debug(msg, req);
     log.flush();
     console.log(msg, req);
