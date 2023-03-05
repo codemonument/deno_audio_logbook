@@ -9,9 +9,9 @@ await db.schema.dropTable("audiobook_sessions").ifExists().execute();
 await db.schema
   .createTable("audiobook_sessions")
   .ifNotExists()
-  .addColumn("hash", "integer", (col) => col.primaryKey())
-  .addColumn("userId", "integer")
-  .addColumn("unixAuthDate", "integer")
+  .addColumn("hash", "varchar(255)", (col) => col.primaryKey())
+  .addColumn("userId", "integer", (col) => col.notNull())
+  .addColumn("unixAuthDate", "integer", (col) => col.notNull())
   .addColumn("firstName", "varchar(255)")
   .addColumn("lastName", "varchar(255)")
   .addColumn("username", "varchar(255)")
