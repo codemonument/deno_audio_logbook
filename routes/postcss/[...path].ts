@@ -11,7 +11,7 @@ import postcssJitProps from "postcss-jit-props";
 // See: https://www.npmjs.com/package/open-props
 import OpenProps from "open-props";
 import postcssImport from "postcss-import";
-import { cssCache } from "@/src/cssCache.ts";
+import { cssCache } from "@/src/css-cache/cssCache.ts";
 import { encode as encodeBase64 } from "std_encoding_base64";
 import { z } from "zod";
 
