@@ -16,6 +16,12 @@
     "date-fns": "https://esm.sh/v110/date-fns@2.29.3",
     "kysely-planetscale": "https://esm.sh/v110/*kysely-planetscale@1.1.0",
     "kysely": "https://esm.sh/v110/kysely@0.22.0",
+    "open-props": "https://esm.sh/v110/open-props@1.5.5",
+    "open-props/": "https://esm.sh/v110/open-props@1.5.5/",
+    "postcss-import": "https://esm.sh/v110/*postcss-import@15.1.0",
+    "postcss-jit-props": "https://esm.sh/v110/*postcss-jit-props@1.0.12",
+    "postcss": "https://esm.sh/v110/*postcss@8.4.21",
+    "postcss/": "https://esm.sh/v110/*postcss@8.4.21/",
     "preact-render-to-string": "https://esm.sh/v110/*preact-render-to-string@5.2.6",
     "preact-render-to-string/": "https://esm.sh/v110/*preact-render-to-string@5.2.6/",
     "preact": "https://esm.sh/v110/preact@10.11.3",
@@ -23,7 +29,14 @@
   },
   "scopes": {
     "https://esm.sh/v110/": {
-      "pretty-format": "https://esm.sh/v110/pretty-format@3.8.0"
+      "nanoid": "https://esm.sh/v110/nanoid@3.3.4",
+      "picocolors": "https://esm.sh/v110/picocolors@1.0.0",
+      "postcss-value-parser": "https://esm.sh/v110/postcss-value-parser@4.2.0",
+      "pretty-format": "https://esm.sh/v110/pretty-format@3.8.0",
+      "read-cache": "https://esm.sh/v110/read-cache@1.0.0",
+      "resolve": "https://esm.sh/v110/resolve@1.22.1",
+      "source-map-js": "https://esm.sh/v110/source-map-js@1.0.2",
+      "tiny-glob": "https://esm.sh/v110/tiny-glob@0.2.9"
     }
   }
 }
