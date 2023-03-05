@@ -1,8 +1,10 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
+import { getCookies, setCookie } from "$std/http/cookie.ts";
 import { log } from "axiom";
 import { z } from "zod";
 import { dbPromise } from "@/src/db/db.ts";
-import { SessionTable } from "@/src/db/db_schema.ts";
+import { UserSession } from "@/src/db/db_schema.ts";
+import { AUDIO_LOGBOOK_AUTH_COOKIE_NAME } from "@/src/constants.ts";
 
 export const handler: Handlers = {
   async POST(req: Request, ctx: HandlerContext) {
@@ -11,7 +13,7 @@ export const handler: Handlers = {
      */
     const url = new URL(req.url);
 
-    const payload = SessionTable.safeParse({
+    const payload = UserSession.safeParse({
       hash: url.searchParams.get("hash"),
       userId: url.searchParams.get("id"),
       unixAuthDate: url.searchParams.get("auth_date"),
@@ -32,11 +34,25 @@ export const handler: Handlers = {
     await db.insertInto("audiobook_sessions").values(payload.data).execute();
 
     // TODO: generate user login cookie
+    const response = new Response("", {
+      status: 302,
+      headers: new Headers([
+        ["location", new URL(req.url).origin],
+      ]),
+    });
 
-    const msg = `Received Auth Callback via POST`;
-    log.debug(msg, req);
-    log.flush();
-    console.log(msg, req);
-    return new Response(msg, { status: 200 });
+    setCookie(response.headers, {
+      name: AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
+      value: payload.data.hash,
+      maxAge: 60 * 60 * 24 * 7,
+      httpOnly: true,
+    });
+    return response;
+
+    // const msg = `Received Auth Callback via POST`;
+    // log.debug(msg, req);
+    // log.flush();
+    // console.log(msg, req);
+    // return new Response(msg, { status: 200 });
   },
 };
