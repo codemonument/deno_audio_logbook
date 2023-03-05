@@ -71,7 +71,7 @@ export default function OauthCallbackPage({ error }: { error: Error }) {
     <>
       <h1>Oauth Failed?</h1>
 
-      <p>Has Error: {!!error}</p>
+      <p>Has Error: {(error) ? "true" : "false"}</p>
 
       <pre>{JSON.stringify(error, undefined,  ' \t')}</pre>
 
