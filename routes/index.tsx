@@ -1,5 +1,5 @@
 import { Head } from "$fresh/runtime.ts";
-import { HandlerContext, Handlers } from "$fresh/server.ts";
+import { HandlerContext, Handlers, PageProps } from "$fresh/server.ts";
 import { getCookies, setCookie } from "$std/http/cookie.ts";
 import {
   AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
@@ -32,7 +32,7 @@ export async function handler(
 
     if (user.success) {
       console.log("Parsed User", user.data);
-      return ctx.render({ user: user.data });
+      return ctx.render(user.data);
     }
   }
 
@@ -46,7 +46,7 @@ export async function handler(
   });
 }
 
-export default function Home({ user }: { user: UserSession }) {
+export default function Home({ data: user }: PageProps<UserSession>) {
   return (
     <>
       <Head>
