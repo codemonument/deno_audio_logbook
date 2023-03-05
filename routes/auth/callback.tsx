@@ -9,8 +9,8 @@ import { AUDIO_LOGBOOK_AUTH_COOKIE_NAME } from "@/src/constants.ts";
 export const handler: Handlers = {
   async GET(req: Request, ctx: HandlerContext) {
     const msg = `Received Auth Callback via GET`;
-    log.debug(msg, req);
-    log.flush();
+    // log.debug(msg, req);
+    // log.flush();
     console.log(msg, req);
 
     /**
@@ -30,9 +30,9 @@ export const handler: Handlers = {
 
     if (!payload.success) {
       const msg = `Problem while parsing oauth callback payload`;
-      log.error(msg, payload.error);
-      console.error(msg, payload.error);
-      await log.flush();
+      console.error(msg, payload);
+      // log.error(msg, payload.error);
+      // await log.flush();
       return ctx.render(payload.error);
     }
 
