@@ -1,5 +1,8 @@
 # Audio Logbook 
 
+A deno fresh server, with a telegram bot to receive audio messages
+and a website to show all messages of a user in a calendar. 
+
 ---
 
 # Developer's Section 
