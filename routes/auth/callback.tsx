@@ -8,6 +8,11 @@ import { AUDIO_LOGBOOK_AUTH_COOKIE_NAME } from "@/src/constants.ts";
 
 export const handler: Handlers = {
   async POST(req: Request, ctx: HandlerContext) {
+    const msg = `Received Auth Callback via POST`;
+    log.debug(msg, req);
+    log.flush();
+    console.log(msg, req);
+
     /**
      * Extract Telegram Sign On Data
      */
@@ -24,7 +29,7 @@ export const handler: Handlers = {
     });
 
     if (!payload.success) {
-      const msg = `Problem while parsing oauth callback payload`; 
+      const msg = `Problem while parsing oauth callback payload`;
       log.error(msg, payload.error);
       console.error(msg, payload.error);
       await log.flush();
