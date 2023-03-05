@@ -31,6 +31,7 @@ export async function handler(
   }
 
   return new Response("", {
+    status: 302,
     headers: new Headers(
       [
         ["location", new URL(req.url).origin + "/auth/login"],
