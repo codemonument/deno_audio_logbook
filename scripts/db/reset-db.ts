@@ -3,6 +3,9 @@ import { dbPromise } from "@/src/db/db.ts";
 
 const db = await dbPromise;
 
+// await db.schema.dropTable("audiobook_users").ifExists().execute();
+// await db.schema.dropTable("audiobook_recordings").ifExists().execute();
+
 await db.schema
   .createTable("audiobook_users")
   .ifNotExists()
@@ -12,11 +15,12 @@ await db.schema
 await db.schema
   .createTable("audiobook_recordings")
   .ifNotExists()
-  .addColumn("audioId", "integer", (col) => col.primaryKey())
+  .addColumn("audioId", "varchar(100)", (col) => col.primaryKey())
   .addColumn("userId", "integer")
   .addColumn("filePath", "varchar(250)")
+  .addColumn("mimeType", "varchar(30)")
+  .addColumn("unixTimestamp", "integer")
   .execute();
-
 const showTables = await sql<void>`SHOW TABLES`.execute(db);
 
 console.log(showTables);

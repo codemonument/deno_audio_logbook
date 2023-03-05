@@ -1,14 +1,31 @@
 export type AudioRecordingsTable = {
-  // is number good? => forgeability
-  audioId: number;
+  /**
+   * Telegram Voice/Audio File ID
+   */
+  audioId: string;
 
-  // userId is string or number???
+  /**
+   * User ID is Telegram Usernumber
+   */
   userId: number;
 
   /**
    * The Path of the file on the storage
+   * @example "userId/unixTimestamp.ogg"
+   * Eventually without extension if not ogg or not from message:voice callback
    */
   filePath: string;
+
+  /**
+   * The MimeType of the Telegram File
+   * @example "audio/ogg"
+   */
+  mimeType: string;
+
+  /**
+   * From Telegram Message
+   */
+  unixTimestamp: number;
 };
 
 export type UserTable = {
