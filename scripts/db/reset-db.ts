@@ -3,13 +3,19 @@ import { dbPromise } from "@/src/db/db.ts";
 
 const db = await dbPromise;
 
-// await db.schema.dropTable("audiobook_users").ifExists().execute();
+await db.schema.dropTable("audiobook_sessions").ifExists().execute();
 // await db.schema.dropTable("audiobook_recordings").ifExists().execute();
 
 await db.schema
-  .createTable("audiobook_users")
+  .createTable("audiobook_sessions")
   .ifNotExists()
-  .addColumn("userId", "integer", (col) => col.primaryKey())
+  .addColumn("hash", "integer", (col) => col.primaryKey())
+  .addColumn("userId", "integer")
+  .addColumn("unixAuthDate", "integer")
+  .addColumn("firstName", "varchar(255)")
+  .addColumn("lastName", "varchar(255)")
+  .addColumn("username", "varchar(255)")
+  .addColumn("photoUrl", "varchar(255)")
   .execute();
 
 await db.schema
