@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export type AudioRecordingsTable = {
+export type AudioRecording = {
   /**
    * Telegram Voice/Audio File ID
    */
@@ -30,7 +30,7 @@ export type AudioRecordingsTable = {
   unixTimestamp: number;
 };
 
-export const SessionTable = z.object({
+export const UserSession = z.object({
   /**
    * The hash of this one loggin request 
    * Will be the primary key for this table 
@@ -56,9 +56,9 @@ export const SessionTable = z.object({
   photoUrl: z.string().optional(),
 });
 
-export type SessionTable = z.infer<typeof SessionTable>;
+export type UserSession = z.infer<typeof UserSession>;
 
 export type DbSchema = {
-  audiobook_recordings: AudioRecordingsTable;
-  audiobook_sessions: SessionTable;
+  audiobook_recordings: AudioRecording;
+  audiobook_sessions: UserSession;
 };
