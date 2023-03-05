@@ -5,8 +5,8 @@ import postcssJitProps from "postcss-jit-props";
 import OpenProps from "open-props";
 import postcssImport from "postcss-import";
 import { log } from "@/src/log.ts";
-import { expandGlob, WalkEntry } from "std_fs";
-import { encode as encodeBase64 } from "std_encoding_base64";
+import { expandGlob, WalkEntry } from "$std/fs/mod.ts";
+import { encode as encodeBase64 } from "$std/encoding/base64.ts";
 import { cssCache } from "./cssCache.ts";
 
 // FIXME: Why does this logger not log at the start?!?

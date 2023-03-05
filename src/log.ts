@@ -1,4 +1,4 @@
-import * as logBase from "std_log";
+import * as logBase from "$std/log/mod.ts";
 
 logBase.setup({
   handlers: {

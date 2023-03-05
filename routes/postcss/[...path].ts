@@ -4,7 +4,7 @@
  */
 
 import { HandlerContext } from "$fresh/server.ts";
-import * as log from "std_log";
+import * as log from "$std/log/mod.ts";
 import postcss from "postcss";
 // See: https://www.npmjs.com/package/postcss-jit-props
 import postcssJitProps from "postcss-jit-props";
@@ -12,7 +12,7 @@ import postcssJitProps from "postcss-jit-props";
 import OpenProps from "open-props";
 import postcssImport from "postcss-import";
 import { cssCache } from "@/src/css-cache/cssCache.ts";
-import { encode as encodeBase64 } from "std_encoding_base64";
+import { encode as encodeBase64 } from "$std/encoding/base64.ts";
 import { z } from "zod";
 
 export const postCssInstance = postcss([
