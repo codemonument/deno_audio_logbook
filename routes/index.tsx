@@ -5,20 +5,12 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Fresh App</title>
+        <title>Audio Logbook</title>
       </Head>
       <div>
-        <img
-          src="/logo.svg"
-          width="128"
-          height="128"
-          alt="the fresh logo: a sliced lemon dripping with juice"
-        />
-        <p>
-          Welcome to `fresh`. Try updating this message in the
-          ./routes/index.tsx file, and refresh.
-        </p>
-        <Counter start={3} />
+        <h1>Audio Logbook</h1>
+        
+        <script async src="https://telegram.org/js/telegram-widget.js?21" data-telegram-login="audio_logbook_bot" data-size="large" data-auth-url="/auth/callback" data-request-access="write"></script>
       </div>
     </>
   );
