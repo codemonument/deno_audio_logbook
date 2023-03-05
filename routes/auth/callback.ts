@@ -3,15 +3,16 @@ import { log } from "axiom";
 
 export const handler: Handlers = {
   GET(req) {
-    log.debug(`Received Auth Callback via GET: `, req);
-    console.log(`Received Auth Callback via GET: `, req);
-
-    return new Response("", { status: 200 });
+    const msg = `Received Auth Callback via POST`;
+    log.debug(msg, req);
+    console.log(msg, req);
+    return new Response(msg, { status: 200 });
   },
 
   POST(req: Request, _ctx: HandlerContext) {
-    log.debug(`Received Auth Callback via GET: `, req);
-    console.log(`Received Auth Callback via GET: `, req);
-    return new Response("", { status: 200 });
+    const msg = `Received Auth Callback via POST`;
+    log.debug(msg, req);
+    console.log(msg, req);
+    return new Response(msg, { status: 200 });
   },
 };
