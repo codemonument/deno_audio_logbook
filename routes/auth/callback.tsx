@@ -64,7 +64,9 @@ export const handler: Handlers = {
 export default function OauthCallbackPage({ error }: { error: Error }) {
   return (
     <>
-      <h1>Oauth Failed!</h1>
+      <h1>Oauth Failed?</h1>
+
+      <p>Has Error: {!!error}</p>
 
       <pre>{JSON.stringify(error, undefined,  ' \t')}</pre>
 
