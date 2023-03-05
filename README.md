@@ -28,7 +28,7 @@ Prerequisites:
 Run:
 
 ```
-deno task connect-db
+deno task db-connect
 
 > Secure connection to database jbscratch_planetscale-in-deno and branch main is established!.
 > Local address to connect your application: 127.0.0.1:3306 (press ctrl-c to quit)
