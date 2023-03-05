@@ -40,12 +40,12 @@ export const UserSession = z.object({
   /**
    * Telegram User Id
    */
-  userId: z.number(),
+  userId: z.coerce.number(),
 
   /**
    * The unix auth date timestamp
    */
-  unixAuthDate: z.number(),
+  unixAuthDate: z.coerce.number(),
 
   /**
    * Some user information for pretty display
