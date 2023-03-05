@@ -54,10 +54,17 @@ export const UserSession = z.object({
 
   /**
    * Some user information for pretty display
+   * - allows nullable(), bc URL.searchParams.get() returns 'null' when they're not available
    */
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  photoUrl: z.string().optional(),
+  firstName: z.string().optional().nullable().transform((val) =>
+    val ?? undefined
+  ),
+  lastName: z.string().optional().nullable().transform((val) =>
+    val ?? undefined
+  ),
+  photoUrl: z.string().optional().nullable().transform((val) =>
+    val ?? undefined
+  ),
 });
 
 export type UserSession = z.infer<typeof UserSession>;

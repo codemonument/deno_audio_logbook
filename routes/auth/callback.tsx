@@ -22,9 +22,9 @@ export const handler: Handlers = {
       hash: url.searchParams.get("hash"),
       userId: url.searchParams.get("id"),
       unixAuthDate: url.searchParams.get("auth_date"),
+      username: url.searchParams.get("username"),
       firstName: url.searchParams.get("first_name"),
       lastName: url.searchParams.get("last_name"),
-      username: url.searchParams.get("username"),
       photoUrl: url.searchParams.get("photo_url"),
     });
 
