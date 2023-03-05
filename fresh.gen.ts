@@ -3,16 +3,18 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" };
-import * as $0 from "./routes/bot/[...path].ts";
-import * as $1 from "./routes/index.tsx";
-import * as $2 from "./routes/postcss/[...path].ts";
+import * as $0 from "./routes/auth/callback.ts";
+import * as $1 from "./routes/bot/[...path].ts";
+import * as $2 from "./routes/index.tsx";
+import * as $3 from "./routes/postcss/[...path].ts";
 import * as $$0 from "./islands/Counter.tsx";
 
 const manifest = {
   routes: {
-    "./routes/bot/[...path].ts": $0,
-    "./routes/index.tsx": $1,
-    "./routes/postcss/[...path].ts": $2,
+    "./routes/auth/callback.ts": $0,
+    "./routes/bot/[...path].ts": $1,
+    "./routes/index.tsx": $2,
+    "./routes/postcss/[...path].ts": $3,
   },
   islands: {
     "./islands/Counter.tsx": $$0,
