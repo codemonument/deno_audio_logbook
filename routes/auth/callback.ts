@@ -5,6 +5,7 @@ export const handler: Handlers = {
   GET(req) {
     const msg = `Received Auth Callback via POST`;
     log.debug(msg, req);
+    log.flush();
     console.log(msg, req);
     return new Response(msg, { status: 200 });
   },
@@ -12,6 +13,7 @@ export const handler: Handlers = {
   POST(req: Request, _ctx: HandlerContext) {
     const msg = `Received Auth Callback via POST`;
     log.debug(msg, req);
+    log.flush();
     console.log(msg, req);
     return new Response(msg, { status: 200 });
   },
