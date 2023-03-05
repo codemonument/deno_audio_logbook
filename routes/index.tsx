@@ -15,9 +15,9 @@ export async function handler(
   // Get cookie from request header and parse it
   const maybeAccessToken =
     getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME];
-  const db = await dbPromise;
-
-  if (maybeAccessToken) {
+    
+    if (maybeAccessToken) {
+    const db = await dbPromise;
     const maybeUserQuery = db
       .selectFrom("audiobook_sessions")
       .selectAll()
@@ -55,13 +55,13 @@ export default function Home({ user }: { user: UserSession }) {
         <h1>Audio Logbook</h1>
 
         <p>
-          <b>Hello, {user.firstName} {user.lastName}!</b>
-          <img src={user.photoUrl}></img>
+          <b>Hello, {user?.firstName} {user?.lastName}!</b>
+          <img src={user?.photoUrl}></img>
         </p>
 
         <ul>
-          <li>{user.username}</li>
-          <li>{user.unixAuthDate}</li>
+          <li>{user?.username}</li>
+          <li>{user?.unixAuthDate}</li>
         </ul>
       </div>
     </>
