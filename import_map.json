@@ -27,7 +27,8 @@
     "preact/": "https://esm.sh/v110/preact@10.11.3/",
     "sugarss": "https://esm.sh/v110/*sugarss@4.0.1",
     "sugarss/": "https://esm.sh/v110/*sugarss@4.0.1/",
-    "tiny-glob/": "https://esm.sh/v110/tiny-glob@0.2.9/"
+    "tiny-glob/": "https://esm.sh/v110/tiny-glob@0.2.9/",
+    "std_fs": "https://deno.land/std@0.178.0/fs/mod.ts"
   },
   "scopes": {
     "https://esm.sh/v110/": {
