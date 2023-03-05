@@ -24,7 +24,9 @@ export const handler: Handlers = {
     });
 
     if (!payload.success) {
-      log.error(`Problem while parsing oauth callback payload`, payload.error);
+      const msg = `Problem while parsing oauth callback payload`; 
+      log.error(msg, payload.error);
+      console.error(msg, payload.error);
       await log.flush();
       return ctx.render(payload.error);
     }
