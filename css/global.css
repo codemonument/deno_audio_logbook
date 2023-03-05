@@ -1,0 +1,12 @@
+@import url('open-props/normalize.min.css');
+@import url('open-props/buttons.min.css');
+
+body {
+    background-color: var(--green-4);
+    color: var(--gray-0);
+    font-family: var(--font-sans);
+}
+
+a {
+    color: var(--gray-0);
+}
