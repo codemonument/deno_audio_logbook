@@ -1,6 +1,10 @@
 @import url('open-props/normalize.min.css');
 @import url('open-props/buttons.min.css');
 
+/**
+ * Find styles at https://open-props.style/!
+ */
+
 body {
     background-color: var(--green-4);
     color: var(--gray-0);
