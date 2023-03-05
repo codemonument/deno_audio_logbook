@@ -3,6 +3,7 @@ import { Handlers } from "$fresh/server.ts";
 import { Status } from "$fresh/server.ts";
 import { webhookCallback } from "grammy";
 import { botPromise } from "@/src/bot/bot.ts";
+import { log } from "axiom";
 
 /**
  * The adapter path for the telegram bot
@@ -34,8 +35,12 @@ export const handler: Handlers = {
     try {
       return await handleUpdate(req);
     } catch (err) {
+      log.error(
+        `[Route /bot] Some Error happened during handling a bot update: `,
+        err,
+      );
       console.error(err);
-      return ctx.renderNotFound();
+      await log.flush();
     }
   },
 };
