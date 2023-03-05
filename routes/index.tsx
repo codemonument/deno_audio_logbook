@@ -49,6 +49,7 @@ export default function Home({ data: user }: PageProps<UserSession>) {
     <>
       <Head>
         <title>Audio Logbook</title>
+        <link rel="stylesheet" href="/postcss/global.css" />
       </Head>
       <div>
         <pre>Deno Deployment ID: {DEPLOYMENT_ID}</pre>
