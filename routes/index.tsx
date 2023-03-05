@@ -18,11 +18,15 @@ export async function handler(
   const db = await dbPromise;
 
   if (maybeAccessToken) {
-    const maybeUser = await db.selectFrom("audiobook_sessions").where(
-      "hash",
-      "=",
-      maybeAccessToken,
-    ).executeTakeFirst();
+    const maybeUserQuery = db
+      .selectFrom("audiobook_sessions")
+      .selectAll()
+      .where(
+        "hash",
+        "=",
+        maybeAccessToken,
+      );
+    const maybeUser = await maybeUserQuery.executeTakeFirst();
     const user = UserSession.safeParse(maybeUser);
 
     if (user.success) {
