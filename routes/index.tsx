@@ -7,14 +7,20 @@ import {
 } from "@/src/constants.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
+import { secretsPromise } from "@/src/secrets.ts";
 
 export async function handler(
   req: Request,
   ctx: HandlerContext,
 ): Promise<Response> {
-  // Get cookie from request header and parse it
-  const maybeAccessToken =
-    getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME];
+  // When in dev mode,
+  // - get auth token from doppler secrets for local mocking, or
+  // - get auth token from request header in anything other than dev mode
+  // - and parse it
+  const secrets = await secretsPromise;
+  const maybeAccessToken = (secrets.get("ENV_NAME") !== "dev")
+    ? getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME]
+    : secrets.get("MOCK_AUTH_TOKEN");
 
   if (maybeAccessToken) {
     const db = await dbPromise;
