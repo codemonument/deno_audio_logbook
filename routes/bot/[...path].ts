@@ -33,6 +33,12 @@ export const handler: Handlers = {
     }
 
     try {
+      // Allows collecting example messages for mocking the telegram webhooks locally!
+      // Note: Not very useful now, bc. we could only test our code until downloading the voice message from telegram (which would not be available locally :/)
+      // log.debug(`Webhook Body received from Telegram: `, req);
+      // await log.flush();
+
+      // ToDo: re-Enable when enough sample data has been gathered
       return await handleUpdate(req);
     } catch (err) {
       log.error(

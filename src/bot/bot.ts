@@ -2,11 +2,8 @@ import { Bot } from "grammy";
 import { secretsPromise } from "@/src/secrets.ts";
 import { z } from "zod";
 import { s3Promise } from "@/src/s3/s3.ts";
-
-const whitelistedUsers = [
-  1722753347, //@Bloodiko
-  641861927, //@bjesuiter
-];
+import { log } from "axiom";
+import { isUserAuthorized } from "./is-user-authorized.ts";
 
 // Create bot object
 /*console.debug(
@@ -20,35 +17,33 @@ async function initBot() {
 
   const bot = new Bot(z.string().parse(telegramToken));
 
-  // Register Webhook
+  // Register the Bot's Webhook at telegram
   await fetch(
     `https://api.telegram.org/bot${telegramToken}/setWebhook?url=https://deno-audio-logbook.deno.dev/bot/${telegramToken}`,
   );
 
   // Listen for messages
-  bot.command("start", (ctx) => ctx.reply("Welcome! Send me a photo!"));
+  bot.command("start", (ctx) => {
+    ctx.reply("Welcome! Send me a voice message!");
+  });
+
   bot.on("message:voice", async (ctx) => {
-    const voice = ctx.message.voice;
-
-    // Extract voice object -  https://core.telegram.org/bots/api#voice
-
     const userIDSender = ctx.message.from.id;
-
-    if (!whitelistedUsers.includes(userIDSender)) {
-      ctx.reply("You are not allowed to upload files!");
+    if (!isUserAuthorized(userIDSender)) {
+      ctx.reply("You don't have permission to use the BOT!");
       return;
     }
 
+    // Extract voice object -  https://core.telegram.org/bots/api#voice
+    const voice = ctx.message.voice;
+
     const s3 = await s3Promise;
 
-    //fetch the file from telegram
-
+    // fetch the file from telegram
     let reply = "Voice file saved successfully!";
 
     try {
-      // Download the voice file via: https://core.telegram.org/bots/api#getfile
-
-      // Get file metadata
+      // Get file metadata from https://core.telegram.org/bots/api#getfile
       const fileMetadata = await fetch(
         `https://api.telegram.org/bot${telegramToken}/getFile?file_id=${voice.file_id}`,
       );
@@ -56,8 +51,7 @@ async function initBot() {
       const fileMetadataJSON = await fileMetadata.json();
       // Return response object: {ok: true, result: { file_path: "..."}}
 
-      // Download file
-
+      // Fetch the file
       const file = await fetch(
         `https://api.telegram.org/file/bot${telegramToken}/${fileMetadataJSON.result.file_path}`,
       );
