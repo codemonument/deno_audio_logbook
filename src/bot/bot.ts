@@ -4,6 +4,7 @@ import { z } from "zod";
 import { s3Promise } from "@/src/s3/s3.ts";
 import { log } from "axiom";
 import { isUserAuthorized } from "./is-user-authorized.ts";
+import { dbPromise } from "@/src/db/db.ts";
 
 // Create bot object
 /*console.debug(
@@ -73,7 +74,9 @@ async function initBot() {
 
       //   console.log("File Return Code: " + file.status);
 
-      const fileName = `${ctx.message.date}.ogg`;
+      const fileName = `${ctx.message.date}${
+        voice.mime_type === "audio/ogg" ? ".ogg" : ""
+      }`;
 
       // Upload to S3
       await s3.putObject(
@@ -87,6 +90,21 @@ async function initBot() {
           partSize: 20 * 1024 * 1024,
         },
       );
+
+      // if no error occured until now, add the file to the database
+      const db = await dbPromise;
+
+      await db.insertInto("audiobook_recordings")
+        .values(
+          {
+            userId: userIDSender,
+            filePath: `${userIDSender}/${fileName}`,
+            audioId: voice.file_id,
+            mimeType: z.string().parse(voice.mime_type),
+            unixTimestamp: ctx.message.date,
+          },
+        )
+        .execute();
     } catch (error) {
       reply = "An Error occured while handling the upload: \n" + error.message;
     }
