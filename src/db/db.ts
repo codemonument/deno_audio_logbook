@@ -1,5 +1,3 @@
-import {} from "@planetscale/database";
-
 import { Kysely } from "kysely";
 import { PlanetScaleDialect } from "kysely-planetscale";
 
@@ -22,8 +20,11 @@ async function initDb() {
 
     log(event): void {
       if (event.level === "query") {
-        log.info(`Kysely SQL Command: `, {sql: event.query.sql, params: event.query.parameters})
-        log.flush()
+        log.info(`Kysely SQL Command: `, {
+          sql: event.query.sql,
+          params: event.query.parameters,
+        });
+        log.flush();
       }
     },
   });
