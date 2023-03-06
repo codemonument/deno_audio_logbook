@@ -14,8 +14,7 @@
     "@planetscale/database": "https://esm.sh/v110/@planetscale/database@1.4.1",
     "@preact/signals-core": "https://esm.sh/v110/@preact/signals-core@1.0.1",
     "@preact/signals": "https://esm.sh/v110/*@preact/signals@1.0.4",
-    "date-fns": "https://esm.sh/v110/date-fns@2.29.3",
-    "kysely-planetscale": "https://esm.sh/v110/*kysely-planetscale@1.1.0",
+    "kysely-planetscale": "https://esm.sh/v110/kysely-planetscale@1.1.0",
     "kysely": "https://esm.sh/v110/kysely@0.22.0",
     "open-props": "https://esm.sh/v110/open-props@1.5.5",
     "open-props/": "https://esm.sh/v110/open-props@1.5.5/",
@@ -24,10 +23,7 @@
     "preact-render-to-string": "https://esm.sh/v110/*preact-render-to-string@5.2.6",
     "preact-render-to-string/": "https://esm.sh/v110/*preact-render-to-string@5.2.6/",
     "preact": "https://esm.sh/v110/preact@10.11.3",
-    "preact/": "https://esm.sh/v110/preact@10.11.3/",
-    "sugarss": "https://esm.sh/v110/*sugarss@4.0.1",
-    "sugarss/": "https://esm.sh/v110/*sugarss@4.0.1/",
-    "tiny-glob/": "https://esm.sh/v110/tiny-glob@0.2.9/"
+    "preact/": "https://esm.sh/v110/preact@10.11.3/"
   },
   "scopes": {
     "https://esm.sh/v110/": {
@@ -38,7 +34,12 @@
       "read-cache": "https://esm.sh/v110/read-cache@1.0.0",
       "resolve": "https://esm.sh/v110/resolve@1.22.1",
       "source-map-js": "https://esm.sh/v110/source-map-js@1.0.2",
-      "tiny-glob": "https://esm.sh/v110/tiny-glob@0.2.9"
+      "tiny-glob": "https://esm.sh/v110/tiny-glob@0.2.9",
+      "tiny-glob/": "https://esm.sh/v110/tiny-glob@0.2.9/",
+      "sugarss": "https://esm.sh/v110/*sugarss@4.0.1",
+      "sugarss/": "https://esm.sh/v110/*sugarss@4.0.1/",
+      "date-fns": "https://esm.sh/v110/date-fns@2.29.3",
+      "date-fns/": "https://esm.sh/v110/date-fns@2.29.3/"
     }
   }
 }
