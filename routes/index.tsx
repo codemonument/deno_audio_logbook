@@ -9,6 +9,9 @@ import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { secretsPromise } from "@/src/secrets.ts";
 
+// components for the page
+import UserInfo from "@/components/UserInfo.tsx";
+
 export async function handler(
   req: Request,
   ctx: HandlerContext,
@@ -59,17 +62,10 @@ export default function Home({ data: user }: PageProps<UserSession>) {
       </Head>
       <div>
         <pre>Deno Deployment ID: {DEPLOYMENT_ID}</pre>
+        <UserInfo user={user} />
         <h1>Audio Logbook</h1>
 
-        <p>
-          <b>Hello, {user?.firstName} {user?.lastName}!</b>
-          <img src={user?.photoUrl}></img>
-        </p>
-
-        <ul>
-          <li>{user?.username}</li>
-          <li>{user?.unixAuthDate}</li>
-        </ul>
+        Calendar Placeholder
       </div>
     </>
   );

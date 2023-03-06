@@ -6,7 +6,7 @@
  */
 
 body {
-    background-color: var(--green-4);
+    background-color: var(--green-3);
     color: var(--gray-0);
     font-family: var(--font-sans);
 }
@@ -14,3 +14,18 @@ body {
 a {
     color: var(--gray-0);
 }
+
+#userheader {
+    float: right;
+}
+
+#userheader>div {
+    float: left;
+    margin: 0 0.5em;
+}
+
+#userheader>img {
+    float: right;
+    margin: 0 0.5em;
+}
+
