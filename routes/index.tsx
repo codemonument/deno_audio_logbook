@@ -11,6 +11,7 @@ import { secretsPromise } from "@/src/secrets.ts";
 
 // components for the page
 import UserInfo from "@/components/UserInfo.tsx";
+import Control from "@/components/Control.tsx";
 
 export async function handler(
   req: Request,
@@ -65,7 +66,7 @@ export default function Home({ data: user }: PageProps<UserSession>) {
         <UserInfo user={user} />
         <h1>Audio Logbook</h1>
 
-        Calendar Placeholder
+        <Control />
       </div>
     </>
   );

@@ -6,8 +6,8 @@
  */
 
 body {
-    background-color: var(--green-3);
-    color: var(--gray-0);
+    background-color: var(--green-1);
+    color: var(--gray-9);
     font-family: var(--font-sans);
 }
 
@@ -29,3 +29,22 @@ a {
     margin: 0 0.5em;
 }
 
+@import url('https://unpkg.com/css.gg@2.0.0/icons/css/play-button-o.css');
+
+.day {
+    display: inline-block;
+    width: 10vw;
+    height: 10vw;
+    border: 1px solid var(--gray-8);
+    font-size: 0.75em;
+}
+
+.month {
+    display:grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.control {
+    display: inline;
+    margin: 0.5em 0.5em 0.5em 0.5em;
+}
