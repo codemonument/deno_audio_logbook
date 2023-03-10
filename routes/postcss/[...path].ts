@@ -5,20 +5,11 @@
 
 import { HandlerContext } from "$fresh/server.ts";
 import * as log from "$std/log/mod.ts";
-import postcss from "postcss";
-// See: https://www.npmjs.com/package/postcss-jit-props
-import postcssJitProps from "postcss-jit-props";
-// See: https://www.npmjs.com/package/open-props
-import OpenProps from "open-props";
-import postcssImport from "postcss-import";
 import { cssCache } from "@/src/css-cache/cssCache.ts";
 import { encode as encodeBase64 } from "$std/encoding/base64.ts";
 import { z } from "zod";
+import { postcssInstance } from "@/src/css-cache/postcssInstance.ts";
 
-export const postCssInstance = postcss([
-  postcssImport(),
-  postcssJitProps(OpenProps),
-]);
 
 log.setup({
   handlers: {
@@ -53,7 +44,7 @@ export const handler = async (
   // Check cache
   if (!await cssCache.has(fileHash)) {
     // On cache miss: process css file and cache it
-    const processingResult = await postCssInstance.process(rawCssContent, {
+    const processingResult = await postcssInstance.process(rawCssContent, {
       from: fsPath,
     });
     cssCache.set(fileHash, processingResult.css);

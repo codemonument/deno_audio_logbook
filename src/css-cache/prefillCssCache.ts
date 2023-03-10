@@ -1,25 +1,13 @@
-import postcss from "postcss";
-// See: https://www.npmjs.com/package/postcss-jit-props
-import postcssJitProps from "postcss-jit-props";
-// See: https://www.npmjs.com/package/open-props
-import OpenProps from "open-props";
-import postcssImport from "postcss-import";
 import { log } from "@/src/log.ts";
 import { expandGlob, WalkEntry } from "$std/fs/mod.ts";
 import { encode as encodeBase64 } from "$std/encoding/base64.ts";
 import { cssCache } from "./cssCache.ts";
+import { postcssInstance } from "@/src/css-cache/postcssInstance.ts";
 
 // FIXME: Why does this logger not log at the start?!?
 const logger = log.getLogger("deno_audio_logbook");
 
-export const postcssInstance = postcss([
-  postcssImport({
-    addModulesDirectories: ["css_deps"],
-  }),
-  postcssJitProps(OpenProps),
-]);
-
-async function loadProcessAndCacheCss(file: WalkEntry) {
+async function loadAndProcessAndCacheCss(file: WalkEntry) {
   const fsPath = file.path;
 
   // Load input css file
@@ -44,11 +32,11 @@ async function loadProcessAndCacheCss(file: WalkEntry) {
 export async function prefillCssCache() {
   const cssFileEntries = expandGlob("css/*.css", { root: Deno.cwd() });
   for await (const file of cssFileEntries) {
-    await loadProcessAndCacheCss(file);
+    await loadAndProcessAndCacheCss(file);
   }
 
   const cssStaticEntries = expandGlob("static/*.css", { root: Deno.cwd() });
   for await (const file of cssStaticEntries) {
-    await loadProcessAndCacheCss(file);
+    await loadAndProcessAndCacheCss(file);
   }
 }
