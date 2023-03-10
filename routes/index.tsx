@@ -11,7 +11,13 @@ import { secretsPromise } from "@/src/secrets.ts";
 
 // components for the page
 import UserInfo from "@/components/UserInfo.tsx";
+import Control from "@/components/Control.tsx";
+
 import ThemeSwitcher from "../islands/ThemeSwitcher.tsx";
+
+type HomeProps = PageProps<
+  { user: UserSession; date: { month: number; year: number } }
+>;
 
 export async function handler(
   req: Request,
@@ -21,10 +27,12 @@ export async function handler(
   // - get auth token from doppler secrets for local mocking, or
   // - get auth token from request header in anything other than dev mode
   // - and parse it
+  const url = new URL(req.url);
   const secrets = await secretsPromise;
-  const maybeAccessToken = (secrets.get("ENV_NAME") !== "dev")
-    ? getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME]
-    : secrets.get("MOCK_AUTH_TOKEN");
+  const maybeAccessToken =
+    (secrets.get("ENV_NAME") === "dev" || url.host.includes(DEPLOYMENT_ID))
+      ? secrets.get("MOCK_AUTH_TOKEN")
+      : getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME];
 
   if (maybeAccessToken) {
     const db = await dbPromise;
@@ -40,7 +48,17 @@ export async function handler(
     const user = UserSession.safeParse(maybeUser);
 
     if (user.success) {
-      return ctx.render(user.data);
+      //parse url to get month and year
+      const url = new URL(req.url);
+      const month = parseInt(
+        url.searchParams.get("month") || new Date().getMonth().toString(),
+      );
+      const year = parseInt(
+        url.searchParams.get("year") || new Date().getFullYear().toString(),
+      );
+
+      return ctx.render({ user: user.data, date: { month, year } });
+      // this places the user data in the props of the page: props.data = user.data
     }
   }
 
@@ -54,9 +72,8 @@ export async function handler(
   });
 }
 
-export default function Home({ data: user }: PageProps<UserSession>) {
-
-  const selectedTheme = "light"
+export default function Home(props: HomeProps) {
+  const selectedTheme = "light";
 
   return (
     <>
@@ -68,12 +85,12 @@ export default function Home({ data: user }: PageProps<UserSession>) {
         <pre>Deno Deployment ID: {DEPLOYMENT_ID}</pre>
         <div class="flex-gap"></div>
         <ThemeSwitcher selected={selectedTheme} />
-        <UserInfo user={user} />
+        <UserInfo user={props.data.user} />
       </header>
       <div>
         <h1>Audio Logbook</h1>
 
-        Calendar Placeholder
+        <Control date={props.data.date} />
       </div>
     </>
   );

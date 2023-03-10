@@ -1,6 +1,6 @@
 // Userinfo component for top right corner of the page
 import { UserSession } from "@/src/db/db_schema.ts";
-import { PageProps } from "$fresh/server.ts";
+// PageProps is only from deno, not needed here. Preact works like usual react.
 
 export default function UserInfo(props: { user: UserSession }) {
   return (
