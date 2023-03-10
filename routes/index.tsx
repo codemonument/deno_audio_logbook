@@ -21,10 +21,12 @@ export async function handler(
   // - get auth token from doppler secrets for local mocking, or
   // - get auth token from request header in anything other than dev mode
   // - and parse it
+  const url = new URL(req.url);
   const secrets = await secretsPromise;
-  const maybeAccessToken = (secrets.get("ENV_NAME") !== "dev")
-    ? getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME]
-    : secrets.get("MOCK_AUTH_TOKEN");
+  const maybeAccessToken =
+    (secrets.get("ENV_NAME") !== "dev" || url.host.includes(DEPLOYMENT_ID))
+      ? getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME]
+      : secrets.get("MOCK_AUTH_TOKEN");
 
   if (maybeAccessToken) {
     const db = await dbPromise;
@@ -55,8 +57,7 @@ export async function handler(
 }
 
 export default function Home({ data: user }: PageProps<UserSession>) {
-
-  const selectedTheme = "light"
+  const selectedTheme = "light";
 
   return (
     <>
