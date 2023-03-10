@@ -21,12 +21,15 @@ body {
     font-family: var(--font-sans);
 }
 
-a {
-    color: var(--gray-0);
+header {
+    display: flex;
+    flex-flow: row nowrap; 
+    align-items: center;
+    justify-content: flex-start;
 }
 
-#userheader {
-    float: right;
+.flex-gap {
+    flex-grow: 1;
 }
 
 #userheader>div {

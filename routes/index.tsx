@@ -66,8 +66,9 @@ export default function Home({ data: user }: PageProps<UserSession>) {
       </Head>
       <header>
         <pre>Deno Deployment ID: {DEPLOYMENT_ID}</pre>
-        <UserInfo user={user} />
+        <div class="flex-gap"></div>
         <ThemeSwitcher selected={selectedTheme} />
+        <UserInfo user={user} />
       </header>
       <div>
         <h1>Audio Logbook</h1>
