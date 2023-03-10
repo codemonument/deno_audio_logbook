@@ -11,6 +11,7 @@ import { secretsPromise } from "@/src/secrets.ts";
 
 // components for the page
 import UserInfo from "@/components/UserInfo.tsx";
+import ThemeSwitcher from "../islands/ThemeSwitcher.tsx";
 
 export async function handler(
   req: Request,
@@ -54,15 +55,21 @@ export async function handler(
 }
 
 export default function Home({ data: user }: PageProps<UserSession>) {
+
+  const selectedTheme = "light"
+
   return (
     <>
       <Head>
         <title>Audio Logbook</title>
         <link rel="stylesheet" href="/postcss/global.css" />
       </Head>
-      <div>
+      <header>
         <pre>Deno Deployment ID: {DEPLOYMENT_ID}</pre>
         <UserInfo user={user} />
+        <ThemeSwitcher selected={selectedTheme} />
+      </header>
+      <div>
         <h1>Audio Logbook</h1>
 
         Calendar Placeholder
