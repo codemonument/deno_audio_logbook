@@ -1,13 +1,23 @@
-@import url('open-props/normalize.min.css');
-@import url('open-props/buttons.min.css');
+/* @import url('open-props/normalize.min.css'); */
+/* @import url('open-props/buttons.min.css'); */
 
 /**
  * Find styles at https://open-props.style/!
  */
 
+ [color-scheme="light"] {
+    --brand-background: var(--gray-3);
+    --brand-font-color: var(--gray-9);
+ }
+
+ [color-scheme="dark"] {
+    --brand-background: var(--gray-8);
+    --brand-font-color: var(--gray-0);
+ }
+
 body {
-    background-color: var(--green-1);
-    color: var(--gray-9);
+    background-color: var(--brand-background);
+    color: var(--brand-font-color);
     font-family: var(--font-sans);
 }
 
