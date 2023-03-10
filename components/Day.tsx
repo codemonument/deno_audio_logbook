@@ -1,6 +1,6 @@
 // Data (audio file information) comes passed down via props
 
-import Audio from "./Audio.tsx";
+import Audio from "@/islands/Audio.tsx";
 
 // mock data TMP
 const audio = [
