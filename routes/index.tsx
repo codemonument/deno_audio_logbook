@@ -41,6 +41,7 @@ export async function handler(
 
     if (user.success) {
       return ctx.render(user.data);
+      // this places the user data in the props of the page: props.data = user.data
     }
   }
 
@@ -54,7 +55,7 @@ export async function handler(
   });
 }
 
-export default function Home({ data: user }: PageProps<UserSession>) {
+export default function Home(props: PageProps<UserSession>) {
   return (
     <>
       <Head>
@@ -63,7 +64,7 @@ export default function Home({ data: user }: PageProps<UserSession>) {
       </Head>
       <div>
         <pre>Deno Deployment ID: {DEPLOYMENT_ID}</pre>
-        <UserInfo user={user} />
+        <UserInfo user={props.data} />
         <h1>Audio Logbook</h1>
 
         <Control />
