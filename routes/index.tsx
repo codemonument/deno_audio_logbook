@@ -13,6 +13,10 @@ import { secretsPromise } from "@/src/secrets.ts";
 import UserInfo from "@/components/UserInfo.tsx";
 import Control from "@/components/Control.tsx";
 
+type HomeProps = PageProps<
+  { user: UserSession; date: { month: number; year: number } }
+>;
+
 export async function handler(
   req: Request,
   ctx: HandlerContext,
@@ -40,7 +44,16 @@ export async function handler(
     const user = UserSession.safeParse(maybeUser);
 
     if (user.success) {
-      return ctx.render(user.data);
+      //parse url to get month and year
+      const url = new URL(req.url);
+      const month = parseInt(
+        url.searchParams.get("month") || new Date().getMonth().toString(),
+      );
+      const year = parseInt(
+        url.searchParams.get("year") || new Date().getFullYear().toString(),
+      );
+
+      return ctx.render({ user: user.data, date: { month, year } });
       // this places the user data in the props of the page: props.data = user.data
     }
   }
@@ -55,7 +68,7 @@ export async function handler(
   });
 }
 
-export default function Home(props: PageProps<UserSession>) {
+export default function Home(props: HomeProps) {
   return (
     <>
       <Head>
@@ -64,10 +77,10 @@ export default function Home(props: PageProps<UserSession>) {
       </Head>
       <div>
         <pre>Deno Deployment ID: {DEPLOYMENT_ID}</pre>
-        <UserInfo user={props.data} />
+        <UserInfo user={props.data.user} />
         <h1>Audio Logbook</h1>
 
-        <Control />
+        <Control date={props.data.date} />
       </div>
     </>
   );

@@ -1,59 +1,30 @@
-import { useState } from "preact/hooks";
-
 import Month from "@/components/Month.tsx";
 
-enum Direction {
-  PREV = 1,
-  NEXT = 2,
-}
+import DateChanger from "@/islands/DateChanger.tsx";
 
-export default function Control() {
-  const [month, setMonth] = useState(1);
-  const [year, setYear] = useState(2023);
+type ControlProps = {
+  date: { month: number; year: number };
+};
 
-  const changeMonth = (direction: Direction) => {
-    switch (direction) {
-      case Direction.NEXT:
-        if (month > 11) {
-          setMonth(1);
-          setYear((year: number) => year + 1);
-        } else {
-          setMonth((month: number) => month + 1);
-        }
-        break;
-      case Direction.PREV:
-        if (month < 2) {
-          setMonth(12);
-          setYear((year: number) => year - 1);
-        } else {
-          setMonth((month: number) => month - 1);
-        }
-        break;
-      default:
-        break;
-    }
-  };
+export default function Control(
+  props: ControlProps,
+) {
   return (
     <div className="calendarWrapper">
       <div className="control">
-        <button
-          className="changeMonth"
-          onClick={() => changeMonth(Direction.PREV)}
-        >
-          &lt;
-        </button>
-        <span>{month}</span>&nbsp;-&nbsp;
-        <span>{year}</span>
-        <button
-          className="changeMonth"
-          onClick={() => changeMonth(Direction.NEXT)}
-        >
-          &gt;
-        </button>
+        <DateChanger date={props.date} />
         <br />
       </div>
       <br />
-      <Month month={month} year={year} />
+      <Month
+        month={props.date.month - 1 /** Note1! */}
+        year={props.date.year}
+      />
     </div>
   );
 }
+
+/**
+ * Note1: month is 0-indexed, so January is 0, February is 1, etc, thus the -1.
+ * Every other usage of month in this code is 1-indexed, thus only adjusting here where the calculation happens.
+ */
