@@ -1,0 +1,17 @@
+DB Request once for each month (only getting the selected month at a time)
+
+- The user can select a month and year to get the data for
+- Add Option to create a custom name for the file, or leave name unchanged and
+  add a separate field for the name
+
+  - Add Option for Tags (e.g. "bad mood", "dreamy", "sleepy", "happy" ?)
+
+  - make those tags selectable in the UI?
+
+  Sidebar with Recordings Per Recent months? like:
+  - Januar 2019: 5
+  - Februar 2019: 3
+  - März 2019: 2
+  - April 2019: 1
+  - Mai 2019: 0 -- Exclude months with 0 recordings
+  - Juni 2019: 0

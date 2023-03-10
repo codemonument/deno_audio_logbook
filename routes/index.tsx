@@ -11,7 +11,13 @@ import { secretsPromise } from "@/src/secrets.ts";
 
 // components for the page
 import UserInfo from "@/components/UserInfo.tsx";
+import Control from "@/components/Control.tsx";
+
 import ThemeSwitcher from "../islands/ThemeSwitcher.tsx";
+
+type HomeProps = PageProps<
+  { user: UserSession; date: { month: number; year: number } }
+>;
 
 export async function handler(
   req: Request,
@@ -42,7 +48,17 @@ export async function handler(
     const user = UserSession.safeParse(maybeUser);
 
     if (user.success) {
-      return ctx.render(user.data);
+      //parse url to get month and year
+      const url = new URL(req.url);
+      const month = parseInt(
+        url.searchParams.get("month") || new Date().getMonth().toString(),
+      );
+      const year = parseInt(
+        url.searchParams.get("year") || new Date().getFullYear().toString(),
+      );
+
+      return ctx.render({ user: user.data, date: { month, year } });
+      // this places the user data in the props of the page: props.data = user.data
     }
   }
 
@@ -56,7 +72,7 @@ export async function handler(
   });
 }
 
-export default function Home({ data: user }: PageProps<UserSession>) {
+export default function Home(props: HomeProps) {
   const selectedTheme = "light";
 
   return (
@@ -67,13 +83,13 @@ export default function Home({ data: user }: PageProps<UserSession>) {
       </Head>
       <header>
         <pre>Deno Deployment ID: {DEPLOYMENT_ID}</pre>
-        <UserInfo user={user} />
+        <UserInfo user={props.data.user} />
         <ThemeSwitcher selected={selectedTheme} />
       </header>
       <div>
         <h1>Audio Logbook</h1>
 
-        Calendar Placeholder
+        <Control date={props.data.date} />
       </div>
     </>
   );
