@@ -24,9 +24,9 @@ export async function handler(
   const url = new URL(req.url);
   const secrets = await secretsPromise;
   const maybeAccessToken =
-    (secrets.get("ENV_NAME") !== "dev" || url.host.includes(DEPLOYMENT_ID))
-      ? getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME]
-      : secrets.get("MOCK_AUTH_TOKEN");
+    (secrets.get("ENV_NAME") === "dev" || !url.host.includes(DEPLOYMENT_ID))
+      ? secrets.get("MOCK_AUTH_TOKEN")
+      : getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME];
 
   if (maybeAccessToken) {
     const db = await dbPromise;
