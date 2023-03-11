@@ -22,14 +22,13 @@ export default function Day(props: { day: number }) {
   return (
     <div className="day">
       <span className="dayNumber">{props.day}</span>
-      <div>
-        {
-          // map over audio array
-          audio.map((audio) => {
-            return <Audio audio={audio} />;
-          })
-        }
-      </div>
+
+      {
+        // map over audio array
+        audio.map((audio) => {
+          return <Audio audio={audio} />;
+        })
+      }
     </div>
   );
 }

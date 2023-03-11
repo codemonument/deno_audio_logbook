@@ -29,14 +29,12 @@ export default function Audio(props: { audio: Audio }) {
   }, [sound]);
 
   return (
-    <div className="audio">
-      <button
-        className="gg-play-button-o"
-        onClick={() => (playing) ? sound.pause() : sound.play()}
-      >
-        {(playing) ? "||" : "|>"} &nbsp;
-        {props.audio.fileTitle}
-      </button>
-    </div>
+    <button
+      className="audio-button"
+      onClick={() => (playing) ? sound.pause() : sound.play()}
+    >
+      {(playing) ? "||" : "|>"} &nbsp;
+      {props.audio.fileTitle}
+    </button>
   );
 }
