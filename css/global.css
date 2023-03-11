@@ -92,8 +92,8 @@ header h1 {
 
 .day {
     display: inline-block;
-    width: 10vw;
-    height: 10vw;
+    width: max-content;
+    aspect-ratio: 1 / 1;
     border: 1px solid var(--gray-9);
     font-size: 0.75em;
 }
