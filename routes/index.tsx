@@ -79,6 +79,7 @@ export default function Home(props: HomeProps) {
     <>
       <Head>
         <title>Audio Logbook</title>
+        <link rel="stylesheet" href="/reset.css" />
         <link rel="stylesheet" href="/postcss/global.css" />
       </Head>
       <header>
