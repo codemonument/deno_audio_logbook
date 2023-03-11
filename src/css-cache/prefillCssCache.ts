@@ -35,8 +35,9 @@ export async function prefillCssCache() {
     await loadAndProcessAndCacheCss(file);
   }
 
-  const cssStaticEntries = expandGlob("static/*.css", { root: Deno.cwd() });
-  for await (const file of cssStaticEntries) {
-    await loadAndProcessAndCacheCss(file);
-  }
+  // don't transform entries in static assets
+  // const cssStaticEntries = expandGlob("static/*.css", { root: Deno.cwd() });
+  // for await (const file of cssStaticEntries) {
+  //   await loadAndProcessAndCacheCss(file);
+  // }
 }

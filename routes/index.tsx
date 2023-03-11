@@ -73,24 +73,25 @@ export async function handler(
 }
 
 export default function Home(props: HomeProps) {
-  const selectedTheme = "light";
-
   return (
     <>
       <Head>
         <title>Audio Logbook</title>
+        <link rel="stylesheet" href="/reset.css" />
         <link rel="stylesheet" href="/postcss/global.css" />
       </Head>
       <header>
-        <pre>Deno Deployment ID: {DEPLOYMENT_ID}</pre>
+        <h1>Audio Logbook</h1>
+        <div class="flex-gap"></div>
+        <ThemeSwitcher />
         <UserInfo user={props.data.user} />
-        <ThemeSwitcher selected={selectedTheme} />
       </header>
       <div>
-        <h1>Audio Logbook</h1>
-
         <Control date={props.data.date} />
       </div>
+      <footer>
+        <pre>Deployment: {DEPLOYMENT_ID}</pre>
+      </footer>
     </>
   );
 }

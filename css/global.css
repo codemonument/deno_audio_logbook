@@ -2,31 +2,80 @@
 /* @import url('open-props/buttons.min.css'); */
 
 /**
+ * Resets
+ */
+pre {
+    margin: 0;
+}
+
+/**
  * Find styles at https://open-props.style/!
  */
 
- [color-scheme="light"] {
-    --brand-background: var(--gray-3);
-    --brand-font-color: var(--gray-9);
- }
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+        --system-color-scheme: dark;
+    }
+}
 
- [color-scheme="dark"] {
-    --brand-background: var(--gray-8);
-    --brand-font-color: var(--gray-0);
- }
+@media (prefers-color-scheme: light) {
+    :root {
+        color-scheme: light;
+        --system-color-scheme: light;
+    }
+}
+
+[theme="light"] {
+    --main-bg: var(--gray-1);
+    --main-font-color: var(--gray-9);
+    --main-outline: var(--gray-3);
+    --main-accent: var(--blue-2);
+}
+
+[theme="dark"] {
+    --main-bg: var(--gray-8);
+    --main-font-color: var(--gray-0);
+    --main-outline: var(--gray-6);
+    --main-accent: var(--blue-9);
+}
 
 body {
-    background-color: var(--brand-background);
-    color: var(--brand-font-color);
+    background-color: var(--main-bg);
+    color: var(--main-font-color);
     font-family: var(--font-sans);
 }
 
-a {
-    color: var(--gray-0);
+select,
+button {
+    background-color: var(--main-bg);
+    color: var(--main-font-color);
 }
 
-#userheader {
-    float: right;
+select {
+    border: none;
+    padding: var(--size-1);
+    background-color: transparent;
+}
+
+header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    height: max-content;
+    box-shadow: var(--shadow-2);
+    margin-bottom: var(--size-4);
+    background: var(--main-accent);
+    padding: var(--size-2);
+}
+
+header h1 {
+    font-size: var(--font-size-4);
+}
+
+.flex-gap {
+    flex-grow: 1;
 }
 
 #userheader>div {
@@ -50,11 +99,22 @@ a {
 }
 
 .month {
-    display:grid;
+    display: grid;
     grid-template-columns: repeat(7, 1fr);
 }
 
 .control {
     display: inline;
     margin: 0.5em 0.5em 0.5em 0.5em;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    height: max-content;
+    padding: var(--size-3);
+    text-align: center;
+    width: 100%;
+
+    color: var(--gray-5);
 }
