@@ -27,13 +27,17 @@ pre {
 }
 
 [theme="light"] {
-    --main-bg: var(--gray-0);
+    --main-bg: var(--gray-1);
     --main-font-color: var(--gray-9);
+    --main-outline: var(--gray-3);
+    --main-accent: var(--blue-2);
 }
 
 [theme="dark"] {
     --main-bg: var(--gray-8);
     --main-font-color: var(--gray-0);
+    --main-outline: var(--gray-6);
+    --main-accent: var(--blue-9);
 }
 
 body {
@@ -46,8 +50,12 @@ select,
 button {
     background-color: var(--main-bg);
     color: var(--main-font-color);
-    box-shadow: var(--shadow-1);
+}
 
+select {
+    border: none;
+    padding: var(--size-1);
+    background-color: transparent;
 }
 
 header {
@@ -57,12 +65,13 @@ header {
     justify-content: flex-start;
     height: max-content;
     box-shadow: var(--shadow-2);
-
     margin-bottom: var(--size-4);
+    background: var(--main-accent);
+    padding: var(--size-2);
 }
 
 header h1 {
-    font-size: var(--font-size-5);
+    font-size: var(--font-size-4);
 }
 
 .flex-gap {
