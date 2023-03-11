@@ -19,10 +19,6 @@ export default function ThemeSwitcher() {
   }
 
   // Anything here runs on the client!
-  // Important: AND RE-RUNS when useState hook changes!!!
-
-  // Halts in chrome
-  debugger;
 
   // get htmlTag
   const htmlTag = document.firstElementChild;
