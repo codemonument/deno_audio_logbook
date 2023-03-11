@@ -5,15 +5,29 @@
  * Find styles at https://open-props.style/!
  */
 
- [color-scheme="light"] {
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+        --system-color-scheme: dark;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color-scheme: light;
+        --system-color-scheme: light;
+    }
+}
+
+[theme="light"] {
     --main-background: var(--gray-0);
     --main-font-color: var(--gray-9);
- }
+}
 
- [color-scheme="dark"] {
+[theme="dark"] {
     --main-background: var(--gray-8);
     --main-font-color: var(--gray-0);
- }
+}
 
 body {
     background-color: var(--main-background);
@@ -23,7 +37,7 @@ body {
 
 header {
     display: flex;
-    flex-flow: row nowrap; 
+    flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
 }
@@ -53,7 +67,7 @@ header {
 }
 
 .month {
-    display:grid;
+    display: grid;
     grid-template-columns: repeat(7, 1fr);
 }
 
