@@ -93,6 +93,11 @@ header h1 {
     margin: 0 0.5em;
 }
 
+.calendarWrapper {
+    max-width: max-content;
+    margin: 0 auto;
+}
+
 .day {
     display: inline-block;
     width: max-content;
@@ -117,8 +122,11 @@ header h1 {
     margin: 0.5em 0.5em 0.5em 0.5em;
 }
 
-.audio-button {
-    /* border: none; */
+.date-changer-text {
+    margin: 0 var(--size-2);
+}
+
+button.audio {
     cursor: pointer;
 }
 

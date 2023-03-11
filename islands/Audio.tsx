@@ -30,7 +30,7 @@ export default function Audio(props: { audio: Audio }) {
 
   return (
     <button
-      className="audio-button"
+      className="audio"
       onClick={() => (playing) ? sound.pause() : sound.play()}
     >
       {(playing) ? "||" : "|>"} &nbsp;
