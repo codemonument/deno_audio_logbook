@@ -2,6 +2,13 @@
 /* @import url('open-props/buttons.min.css'); */
 
 /**
+ * Resets
+ */
+pre {
+    margin: 0;
+}
+
+/**
  * Find styles at https://open-props.style/!
  */
 
@@ -20,19 +27,27 @@
 }
 
 [theme="light"] {
-    --main-background: var(--gray-0);
+    --main-bg: var(--gray-0);
     --main-font-color: var(--gray-9);
 }
 
 [theme="dark"] {
-    --main-background: var(--gray-8);
+    --main-bg: var(--gray-8);
     --main-font-color: var(--gray-0);
 }
 
 body {
-    background-color: var(--main-background);
+    background-color: var(--main-bg);
     color: var(--main-font-color);
     font-family: var(--font-sans);
+}
+
+select,
+button {
+    background-color: var(--main-bg);
+    color: var(--main-font-color);
+    box-shadow: var(--shadow-1);
+
 }
 
 header {
@@ -40,6 +55,14 @@ header {
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
+    height: max-content;
+    box-shadow: var(--shadow-2);
+
+    margin-bottom: var(--size-4);
+}
+
+header h1 {
+    font-size: var(--font-size-5);
 }
 
 .flex-gap {
@@ -74,4 +97,15 @@ header {
 .control {
     display: inline;
     margin: 0.5em 0.5em 0.5em 0.5em;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    height: max-content;
+    padding: var(--size-3);
+    text-align: center;
+    width: 100%;
+
+    color: var(--gray-5);
 }
