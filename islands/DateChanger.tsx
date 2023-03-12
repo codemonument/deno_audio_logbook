@@ -43,7 +43,7 @@ export default function DateChanger(
       >
         ←
       </button>
-      <span>
+      <span class="date-changer-text">
         {MONTH_NUMBER_STRING[props.date.month]}&nbsp;-&nbsp;{props.date.year}
       </span>
       <button
