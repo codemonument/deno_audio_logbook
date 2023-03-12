@@ -81,6 +81,11 @@ export default function Home() {
       </Head>
       <header>
         <h1>Audio Logbook</h1>
+        <div class="flex-gap"></div>
+        {/* TODO: Put Date Seletor here? */}
+        <div class="flex-gap"></div>
+        <ThemeSwitcher />
+        <UserInfo user={props.data.user} />
       </header>
       <main>
         You should not see this Page. If you do, the redirect to the calendar
