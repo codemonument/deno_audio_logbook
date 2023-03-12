@@ -9,6 +9,8 @@ import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { secretsPromise } from "@/src/secrets.ts";
+import ThemeSwitcher from "@/islands/ThemeSwitcher.tsx";
+import UserInfo from "@/components/UserInfo.tsx";
 
 export async function handler(
   req: Request,
@@ -84,8 +86,8 @@ export default function Home() {
         <div class="flex-gap"></div>
         {/* TODO: Put Date Seletor here? */}
         <div class="flex-gap"></div>
-        <ThemeSwitcher />
-        <UserInfo user={props.data.user} />
+        {/* <ThemeSwitcher /> */}
+        {/* <UserInfo user={props.data.user} /> */}
       </header>
       <main>
         You should not see this Page. If you do, the redirect to the calendar
