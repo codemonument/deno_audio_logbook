@@ -1,6 +1,6 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-import { DEPLOYMENT_ID } from "@/src/constants.ts";
+import { DEPLOYMENT_ID } from "@/src/server_constants.ts";
 
 export async function handler(
   req: Request,

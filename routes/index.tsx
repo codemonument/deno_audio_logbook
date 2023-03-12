@@ -1,23 +1,14 @@
 import { Head } from "$fresh/runtime.ts";
-import { HandlerContext, Handlers, PageProps } from "$fresh/server.ts";
-import { getCookies, setCookie } from "$std/http/cookie.ts";
+import { HandlerContext, PageProps } from "$fresh/server.ts";
+import { getCookies } from "$std/http/cookie.ts";
 import {
   AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
   DEPLOYMENT_ID,
-} from "@/src/constants.ts";
+} from "@/src/server_constants.ts";
+import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { secretsPromise } from "@/src/secrets.ts";
-
-// components for the page
-import UserInfo from "@/components/UserInfo.tsx";
-import Control from "@/components/Control.tsx";
-
-import ThemeSwitcher from "../islands/ThemeSwitcher.tsx";
-
-type HomeProps = PageProps<
-  { user: UserSession; date: { month: number; year: number } }
->;
 
 export async function handler(
   req: Request,
@@ -48,17 +39,22 @@ export async function handler(
     const user = UserSession.safeParse(maybeUser);
 
     if (user.success) {
-      //parse url to get month and year
-      const url = new URL(req.url);
-      const month = parseInt(
-        url.searchParams.get("month") || new Date().getMonth().toString(),
-      );
-      const year = parseInt(
-        url.searchParams.get("year") || new Date().getFullYear().toString(),
-      );
+      // login successful, redirect to calendar
+      const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
+      const currentYear = new Date().getFullYear().toString();
 
-      return ctx.render({ user: user.data, date: { month, year } });
-      // this places the user data in the props of the page: props.data = user.data
+      return new Response("", {
+        status: 302,
+        headers: new Headers(
+          [
+            [
+              "location",
+              new URL(req.url).origin + "/calendar/" + currentYear + "/" +
+              currentMonth,
+            ],
+          ],
+        ),
+      });
     }
   }
 
@@ -72,7 +68,10 @@ export async function handler(
   });
 }
 
-export default function Home(props: HomeProps) {
+export default function Home() {
+  const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
+  const currentYear = new Date().getFullYear().toString();
+
   return (
     <>
       <Head>
@@ -82,13 +81,15 @@ export default function Home(props: HomeProps) {
       </Head>
       <header>
         <h1>Audio Logbook</h1>
-        <div class="flex-gap"></div>
-        <ThemeSwitcher />
-        <UserInfo user={props.data.user} />
       </header>
-      <div>
-        <Control date={props.data.date} />
-      </div>
+      <main>
+        You should not see this Page. If you do, the redirect to the calendar
+        failed.
+        <br />
+        <a href={`/calendar/${currentYear}/${currentMonth}`}>
+          Go to Calendar
+        </a>
+      </main>
       <footer>
         <pre>Deployment: {DEPLOYMENT_ID}</pre>
       </footer>

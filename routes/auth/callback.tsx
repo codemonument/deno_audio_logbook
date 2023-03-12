@@ -4,7 +4,7 @@ import { log } from "axiom";
 import { z, ZodError } from "zod";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
-import { AUDIO_LOGBOOK_AUTH_COOKIE_NAME } from "@/src/constants.ts";
+import { AUDIO_LOGBOOK_AUTH_COOKIE_NAME } from "@/src/server_constants.ts";
 
 export const handler: Handlers = {
   async GET(req: Request, ctx: HandlerContext) {
