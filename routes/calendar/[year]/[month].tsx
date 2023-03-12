@@ -8,6 +8,7 @@ import {
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { secretsPromise } from "@/src/secrets.ts";
+import { LogbookDate } from "@/src/calendar/LogbookDate.ts";
 
 // components for the page
 import UserInfo from "@/components/UserInfo.tsx";
@@ -18,6 +19,7 @@ import ThemeSwitcher from "@/islands/ThemeSwitcher.tsx";
 type HomeProps = PageProps<
   {
     user: UserSession;
+    date: LogbookDate;
   }
 >;
 
@@ -49,8 +51,16 @@ export async function handler(
     const maybeUser = await maybeUserQuery.executeTakeFirst();
     const user = UserSession.safeParse(maybeUser);
 
-    if (user.success) {
-      return ctx.render({ user: user.data });
+    // Parse correct year and month params from url
+    const { year, month } = ctx.params;
+
+    const parsedDate = LogbookDate.safeParse({ month, year });
+
+    // TODO: Query audio files for the selected month
+
+    //  Start rendering with audio and user objects
+    if (user.success && parsedDate.success) {
+      return ctx.render({ user: user.data, date: parsedDate.data });
     }
   }
 
@@ -64,17 +74,7 @@ export async function handler(
   });
 }
 
-export default function Home(props: HomeProps) {
-  // OPTIONAL: Maybe move this to a function, and check it in the handler, to correctly redirect to the current month if the date is invalid
-  const { year, month } = props.params;
-
-  const date = { year: parseInt(year), month: parseInt(month) - 1 }; // month -1 to get the 0-indexed month, not the string month number
-
-  if (date.year < 1970 || (date.month < 0 || date.month > 11)) {
-    date.year = new Date().getFullYear();
-    date.month = new Date().getMonth();
-  }
-
+export default function Home({ data }: HomeProps) {
   return (
     <>
       <Head>
@@ -86,10 +86,10 @@ export default function Home(props: HomeProps) {
         <h1>Audio Logbook</h1>
         <div class="flex-gap"></div>
         <ThemeSwitcher />
-        <UserInfo user={props.data.user} />
+        <UserInfo user={data.user} />
       </header>
       <div>
-        <Control date={date} />
+        <Control date={data.date} />
       </div>
       <footer>
         <pre>Deployment: {DEPLOYMENT_ID}</pre>
