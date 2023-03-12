@@ -5,12 +5,21 @@ import {
   AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
   DEPLOYMENT_ID,
 } from "@/src/server_constants.ts";
-import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { secretsPromise } from "@/src/secrets.ts";
-import ThemeSwitcher from "@/islands/ThemeSwitcher.tsx";
+
+// components for the page
 import UserInfo from "@/components/UserInfo.tsx";
+import Control from "@/components/Control.tsx";
+
+import ThemeSwitcher from "@/islands/ThemeSwitcher.tsx";
+
+type HomeProps = PageProps<
+  {
+    user: UserSession;
+  }
+>;
 
 export async function handler(
   req: Request,
@@ -41,22 +50,7 @@ export async function handler(
     const user = UserSession.safeParse(maybeUser);
 
     if (user.success) {
-      // login successful, redirect to calendar
-      const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
-      const currentYear = new Date().getFullYear().toString();
-
-      return new Response("", {
-        status: 302,
-        headers: new Headers(
-          [
-            [
-              "location",
-              new URL(req.url).origin + "/calendar/" + currentYear + "/" +
-              currentMonth,
-            ],
-          ],
-        ),
-      });
+      return ctx.render({ user: user.data });
     }
   }
 
@@ -70,9 +64,16 @@ export async function handler(
   });
 }
 
-export default function Home() {
-  const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
-  const currentYear = new Date().getFullYear().toString();
+export default function Home(props: HomeProps) {
+  // OPTIONAL: Maybe move this to a function, and check it in the handler, to correctly redirect to the current month if the date is invalid
+  const { year, month } = props.params;
+
+  const date = { year: parseInt(year), month: parseInt(month) - 1 }; // month -1 to get the 0-indexed month, not the string month number
+
+  if (date.year < 1970 || (date.month < 0 || date.month > 11)) {
+    date.year = new Date().getFullYear();
+    date.month = new Date().getMonth();
+  }
 
   return (
     <>
@@ -84,19 +85,12 @@ export default function Home() {
       <header>
         <h1>Audio Logbook</h1>
         <div class="flex-gap"></div>
-        {/* TODO: Put Date Seletor here? */}
-        <div class="flex-gap"></div>
-        {/* <ThemeSwitcher /> */}
-        {/* <UserInfo user={props.data.user} /> */}
+        <ThemeSwitcher />
+        <UserInfo user={props.data.user} />
       </header>
-      <main>
-        You should not see this Page. If you do, the redirect to the calendar
-        failed.
-        <br />
-        <a href={`/calendar/${currentYear}/${currentMonth}`}>
-          Go to Calendar
-        </a>
-      </main>
+      <div>
+        <Control date={date} />
+      </div>
       <footer>
         <pre>Deployment: {DEPLOYMENT_ID}</pre>
       </footer>

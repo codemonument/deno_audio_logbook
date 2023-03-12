@@ -17,14 +17,9 @@ export default function Control(
       </div>
       <br />
       <Month
-        month={props.date.month - 1 /** Note1! */}
+        month={props.date.month}
         year={props.date.year}
       />
     </div>
   );
 }
-
-/**
- * Note1: month is 0-indexed, so January is 0, February is 1, etc, thus the -1.
- * Every other usage of month in this code is 1-indexed, thus only adjusting here where the calculation happens.
- */
