@@ -83,6 +83,8 @@ export default function Home(props: HomeProps) {
       <header>
         <h1>Audio Logbook</h1>
         <div class="flex-gap"></div>
+        {/* TODO: Put Date Seletor here? */}
+        <div class="flex-gap"></div>
         <ThemeSwitcher />
         <UserInfo user={props.data.user} />
       </header>

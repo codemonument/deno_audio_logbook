@@ -1,4 +1,6 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
+import { Howl, Howler } from "howler";
+import { signal } from "@preact/signals";
 
 export type Audio = {
   unixTimestamp: number;
@@ -7,21 +9,32 @@ export type Audio = {
 };
 
 export default function Audio(props: { audio: Audio }) {
-  const [audioLoaded, setAudioLoaded] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  const [sound] = useState(
+    new Howl({
+      src: [props.audio.audioFile],
+      html5: true,
+    }),
+  );
+
+  useEffect(() => {
+    sound.on("play", () => setPlaying(true));
+    sound.on("stop", () => setPlaying(false));
+    sound.on("pause", () => setPlaying(false));
+
+    sound.on("end", () => {
+      setPlaying(false);
+    });
+  }, [sound]);
 
   return (
-    <div className="audio">
-      {!audioLoaded
-        ? (
-          <button
-            className="gg-play-button-o"
-            onClick={() => setAudioLoaded(true)}
-          >
-            |&gt;
-          </button>
-        )
-        : <audio controls src={props.audio.audioFile} />}
-      {/*<span>{props.audio.fileTitle}</span>*/}
-    </div>
+    <button
+      className="audio"
+      onClick={() => (playing) ? sound.pause() : sound.play()}
+    >
+      {(playing) ? "||" : "|>"} &nbsp;
+      {props.audio.fileTitle}
+    </button>
   );
 }

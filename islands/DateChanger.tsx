@@ -39,10 +39,11 @@ export default function DateChanger(
       >
         ←
       </button>
-      <span>
-        {props.date.month}
-      </span>&nbsp;-&nbsp;
-      <span>{props.date.year}</span>
+
+      <span class="date-changer-text">
+        {props.date.month} &nbsp;-&nbsp; {props.date.year}
+      </span>
+
       <button
         className="changeMonth"
         onClick={() => changeMonth(Direction.NEXT)}
