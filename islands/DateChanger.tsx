@@ -1,3 +1,5 @@
+import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
+
 enum Direction {
   PREV = 1,
   NEXT = 2,
@@ -9,21 +11,23 @@ export default function DateChanger(
   const changeMonth = (direction: Direction) => {
     switch (direction) {
       case Direction.NEXT:
-        if (props.date.month > 11) {
-          window.location.href = `/?month=${1}&year=${props.date.year + 1}`;
+        if (props.date.month > 10) {
+          window.location.href = `/calendar/${props.date.year + 1}/01`;
         } else {
-          window.location.href = `/?month=${
-            props.date.month + 1
-          }&year=${props.date.year}`;
+          window.location.href = `/calendar/${props.date.year}/${
+            MONTH_NUMBER_STRING[props.date.month + 1]
+          }`;
         }
         break;
       case Direction.PREV:
-        if (props.date.month < 2) {
-          window.location.href = `/?month=${12}&year=${props.date.year - 1}`;
+        if (props.date.month < 1) {
+          window.location.href = `/calendar/${props.date.year - 1}/12`;
         } else {
-          window.location.href = `/?month=${
-            props.date.month - 1
-          }&year=${props.date.year}`;
+          window.location.href = `/calendar/${props.date.year}/${
+            MONTH_NUMBER_STRING[
+              props.date.month - 1
+            ]
+          }`;
         }
         break;
       default:
@@ -40,9 +44,8 @@ export default function DateChanger(
         ←
       </button>
       <span>
-        {props.date.month}
-      </span>&nbsp;-&nbsp;
-      <span>{props.date.year}</span>
+        {MONTH_NUMBER_STRING[props.date.month]}&nbsp;-&nbsp;{props.date.year}
+      </span>
       <button
         className="changeMonth"
         onClick={() => changeMonth(Direction.NEXT)}
