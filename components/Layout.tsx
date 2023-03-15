@@ -6,7 +6,7 @@ import UserInfo from "@/components/UserInfo.tsx";
 import type { ComponentChildren } from "preact";
 
 type LayoutProps = {
-  user: UserSession;
+  user?: UserSession;
   children: ComponentChildren;
 };
 
