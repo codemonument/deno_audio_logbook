@@ -1,5 +1,5 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
-import { serverOrigin } from "../src/server_constants.ts";
+import { serverOrigin } from "@/src/const/server_constants.ts";
 
 let originInitialized = false;
 

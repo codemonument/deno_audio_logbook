@@ -1,5 +1,5 @@
-import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
-import { serverOrigin } from "@/src/server_constants.ts";
+import { MONTH_NUMBER_STRING } from "@/src/const/client_constants.ts";
+import { serverOrigin } from "@/src/const/server_constants.ts";
 
 /**
  * Simplifies generating a redirect response for (mostly temporary) redirects, like errors, login page, etc.

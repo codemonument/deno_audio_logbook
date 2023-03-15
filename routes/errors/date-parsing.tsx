@@ -1,4 +1,4 @@
-import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
+import { MONTH_NUMBER_STRING } from "@/src/const/client_constants.ts";
 
 export default function DateParsingErrorPage() {
   const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];

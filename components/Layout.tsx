@@ -1,7 +1,7 @@
 import { Head } from "$fresh/runtime.ts";
 import ThemeSwitcher from "@/islands/ThemeSwitcher.tsx";
 import { UserSession } from "@/src/db/db_schema.ts";
-import { DEPLOYMENT_ID } from "@/src/server_constants.ts";
+import { DEPLOYMENT_ID } from "@/src/const/server_constants.ts";
 import UserInfo from "@/components/UserInfo.tsx";
 import type { ComponentChildren } from "preact";
 

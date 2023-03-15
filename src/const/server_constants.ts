@@ -5,4 +5,3 @@ export const DEPLOYMENT_ID = Deno.env.get("DENO_DEPLOYMENT_ID") ??
   "unknown/unavailable";
 
 export const serverOrigin = pDefer();
-
