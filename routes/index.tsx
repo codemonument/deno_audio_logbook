@@ -9,8 +9,7 @@ import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { secretsPromise } from "@/src/secrets.ts";
-import ThemeSwitcher from "@/islands/ThemeSwitcher.tsx";
-import UserInfo from "@/components/UserInfo.tsx";
+import { redirectToCalendar, redirectToLogin } from "@/src/utils/redirects.ts";
 
 export async function handler(
   req: Request,
@@ -41,33 +40,11 @@ export async function handler(
     const user = UserSession.safeParse(maybeUser);
 
     if (user.success) {
-      // login successful, redirect to calendar
-      const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
-      const currentYear = new Date().getFullYear().toString();
-
-      return new Response("", {
-        status: 302,
-        headers: new Headers(
-          [
-            [
-              "location",
-              new URL(req.url).origin + "/calendar/" + currentYear + "/" +
-              currentMonth,
-            ],
-          ],
-        ),
-      });
+      return redirectToCalendar(req.url);
     }
   }
 
-  return new Response("", {
-    status: 302,
-    headers: new Headers(
-      [
-        ["location", new URL(req.url).origin + "/auth/login"],
-      ],
-    ),
-  });
+  return redirectToLogin(req.url);
 }
 
 export default function Home() {
