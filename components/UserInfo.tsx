@@ -2,7 +2,9 @@
 import { UserSession } from "@/src/db/db_schema.ts";
 // PageProps is only from deno, not needed here. Preact works like usual react.
 
-export default function UserInfo(props: { user: UserSession }) {
+export default function UserInfo(props: { user?: UserSession }) {
+  if (!props.user) return <></>;
+
   return (
     <div id="userheader">
       <div>
