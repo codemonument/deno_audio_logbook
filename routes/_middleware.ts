@@ -9,14 +9,13 @@ import { secretsPromise } from "@/src/utils/secrets.ts";
 import { getCookies } from "$std/http/cookie.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { gotoLogin } from "@/src/utils/redirects.ts";
+import { ContextState } from "@/src/context_state.ts";
 
 let originInitialized = false;
 
-
-
 export async function handler(
   req: Request,
-  ctx: MiddlewareHandlerContext<RootMiddlewareState>,
+  ctx: MiddlewareHandlerContext<ContextState>,
 ) {
   // Initialize serverOrigin deferred promise
   if (!originInitialized) {
@@ -49,20 +48,17 @@ export async function handler(
     const maybeUser = await maybeUserQuery.executeTakeFirst();
     const userParse = UserSession.safeParse(maybeUser);
 
-    /**
-     * If user is on the login page, do not redirect to login (bc.this would be endless loop)
-     */
+    // If user is on the login page, do not redirect to login (bc.this would be endless loop)
     if (new URL(req.url).pathname.startsWith(`auth/login`)) {
       return ctx.next();
     }
 
-    /**
-     * Redirect to login page when no UserSession is not available
-     */
+    // Redirect to login page when no UserSession is not available
     if (!userParse.success) {
       return gotoLogin();
     }
 
+    // Happy Path to the normal App
     ctx.state.user = userParse.data;
     return ctx.next();
   }
