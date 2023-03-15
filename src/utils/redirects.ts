@@ -20,7 +20,7 @@ export function internalRedirect(
 }
 
 export function redirectToCalendar(
-  { origin }: { origin: string },
+  origin: string,
 ) {
   const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
   const currentYear = new Date().getFullYear().toString();
@@ -28,5 +28,14 @@ export function redirectToCalendar(
   return internalRedirect({
     origin,
     target: `/calendar/${currentYear}/${currentMonth}`,
+  });
+}
+
+export function redirectToLogin(
+  origin: string,
+) {
+  return internalRedirect({
+    origin,
+    target: `/auth/login`,
   });
 }
