@@ -8,7 +8,7 @@ import { ContextState } from "@/src/context_state.ts";
 import Control from "@/components/Control.tsx";
 import Layout from "@/components/Layout.tsx";
 
-import { gotoInternal, gotoLogin } from "@/src/utils/redirects.ts";
+import { gotoInternal } from "@/src/utils/redirects.ts";
 
 type HomeProps = PageProps<
   {
@@ -29,13 +29,12 @@ export const handler: Handlers<unknown, ContextState> = {
 
     // TODO: Query audio files for the selected month
 
-    //  Start rendering with audio and user objects
-
     // Redirect to date error page when parsing failed
     if (!parsedDate.success) {
       return gotoInternal("/errors/date-parsing");
     }
 
+    // Render calendar with audio and user objects
     return ctx.render({ user, date: parsedDate.data });
   },
 };
