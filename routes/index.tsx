@@ -6,7 +6,7 @@ import {
 } from "@/src/const/server_constants.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
-import { secretsPromise } from "@/src/secrets.ts";
+import { secretsPromise } from "@/src/utils/secrets.ts";
 import { gotoCalendar, gotoLogin } from "@/src/utils/redirects.ts";
 
 export async function handler(
