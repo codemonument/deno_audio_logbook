@@ -1,4 +1,3 @@
-import { Head } from "$fresh/runtime.ts";
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 import { getCookies } from "$std/http/cookie.ts";
 import {
@@ -11,12 +10,10 @@ import { secretsPromise } from "@/src/secrets.ts";
 import { LogbookDate } from "@/src/calendar/LogbookDate.ts";
 
 // components for the page
-import UserInfo from "@/components/UserInfo.tsx";
 import Control from "@/components/Control.tsx";
-
-import ThemeSwitcher from "@/islands/ThemeSwitcher.tsx";
-import { gotoInternal } from "@/src/utils/redirects.ts";
 import Layout from "@/components/Layout.tsx";
+
+import { gotoInternal, gotoLogin } from "@/src/utils/redirects.ts";
 
 type HomeProps = PageProps<
   {
@@ -72,14 +69,7 @@ export async function handler(
     }
   }
 
-  return new Response("", {
-    status: 302,
-    headers: new Headers(
-      [
-        ["location", new URL(req.url).origin + "/auth/login"],
-      ],
-    ),
-  });
+  return gotoLogin();
 }
 
 export default function Home({ data }: HomeProps) {
