@@ -25,15 +25,8 @@ export function redirectToCalendar(
   const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
   const currentYear = new Date().getFullYear().toString();
 
-  return new Response("", {
-    status: 302,
-    headers: new Headers(
-      [
-        [
-          "location",
-          new URL(origin).origin + `/calendar/${currentYear}/${currentMonth}`,
-        ],
-      ],
-    ),
+  return internalRedirect({
+    origin,
+    target: `/calendar/${currentYear}/${currentMonth}`,
   });
 }
