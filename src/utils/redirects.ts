@@ -1,3 +1,5 @@
+import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
+
 /**
  * Simplifies generating a redirect response for (mostly temporary) redirects, like errors, login page, etc.
  *
@@ -12,6 +14,25 @@ export function internalRedirect(
     headers: new Headers(
       [
         ["location", new URL(origin).origin + target],
+      ],
+    ),
+  });
+}
+
+export function redirectToCalendar(
+  { origin }: { origin: string },
+) {
+  const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
+  const currentYear = new Date().getFullYear().toString();
+
+  return new Response("", {
+    status: 302,
+    headers: new Headers(
+      [
+        [
+          "location",
+          new URL(origin).origin + `/calendar/${currentYear}/${currentMonth}`,
+        ],
       ],
     ),
   });
