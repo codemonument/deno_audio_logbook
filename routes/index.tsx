@@ -1,11 +1,9 @@
-import { Head } from "$fresh/runtime.ts";
-import { HandlerContext, PageProps } from "$fresh/server.ts";
+import { HandlerContext } from "$fresh/server.ts";
 import { getCookies } from "$std/http/cookie.ts";
 import {
   AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
   DEPLOYMENT_ID,
 } from "@/src/server_constants.ts";
-import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { secretsPromise } from "@/src/secrets.ts";
@@ -45,38 +43,4 @@ export async function handler(
   }
 
   return gotoLogin();
-}
-
-export default function Home() {
-  const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
-  const currentYear = new Date().getFullYear().toString();
-
-  return (
-    <>
-      <Head>
-        <title>Audio Logbook</title>
-        <link rel="stylesheet" href="/reset.css" />
-        <link rel="stylesheet" href="/postcss/global.css" />
-      </Head>
-      <header>
-        <h1>Audio Logbook</h1>
-        <div class="flex-gap"></div>
-        {/* TODO: Put Date Seletor here? */}
-        <div class="flex-gap"></div>
-        {/* <ThemeSwitcher /> */}
-        {/* <UserInfo user={props.data.user} /> */}
-      </header>
-      <main>
-        You should not see this Page. If you do, the redirect to the calendar
-        failed.
-        <br />
-        <a href={`/calendar/${currentYear}/${currentMonth}`}>
-          Go to Calendar
-        </a>
-      </main>
-      <footer>
-        <pre>Deployment: {DEPLOYMENT_ID}</pre>
-      </footer>
-    </>
-  );
 }

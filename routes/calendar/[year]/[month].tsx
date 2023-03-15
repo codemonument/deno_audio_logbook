@@ -16,6 +16,7 @@ import Control from "@/components/Control.tsx";
 
 import ThemeSwitcher from "@/islands/ThemeSwitcher.tsx";
 import { gotoInternal } from "@/src/utils/redirects.ts";
+import Layout from "@/components/Layout.tsx";
 
 type HomeProps = PageProps<
   {
@@ -83,24 +84,8 @@ export async function handler(
 
 export default function Home({ data }: HomeProps) {
   return (
-    <>
-      <Head>
-        <title>Audio Logbook</title>
-        <link rel="stylesheet" href="/reset.css" />
-        <link rel="stylesheet" href="/postcss/global.css" />
-      </Head>
-      <header>
-        <h1>Audio Logbook</h1>
-        <div class="flex-gap"></div>
-        <ThemeSwitcher />
-        <UserInfo user={data.user} />
-      </header>
-      <div>
-        <Control date={data.date} />
-      </div>
-      <footer>
-        <pre>Deployment: {DEPLOYMENT_ID}</pre>
-      </footer>
-    </>
+    <Layout user={data.user}>
+      <Control date={data.date} />
+    </Layout>
   );
 }
