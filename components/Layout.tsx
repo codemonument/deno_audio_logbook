@@ -7,6 +7,7 @@ import type { ComponentChildren } from "preact";
 
 type LayoutProps = {
   user?: UserSession;
+  h1Override?: string;
   children: ComponentChildren;
 };
 
@@ -19,9 +20,9 @@ export default function Layout(props: LayoutProps) {
         <link rel="stylesheet" href="/postcss/global.css" />
       </Head>
       <header>
-        <h1>Audio Logbook</h1>
+        <h1>{(props.h1Override) ? props.h1Override : "Audio Logbook"}</h1>
         <div class="flex-gap"></div>
-         {/* TODO: Put Date Seletor here? */}
+        {/* TODO: Put Date Seletor here? */}
         <ThemeSwitcher />
         <UserInfo user={props.user} />
       </header>

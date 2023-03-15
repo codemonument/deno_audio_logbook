@@ -1,6 +1,7 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import { DEPLOYMENT_ID } from "@/src/const/server_constants.ts";
+import Layout from "@/components/Layout.tsx";
 
 export async function handler(
   req: Request,
@@ -24,14 +25,8 @@ export async function handler(
 
 export default function Login() {
   return (
-    <>
-      <Head>
-        <title>Audio Logbook</title>
-      </Head>
-      <div>
-        <pre>Deno Deployment ID: {DEPLOYMENT_ID}</pre>
-        <h1>Audio Logbook - Login</h1>
-
+    <Layout h1Override="Audio Logbook - Login">
+      <div style="margin: 0 auto; width: min-content; ">
         <script
           async
           src="https://telegram.org/js/telegram-widget.js?21"
@@ -42,6 +37,6 @@ export default function Login() {
         >
         </script>
       </div>
-    </>
+    </Layout>
   );
 }
