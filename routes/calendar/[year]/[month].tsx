@@ -1,13 +1,8 @@
-import { HandlerContext, PageProps } from "$fresh/server.ts";
-import { getCookies } from "$std/http/cookie.ts";
-import {
-  AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
-  DEPLOYMENT_ID,
-} from "@/src/const/server_constants.ts";
-import { dbPromise } from "@/src/db/db.ts";
+import { Handlers, PageProps } from "$fresh/server.ts";
+
 import { UserSession } from "@/src/db/db_schema.ts";
-import { secretsPromise } from "@/src/utils/secrets.ts";
 import { LogbookDate } from "@/src/calendar/LogbookDate.ts";
+import { ContextState } from "@/src/context_state.ts";
 
 // components for the page
 import Control from "@/components/Control.tsx";
@@ -22,38 +17,15 @@ type HomeProps = PageProps<
   }
 >;
 
-export async function handler(
-  req: Request,
-  ctx: HandlerContext,
-): Promise<Response> {
-  // When in dev mode,
-  // - get auth token from doppler secrets for local mocking, or
-  // - get auth token from request header in anything other than dev mode
-  // - and parse it
-  const url = new URL(req.url);
-  const secrets = await secretsPromise;
-  const maybeAccessToken =
-    (secrets.get("ENV_NAME") === "dev" || url.host.includes(DEPLOYMENT_ID))
-      ? secrets.get("MOCK_AUTH_TOKEN")
-      : getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME];
-
-  if (maybeAccessToken) {
-    const db = await dbPromise;
-    const maybeUserQuery = db
-      .selectFrom("audiobook_sessions")
-      .selectAll()
-      .where(
-        "hash",
-        "=",
-        maybeAccessToken,
-      );
-    const maybeUser = await maybeUserQuery.executeTakeFirst();
-    const user = UserSession.safeParse(maybeUser);
-
+/**
+ * @requires ctx.state.user => The user session, resolved by the _middleware.ts file
+ */
+export const handler: Handlers<unknown, ContextState> = {
+  GET(_req, ctx) {
     // Parse correct year and month params from url
     const { year, month } = ctx.params;
-
     const parsedDate = LogbookDate.safeParse({ month, year });
+    const user = ctx.state.user;
 
     // TODO: Query audio files for the selected month
 
@@ -64,13 +36,9 @@ export async function handler(
       return gotoInternal("/errors/date-parsing");
     }
 
-    if (user.success && parsedDate.success) {
-      return ctx.render({ user: user.data, date: parsedDate.data });
-    }
-  }
-
-  return gotoLogin();
-}
+    return ctx.render({ user, date: parsedDate.data });
+  },
+};
 
 export default function Home({ data }: HomeProps) {
   return (
