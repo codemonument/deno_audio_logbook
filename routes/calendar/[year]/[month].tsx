@@ -15,6 +15,7 @@ import UserInfo from "@/components/UserInfo.tsx";
 import Control from "@/components/Control.tsx";
 
 import ThemeSwitcher from "@/islands/ThemeSwitcher.tsx";
+import { internalRedirect } from "@/src/utils/redirects.ts";
 
 type HomeProps = PageProps<
   {
@@ -59,6 +60,15 @@ export async function handler(
     // TODO: Query audio files for the selected month
 
     //  Start rendering with audio and user objects
+
+    // Redirect to date error page when parsing failed
+    if (!parsedDate.success) {
+      return internalRedirect({
+        origin: req.url,
+        target: "/errors/date-parsing",
+      });
+    }
+
     if (user.success && parsedDate.success) {
       return ctx.render({ user: user.data, date: parsedDate.data });
     }

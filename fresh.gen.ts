@@ -7,8 +7,9 @@ import * as $0 from "./routes/auth/callback.tsx";
 import * as $1 from "./routes/auth/login.tsx";
 import * as $2 from "./routes/bot/[...path].ts";
 import * as $3 from "./routes/calendar/[year]/[month].tsx";
-import * as $4 from "./routes/index.tsx";
-import * as $5 from "./routes/postcss/[...path].ts";
+import * as $4 from "./routes/errors/date-parsing.tsx";
+import * as $5 from "./routes/index.tsx";
+import * as $6 from "./routes/postcss/[...path].ts";
 import * as $$0 from "./islands/Audio.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/DateChanger.tsx";
@@ -20,8 +21,9 @@ const manifest = {
     "./routes/auth/login.tsx": $1,
     "./routes/bot/[...path].ts": $2,
     "./routes/calendar/[year]/[month].tsx": $3,
-    "./routes/index.tsx": $4,
-    "./routes/postcss/[...path].ts": $5,
+    "./routes/errors/date-parsing.tsx": $4,
+    "./routes/index.tsx": $5,
+    "./routes/postcss/[...path].ts": $6,
   },
   islands: {
     "./islands/Audio.tsx": $$0,
