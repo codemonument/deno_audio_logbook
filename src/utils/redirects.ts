@@ -19,6 +19,7 @@ export function internalRedirect(
   });
 }
 
+// TODO: rename to gotoXXX
 export function redirectToCalendar(
   origin: string,
 ) {
