@@ -15,7 +15,7 @@ import UserInfo from "@/components/UserInfo.tsx";
 import Control from "@/components/Control.tsx";
 
 import ThemeSwitcher from "@/islands/ThemeSwitcher.tsx";
-import { internalRedirect } from "@/src/utils/redirects.ts";
+import { gotoInternal } from "@/src/utils/redirects.ts";
 
 type HomeProps = PageProps<
   {
@@ -63,10 +63,7 @@ export async function handler(
 
     // Redirect to date error page when parsing failed
     if (!parsedDate.success) {
-      return internalRedirect({
-        origin: req.url,
-        target: "/errors/date-parsing",
-      });
+      return gotoInternal("/errors/date-parsing");
     }
 
     if (user.success && parsedDate.success) {

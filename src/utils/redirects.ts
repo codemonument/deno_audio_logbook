@@ -7,7 +7,7 @@ import { serverOrigin } from "@/src/server_constants.ts";
  * @requires serverOrigin.promise  the origin url of the server, detected by /routes/_middleware.ts
  * @param target: The absolute url to redirect to, for example /auth/login, or /errors/date-parsing
  */
-export async function internalRedirect(
+export async function gotoInternal(
   target: string,
 ) {
   const origin = await serverOrigin.promise;
@@ -22,13 +22,13 @@ export async function internalRedirect(
   });
 }
 
-export function redirectToCalendar() {
+export function gotoCalendar() {
   const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
   const currentYear = new Date().getFullYear().toString();
 
-  return internalRedirect(`/calendar/${currentYear}/${currentMonth}`);
+  return gotoInternal(`/calendar/${currentYear}/${currentMonth}`);
 }
 
-export function redirectToLogin() {
-  return internalRedirect(`/auth/login`);
+export function gotoLogin() {
+  return gotoInternal(`/auth/login`);
 }

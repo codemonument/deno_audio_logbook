@@ -9,7 +9,7 @@ import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { secretsPromise } from "@/src/secrets.ts";
-import { redirectToCalendar, redirectToLogin } from "@/src/utils/redirects.ts";
+import { gotoCalendar, gotoLogin } from "@/src/utils/redirects.ts";
 
 export async function handler(
   req: Request,
@@ -40,11 +40,11 @@ export async function handler(
     const user = UserSession.safeParse(maybeUser);
 
     if (user.success) {
-      return redirectToCalendar(req.url);
+      return gotoCalendar();
     }
   }
 
-  return redirectToLogin(req.url);
+  return gotoLogin();
 }
 
 export default function Home() {
