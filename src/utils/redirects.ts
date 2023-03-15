@@ -1,42 +1,34 @@
 import { MONTH_NUMBER_STRING } from "@/src/client_constants.ts";
+import { serverOrigin } from "@/src/server_constants.ts";
 
 /**
  * Simplifies generating a redirect response for (mostly temporary) redirects, like errors, login page, etc.
  *
- * @param origin: an url, for example req.url. Will be transformed as: new URL(origin).origin
+ * @requires serverOrigin.promise  the origin url of the server, detected by /routes/_middleware.ts
  * @param target: The absolute url to redirect to, for example /auth/login, or /errors/date-parsing
  */
-export function internalRedirect(
-  { origin, target }: { origin: string; target: string },
+export async function internalRedirect(
+  target: string,
 ) {
+  const origin = await serverOrigin.promise;
+
   return new Response("", {
     status: 302,
     headers: new Headers(
       [
-        ["location", new URL(origin).origin + target],
+        ["location", origin + target],
       ],
     ),
   });
 }
 
-// TODO: rename to gotoXXX
-export function redirectToCalendar(
-  origin: string,
-) {
+export function redirectToCalendar() {
   const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
   const currentYear = new Date().getFullYear().toString();
 
-  return internalRedirect({
-    origin,
-    target: `/calendar/${currentYear}/${currentMonth}`,
-  });
+  return internalRedirect(`/calendar/${currentYear}/${currentMonth}`);
 }
 
-export function redirectToLogin(
-  origin: string,
-) {
-  return internalRedirect({
-    origin,
-    target: `/auth/login`,
-  });
+export function redirectToLogin() {
+  return internalRedirect(`/auth/login`);
 }
