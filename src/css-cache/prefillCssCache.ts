@@ -1,4 +1,4 @@
-import { log } from "@/src/log.ts";
+import { log } from "@/src/utils/log.ts";
 import { expandGlob, WalkEntry } from "$std/fs/mod.ts";
 import { encode as encodeBase64 } from "$std/encoding/base64.ts";
 import { cssCache } from "./cssCache.ts";
