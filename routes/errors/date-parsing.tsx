@@ -23,8 +23,11 @@ export default function DateParsingErrorPage(
   return (
     <Layout user={props.data.user}>
       <div class="error medium-width">
-        Oooops! You passed a invalid date, so the calendar cannot be shown!{" "}
-        <br /> <br />
+        <h2 style="padding-bottom: var(--size-4)">
+          Oooops!
+        </h2>
+        You passed a invalid date, so the calendar cannot be shown! <br />{" "}
+        <br />
         Please specify ...
         <ul>
           <li>a year &gt; 1970</li>

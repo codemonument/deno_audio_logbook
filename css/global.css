@@ -28,9 +28,11 @@ pre {
 
 [theme="light"] {
     --main-bg: var(--gray-1);
-    --main-font-color: var(--gray-9);
+    --main-font-color: var(--gray-10);
     --main-outline: var(--gray-3);
-    --main-accent: var(--blue-2);
+    --main-accent: var(--blue-3);
+    --main-error: var(--red-6);
+    --main-link-visited: var(--gray-8);
 }
 
 [theme="dark"] {
@@ -38,6 +40,8 @@ pre {
     --main-font-color: var(--gray-0);
     --main-outline: var(--gray-6);
     --main-accent: var(--blue-9);
+    --main-error: var(--red-10);
+    --main-link-visited: var(--gray-5);
 }
 
 body {
@@ -79,11 +83,14 @@ header h1 {
     font-size: var(--font-size-4);
 }
 
+a:visited {
+    color: var(--main-link-visited);
+}
+
 .error {
-    background-color: var(--red-10);
-    border: var(--border-size-3) solid var(--red-10);
+    background-color: var(--main-error);
     border-radius: var(--radius-3);
-    padding: var(--size-4) var(--size-4) var(--size-7) var(--size-4);
+    padding: var(--size-5) var(--size-5) var(--size-8) var(--size-5);
     -webkit-mask: var(--mask-edge-zig-zag-bottom);
 }
 
