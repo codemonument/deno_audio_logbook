@@ -49,7 +49,7 @@ export async function handler(
     const userParse = UserSession.safeParse(maybeUser);
 
     // If user is on the login page, do not redirect to login (bc.this would be endless loop)
-    if (new URL(req.url).pathname.startsWith(`auth/login`)) {
+    if (new URL(req.url).pathname.startsWith(`/auth/login`)) {
       return ctx.next();
     }
 
