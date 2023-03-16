@@ -1,5 +1,4 @@
 import { MONTH_NUMBER_STRING } from "@/src/const/client_constants.ts";
-import { serverOrigin } from "@/src/const/server_constants.ts";
 
 /**
  * Simplifies generating a redirect response for (mostly temporary) redirects, like errors, login page, etc.
@@ -7,16 +6,14 @@ import { serverOrigin } from "@/src/const/server_constants.ts";
  * @requires serverOrigin.promise  the origin url of the server, detected by /routes/_middleware.ts
  * @param target: The absolute url to redirect to, for example /auth/login, or /errors/date-parsing
  */
-export async function gotoInternal(
+export function gotoInternal(
   target: string,
 ) {
-  const origin = await serverOrigin.promise;
-
   return new Response("", {
     status: 302,
     headers: new Headers(
       [
-        ["location", origin + target],
+        ["location", target],
       ],
     ),
   });
