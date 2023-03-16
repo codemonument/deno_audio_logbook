@@ -1,5 +1,5 @@
 import { Bot } from "grammy";
-import { secretsPromise } from "@/src/secrets.ts";
+import { secretsPromise } from "@/src/utils/secrets.ts";
 import { z } from "zod";
 import { s3Promise } from "@/src/s3/s3.ts";
 import { log } from "axiom";
@@ -13,12 +13,12 @@ import { dbPromise } from "@/src/db/db.ts";
 export const botPromise = initBot();
 
 /**
- * Telegram API Guide for Bots: 
+ * Telegram API Guide for Bots:
  * https://core.telegram.org/bots/api
- * 
- * In-Depth guide for avoiding problems with webhook based telegram bots: 
+ *
+ * In-Depth guide for avoiding problems with webhook based telegram bots:
  * https://core.telegram.org/bots/webhooks
- * 
+ *
  * TODO: Read and follow!
  */
 async function initBot() {

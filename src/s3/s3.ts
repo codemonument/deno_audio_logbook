@@ -1,5 +1,5 @@
 import { S3Client } from "s3";
-import { secretsPromise } from "@/src/secrets.ts";
+import { secretsPromise } from "@/src/utils/secrets.ts";
 import { z } from "zod";
 
 // console.debug(

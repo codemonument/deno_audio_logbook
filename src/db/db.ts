@@ -2,7 +2,7 @@ import { Kysely } from "kysely";
 import { PlanetScaleDialect } from "kysely-planetscale";
 
 import { DbSchema } from "./db_schema.ts";
-import { secretsPromise } from "@/src/secrets.ts";
+import { secretsPromise } from "@/src/utils/secrets.ts";
 import { log } from "axiom";
 
 export const dbPromise: Promise<Kysely<DbSchema>> = initDb();
