@@ -2,7 +2,6 @@ import { MiddlewareHandlerContext } from "$fresh/server.ts";
 import {
   AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
   DEPLOYMENT_ID,
-  serverOrigin,
 } from "@/src/const/server_constants.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { secretsPromise } from "@/src/utils/secrets.ts";
@@ -11,18 +10,13 @@ import { dbPromise } from "@/src/db/db.ts";
 import { gotoLogin } from "@/src/utils/redirects.ts";
 import { ContextState } from "@/src/context_state.ts";
 
-let originInitialized = false;
-
 export async function handler(
   req: Request,
   ctx: MiddlewareHandlerContext<ContextState>,
 ) {
   // Initialize serverOrigin deferred promise
-  if (!originInitialized) {
-    const origin = new URL(req.url).origin;
-    serverOrigin.resolve(origin);
-    originInitialized = true;
-  }
+  const origin = new URL(req.url).origin;
+  ctx.state.serverOrigin = origin;
 
   // When in dev mode,
   // - get auth token from doppler secrets for local mocking, or
