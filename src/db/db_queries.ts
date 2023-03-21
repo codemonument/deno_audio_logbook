@@ -22,6 +22,13 @@ const DB_CACHE = {
   recordings: {} as recordings,
 };
 
+export function invalidateCache(
+  obj: "sessions" | "recordings",
+  userId: number,
+) {
+  //TODO: Add a function to invalidate the cache.
+}
+
 export async function getSavedRecordingTimestamps(
   userId: number,
 ): Promise<Recording[]> {

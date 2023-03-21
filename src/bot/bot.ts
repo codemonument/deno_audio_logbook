@@ -5,6 +5,7 @@ import { s3Promise } from "@/src/s3/s3.ts";
 import { log } from "axiom";
 import { isUserAuthorized } from "./is-user-authorized.ts";
 import { dbPromise } from "@/src/db/db.ts";
+import { invalidateCache } from "@/src/db/db_queries.ts";
 
 // Create bot object
 /*console.debug(
@@ -117,6 +118,9 @@ async function initBot() {
     } catch (error) {
       reply = "An Error occured while handling the upload: \n" + error.message;
     }
+
+    // invalidate recordings cache for this user
+    invalidateCache("recordings", userIDSender);
 
     ctx.reply(reply);
   });
