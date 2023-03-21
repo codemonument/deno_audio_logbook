@@ -79,6 +79,10 @@ header {
     padding: var(--size-2);
 }
 
+main {
+    display: flex;
+}
+
 header h1 {
     font-size: var(--font-size-4);
 }
