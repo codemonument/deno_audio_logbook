@@ -12,11 +12,23 @@ export default function LoadSidebar() {
       fetch("/api/fetchData?whichData=sidebar")
         .then((response) => response.json())
         .then((entries) => setEntries({ entries: entries }));
-      return <Loading />;
+      return (
+        <aside>
+          <Loading />
+        </aside>
+      );
     }
 
-    return <AudioBacklogSidebar entries={entries.entries} />;
+    return (
+      <aside>
+        <AudioBacklogSidebar entries={entries.entries} />
+      </aside>
+    );
   } else {
-    return <Loading />;
+    return (
+      <aside>
+        <Loading />
+      </aside>
+    );
   }
 }
