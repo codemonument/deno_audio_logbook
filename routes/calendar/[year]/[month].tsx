@@ -12,6 +12,7 @@ import Layout from "@/components/Layout.tsx";
 
 import { gotoInternal } from "@/src/utils/redirects.ts";
 import AudioBacklogSidebar from "@/components/AudioBacklogSidebar.tsx";
+import LoadSidebar from "@/islands/LoadSidebar.tsx";
 
 type HomeProps = PageProps<
   {
@@ -51,7 +52,7 @@ export const handler: Handlers<unknown, ContextState> = {
 export default function Home({ data }: HomeProps) {
   return (
     <Layout user={data.user}>
-      <AudioBacklogSidebar entries={data.entries} />
+      <LoadSidebar />
       <Control date={data.date} />
     </Layout>
   );

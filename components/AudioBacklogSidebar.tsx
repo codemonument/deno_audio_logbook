@@ -3,27 +3,27 @@
  * Component for Audio Backlog Sidebar.
  * Searches for audio files in the database and displays them in a sidebar sorted by month and year.
  *
- * @argument {number} userId - User ID.
+ * @argument {Array} entries - Array of entries from the database, containing the unix timestamp of each recording.
  */
 
 import { MONTH_NUMBER_STRING } from "@/src/const/client_constants.ts";
 
-type AudioBacklogSidebarProps = {
-  entries: { unixTimestamp: number }[];
+export type AudioEntries = {
+  entries: number[];
 };
 
 type filteredEntries = {
   [year: number]: {
-    [month: number]: { unixTimestamp: number }[];
+    [month: number]: number[];
   };
 };
 
 export default function AudioBacklogSidebar(
-  props: AudioBacklogSidebarProps,
+  props: AudioEntries,
 ) {
   // filter them by month and year
   const filteredEntries = props.entries.reduce((acc, entry) => {
-    const date = new Date(entry.unixTimestamp * 1000); // Important: DB stores unix timestamp in seconds, but JS Date() expects milliseconds.
+    const date = new Date(entry * 1000); // Important: DB stores unix timestamp in seconds, but JS Date() expects milliseconds.
     const month = date.getMonth();
     const year = date.getFullYear();
 
