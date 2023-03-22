@@ -6,14 +6,10 @@ const INVALIDATE_TIME_5 = 1000 * 60 * 5;
 const INVALIDATE_TIME_1 = 1000 * 60 * 1;
 const INVALIDATE_TIME_10 = 1000 * 60 * 10;
 
-type Recording = {
-  unixTimestamp: number;
-};
-
 type recordings = {
   [userId: number]: {
     unixTimestamp_fetched: number;
-    data: Recording[];
+    data: number[];
   };
 };
 
@@ -26,12 +22,20 @@ export function invalidateCache(
   obj: "sessions" | "recordings",
   userId: number,
 ) {
-  //TODO: Add a function to invalidate the cache.
+  //function to invalidate the cache for the given obj for the given user.
+
+  if (obj === "sessions") {
+    // todo
+  }
+
+  if (obj === "recordings") {
+    // todo
+  }
 }
 
 export async function getSavedRecordingTimestamps(
   userId: number,
-): Promise<Recording[]> {
+): Promise<number[]> {
   if (
     DB_CACHE.recordings[userId]?.data &&
     Date.now() - DB_CACHE.recordings[userId].unixTimestamp_fetched <
@@ -44,13 +48,18 @@ export async function getSavedRecordingTimestamps(
     .selectFrom("audiobook_recordings")
     .select("unixTimestamp")
     .where("userId", "=", userId)
-    .execute();
+    .execute()
+    .then((res) =>
+      res.map(
+        (r) => r.unixTimestamp,
+      )
+    );
 
   DB_CACHE.recordings[userId] = {
     unixTimestamp_fetched: Date.now(),
     data: recordings,
   };
-
+  // recordings = timestamps of saved recordings
   return Promise.resolve(recordings);
 }
 
