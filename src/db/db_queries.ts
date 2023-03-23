@@ -134,6 +134,7 @@ export function invalidateCache(
 
 export async function getSavedRecordingTimestamps(
   userId: number,
+  _params: string,
 ): Promise<number[]> {
   if (checkCache(userId, CACHE_TYPE.RECORDINGS)) {
     console.log("cache hit");
@@ -159,9 +160,21 @@ export async function getSavedRecordingTimestamps(
 
 export async function getAudioMetadataForMonth(
   userId: number,
-  month: number,
-  year: number,
+  params: string,
 ): Promise<string[]> {
+  const { year, month } = JSON.parse(params);
+
+  if (!year || !month) {
+    throw new Error("year and month must be defined");
+  }
+
+  if (checkCache(userId, CACHE_TYPE.AUDIO_PATHS, month, year)) {
+    console.log("cache hit");
+    return Promise.resolve(
+      DB_CACHE[userId][CACHE_TYPE.AUDIO_PATHS]![year][month].data,
+    );
+  }
+
   const recordings = await db
     .selectFrom("audiobook_recordings")
     .select("filePath")

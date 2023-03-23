@@ -1,6 +1,7 @@
 import Month from "@/components/Month.tsx";
 
 import DateChanger from "@/islands/DateChanger.tsx";
+import LoadAndPrepareAudio from "@/islands/LoadAndPrepareAudio.tsx";
 
 type ControlProps = {
   date: { month: number; year: number };
