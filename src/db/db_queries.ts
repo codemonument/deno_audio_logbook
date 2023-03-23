@@ -155,7 +155,7 @@ export async function getSavedRecordingTimestamps(
   writeCache(userId, CACHE_TYPE.RECORDINGS, recordings);
 
   // recordings = timestamps of saved recordings
-  return Promise.resolve(recordings);
+  return recordings;
 }
 
 export async function getAudioMetadataForMonth(
@@ -170,9 +170,7 @@ export async function getAudioMetadataForMonth(
 
   if (checkCache(userId, CACHE_TYPE.AUDIO_PATHS, month, year)) {
     console.log("cache hit");
-    return Promise.resolve(
-      DB_CACHE[userId][CACHE_TYPE.AUDIO_PATHS]![year][month].data,
-    );
+    return DB_CACHE[userId][CACHE_TYPE.AUDIO_PATHS]![year][month].data;
   }
 
   const recordings = await db
