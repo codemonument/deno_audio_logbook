@@ -18,6 +18,12 @@ export async function handler(
   const origin = new URL(req.url).origin;
   ctx.state.serverOrigin = origin;
 
+  // Do not alter requests to the telegram bot
+  if (new URL(req.url).pathname.startsWith("/bot")) {
+    console.log(`Bot Request, doing nothing in middleware`);
+    return ctx.next();
+  }
+
   // When in dev mode,
   // - get auth token from doppler secrets for local mocking, or
   // - get auth token from request header in anything other than dev mode
