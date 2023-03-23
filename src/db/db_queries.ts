@@ -41,7 +41,7 @@ export async function getSavedRecordingTimestamps(
     Date.now() - DB_CACHE.recordings[userId].unixTimestamp_fetched <
       INVALIDATE_TIME_5
   ) {
-    return Promise.resolve(DB_CACHE.recordings[userId].data);
+    return DB_CACHE.recordings[userId].data;
   }
 
   const recordings = await db
@@ -60,7 +60,7 @@ export async function getSavedRecordingTimestamps(
     data: recordings,
   };
   // recordings = timestamps of saved recordings
-  return Promise.resolve(recordings);
+  return recordings;
 }
 
 // TODO: Add a function to get the user session from the DB
