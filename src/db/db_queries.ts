@@ -138,7 +138,7 @@ export async function getSavedRecordingTimestamps(
 ): Promise<number[]> {
   if (checkCache(userId, CACHE_TYPE.RECORDINGS)) {
     console.log("cache hit");
-    return Promise.resolve(DB_CACHE[userId][CACHE_TYPE.RECORDINGS]!.data);
+    return DB_CACHE[userId][CACHE_TYPE.RECORDINGS]!.data;
   }
 
   const recordings = await db
@@ -196,7 +196,7 @@ export async function getAudioMetadataForMonth(
       )
     );
   // recordings = timestamps of saved recordings
-  return Promise.resolve(recordings);
+  return recordings;
 }
 
 // TODO: Add a function to get the user session from the DB

@@ -12,7 +12,7 @@ export type AudioEntries = {
   entries: number[];
 };
 
-type filteredEntries = {
+type FilteredEntries = {
   [year: number]: {
     [month: number]: number[];
   };
@@ -23,7 +23,8 @@ export default function AudioBacklogSidebar(
 ) {
   // filter them by month and year
   const filteredEntries = props.entries.reduce((acc, entry) => {
-    const date = new Date(entry * 1000); // Important: DB stores unix timestamp in seconds, but JS Date() expects milliseconds.
+    // Important: DB stores unix timestamp in seconds, but JS Date() expects milliseconds.
+    const date = new Date(entry * 1000);
     const month = date.getMonth();
     const year = date.getFullYear();
 
@@ -38,15 +39,17 @@ export default function AudioBacklogSidebar(
     acc[year][month].push(entry);
 
     return acc;
-  }, {} as filteredEntries);
+  }, {} as FilteredEntries);
 
   return (
     <div className="audioBacklogSidebar">
       {Object.keys(filteredEntries).map((year) => {
         const yearInt = parseInt(year);
         return (
+          // Year UL
           <ul>
             <li>{year}</li>
+            {/* MOTH UL */}
             <ul>
               {Object.keys(filteredEntries[yearInt]).map((month) => {
                 const monthInt = parseInt(month);
