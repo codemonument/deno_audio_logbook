@@ -20,7 +20,7 @@ export async function handler(
 
   // Do not alter requests to the telegram bot
   if (new URL(req.url).pathname.startsWith("/bot")) {
-    console.log(`Bot Request, doing nothing in middleware`);
+    // console.debug(`Bot Request, doing nothing in middleware`);
     return ctx.next();
   }
 
