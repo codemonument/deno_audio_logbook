@@ -6,6 +6,8 @@ import { log } from "axiom";
 import { isUserAuthorized } from "./is-user-authorized.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { invalidateCache } from "@/src/db/db_queries.ts";
+import { UserSession } from "@/src/db/db_schema.ts";
+import { CACHE_TYPE } from "@/src/const/server_constants.ts";
 
 // Create bot object
 /*console.debug(
@@ -120,7 +122,10 @@ async function initBot() {
     }
 
     // invalidate recordings cache for this user
-    invalidateCache("recordings", userIDSender);
+    invalidateCache(userIDSender, CACHE_TYPE.RECORDINGS);
+
+    // invalidate audio paths cache for this user
+    invalidateCache(userIDSender, CACHE_TYPE.AUDIO_PATHS);
 
     ctx.reply(reply);
   });

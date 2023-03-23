@@ -25,7 +25,7 @@ export type AudioRecording = {
   mimeType: string;
 
   /**
-   * From Telegram Message
+   * From Telegram Message, important: in seconds!
    */
   unixTimestamp: number;
 };
