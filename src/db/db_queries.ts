@@ -11,7 +11,7 @@ const INVALIDATE_TIME_10 = 1000 * 60 * 10;
 enum CACHE_TYPE {
   SESSION = "session",
   RECORDINGS = "recordings",
-  AUDIO_PATHS = "audioPaths",
+  AUDIO_META = "audioPaths",
 }
 
 type recordings = {
@@ -26,16 +26,16 @@ type session = {
   data: UserSession;
 };
 
-type audioPathsMonth = {
+type audioMetaMonth = {
   unixTimestamp_fetched: unixTimestamp_ms;
-  data: path[];
+  data: Awaited<ReturnType<typeof queryAudioMeta>>;
 };
 
 type path = string;
 
-type audioPaths = {
+type audioMeta = {
   [key: year]: {
-    [key: month]: audioPathsMonth;
+    [key: month]: audioMetaMonth;
   };
 };
 
@@ -47,7 +47,7 @@ type DB_CACHE = {
   [key: userId]: {
     [CACHE_TYPE.SESSION]?: session;
     [CACHE_TYPE.RECORDINGS]?: recordings;
-    [CACHE_TYPE.AUDIO_PATHS]?: audioPaths;
+    [CACHE_TYPE.AUDIO_META]?: audioMeta;
   };
 };
 
@@ -59,7 +59,7 @@ function checkCache(
   month?: month,
   year?: year,
 ) {
-  if (cacheType === CACHE_TYPE.AUDIO_PATHS) {
+  if (cacheType === CACHE_TYPE.AUDIO_META) {
     if (!month || !year) {
       throw new Error(
         "month and year must be defined for CACHE_TYPE.AUDIO_PATHS",
@@ -68,11 +68,11 @@ function checkCache(
     if (
       // somehow Typescript needs the ! after the [CACHE_TYPE.AUDIO_PATHS], otherwise it thinks it's undefined even after checking it
       DB_CACHE[userId] &&
-      DB_CACHE[userId][CACHE_TYPE.AUDIO_PATHS] &&
-      DB_CACHE[userId][CACHE_TYPE.AUDIO_PATHS]![year] &&
-      DB_CACHE[userId][CACHE_TYPE.AUDIO_PATHS]![year][month] &&
+      DB_CACHE[userId][CACHE_TYPE.AUDIO_META] &&
+      DB_CACHE[userId][CACHE_TYPE.AUDIO_META]![year] &&
+      DB_CACHE[userId][CACHE_TYPE.AUDIO_META]![year][month] &&
       Date.now() -
-            DB_CACHE[userId][CACHE_TYPE.AUDIO_PATHS]![year][month]
+            DB_CACHE[userId][CACHE_TYPE.AUDIO_META]![year][month]
               .unixTimestamp_fetched <
         INVALIDATE_TIME_5
     ) {
@@ -95,7 +95,7 @@ function checkCache(
 function writeCache(
   userId: userId,
   cacheType: CACHE_TYPE,
-  data: path[] | UserSession | unixTimestamp_s[],
+  data: audioMeta[] | UserSession | unixTimestamp_s[],
 ) {
   DB_CACHE[userId] = {
     ...DB_CACHE[userId],
@@ -123,7 +123,7 @@ export function invalidateCache(
       };
 
       break;
-    case CACHE_TYPE.AUDIO_PATHS:
+    case CACHE_TYPE.AUDIO_META:
       break;
       //
 
@@ -162,17 +162,24 @@ export async function getSavedRecordingTimestamps(
 export async function getAudioMetadataForMonth(
   userId: number,
   date: LogbookDate,
-): Promise<string[]> {
-  const {month, year} = date;
+) {
+  const { month, year } = date;
 
-  if (checkCache(userId, CACHE_TYPE.AUDIO_PATHS, month, year)) {
-    console.log("cache hit");
-    return DB_CACHE[userId][CACHE_TYPE.AUDIO_PATHS]![year][month].data;
+  if (checkCache(userId, CACHE_TYPE.AUDIO_META, month, year)) {
+    console.log(`cache hit for ${CACHE_TYPE.AUDIO_META}`);
+    return DB_CACHE[userId][CACHE_TYPE.AUDIO_META]![year][month].data;
   }
 
+  const recordings = await queryAudioMeta(userId, year, month);
+  writeCache(userId, CACHE_TYPE.AUDIO_META, recordings);
+
+  return recordings;
+}
+
+async function queryAudioMeta(userId: number, year: number, month: number) {
   const recordings = await db
     .selectFrom("audiobook_recordings")
-    .select("filePath")
+    .select(["filePath", "unixTimestamp"])
     .where("userId", "=", userId)
     .where(
       "unixTimestamp",
@@ -184,12 +191,7 @@ export async function getAudioMetadataForMonth(
       "<",
       Math.floor(new Date(year, month + 1, 1).getTime() / 1000),
     )
-    .execute()
-    .then((res) =>
-      res.map(
-        (r) => r.filePath,
-      )
-    );
+    .execute();
   // recordings = timestamps of saved recordings
   return recordings;
 }
