@@ -40,7 +40,7 @@ export const handler: Handlers<unknown, ContextState> = {
     // DB Queries
     // Query all entries for user for the sidebar
 
-    const entries = await getSavedRecordingTimestamps(user.userId);
+    const entries = await getSavedRecordingTimestamps(user.userId, "");
 
     // TODO: Query audio files for the selected month
 
