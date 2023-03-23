@@ -8,26 +8,30 @@ import { getAudioMetadataForMonth } from "@/src/db/db_queries.ts";
 
 // components for the page
 import Control from "@/components/Control.tsx";
+import type { Audio } from "@/components/Day.tsx";
 import Layout from "@/components/Layout.tsx";
 
 import { gotoInternal } from "@/src/utils/redirects.ts";
 import AudioBacklogSidebar from "@/components/AudioBacklogSidebar.tsx";
 import LoadSidebar from "@/islands/LoadSidebar.tsx";
+import { s3Promise } from "@/src/s3/s3.ts";
 
 type HomeProps = PageProps<
   {
     user: UserSession;
     date: LogbookDate;
-    entries: { unixTimestamp: number }[];
+    monthAudios: Audio[];
   }
 >;
+
+const s3 = await s3Promise;
 
 /**
  * @requires ctx.state.user => The user session, resolved by the _middleware.ts file
  */
 export const handler: Handlers<unknown, ContextState> = {
   async GET(_req, ctx) {
-    // Parse correct year and month params from url 
+    // Parse correct year and month params from url
     const { year, month } = ctx.params;
     const parsedDate = LogbookDate.safeParse({ month, year });
     const user = ctx.state.user;
@@ -42,10 +46,23 @@ export const handler: Handlers<unknown, ContextState> = {
     // const entries = await getSavedRecordingTimestamps(user.userId, "");
 
     // TODO: Query audio files for the selected month
-    const monthAudios = getAudioMetadataForMonth(user.userId, parsedDate.data)
+    const monthAudiosMeta = await getAudioMetadataForMonth(
+      user.userId,
+      parsedDate.data,
+    );
+
+    const monthAudiosPromises = monthAudiosMeta.map(async (audioMeta) => {
+      const presignedUrl = await s3.getPresignedUrl("GET", audioMeta.filePath);
+      return {
+        ...audioMeta,
+        url: presignedUrl,
+      };
+    });
+
+    const monthAudios = await Promise.all(monthAudiosPromises);
 
     // Render calendar with audio and user objects
-    return ctx.render({ user, date: parsedDate.data });
+    return ctx.render({ user, date: parsedDate.data, monthAudios });
   },
 };
 
@@ -53,7 +70,7 @@ export default function Home({ data }: HomeProps) {
   return (
     <Layout user={data.user}>
       <LoadSidebar />
-      <Control date={data.date} />
+      <Control date={data.date} audios={data.monthAudios} />
     </Layout>
   );
 }

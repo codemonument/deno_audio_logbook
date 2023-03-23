@@ -2,6 +2,8 @@
 
 import Audio from "@/islands/Audio.tsx";
 
+export type Audio = { unixTimestamp: number; url: string; filePath: string };
+
 // mock data TMP
 const audio = [
   {
@@ -16,8 +18,10 @@ const audio = [
   },
 ];
 
-export default function Day(props: { day: number }) {
+export default function Day(props: { day: number; audios?: Audio[] }) {
   // Save State for audio shown / loaded
+
+  // TODO: @Bloodiko Finish audio rendering
 
   return (
     <div className="day">
