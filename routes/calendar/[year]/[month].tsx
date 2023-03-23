@@ -4,7 +4,7 @@ import { UserSession } from "@/src/db/db_schema.ts";
 import { LogbookDate } from "@/src/calendar/LogbookDate.ts";
 import { ContextState } from "@/src/context_state.ts";
 
-import { getSavedRecordingTimestamps } from "@/src/db/db_queries.ts";
+import { getAudioMetadataForMonth } from "@/src/db/db_queries.ts";
 
 // components for the page
 import Control from "@/components/Control.tsx";
@@ -27,7 +27,7 @@ type HomeProps = PageProps<
  */
 export const handler: Handlers<unknown, ContextState> = {
   async GET(_req, ctx) {
-    // Parse correct year and month params from url
+    // Parse correct year and month params from url 
     const { year, month } = ctx.params;
     const parsedDate = LogbookDate.safeParse({ month, year });
     const user = ctx.state.user;
@@ -38,14 +38,14 @@ export const handler: Handlers<unknown, ContextState> = {
     }
 
     // DB Queries
-    // Query all entries for user for the sidebar
-
-    const entries = await getSavedRecordingTimestamps(user.userId, "");
+    // Query all entries for user for the sidebar (WIP, currently using an api endpoint)
+    // const entries = await getSavedRecordingTimestamps(user.userId, "");
 
     // TODO: Query audio files for the selected month
+    const monthAudios = getAudioMetadataForMonth(user.userId, parsedDate.data)
 
     // Render calendar with audio and user objects
-    return ctx.render({ user, date: parsedDate.data, entries });
+    return ctx.render({ user, date: parsedDate.data });
   },
 };
 

@@ -13,7 +13,6 @@ type FetchDataMap = {
 
 const FetchData: FetchDataMap = {
   sidebar: getSavedRecordingTimestamps,
-  files: getAudioMetadataForMonth,
 };
 
 export const handler: Handlers<unknown, ContextState> = {

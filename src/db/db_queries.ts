@@ -1,5 +1,6 @@
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
+import { LogbookDate } from "../calendar/LogbookDate.ts";
 
 const db = await dbPromise;
 
@@ -160,13 +161,9 @@ export async function getSavedRecordingTimestamps(
 
 export async function getAudioMetadataForMonth(
   userId: number,
-  params: string,
+  date: LogbookDate,
 ): Promise<string[]> {
-  const { year, month } = JSON.parse(params);
-
-  if (!year || !month) {
-    throw new Error("year and month must be defined");
-  }
+  const {month, year} = date;
 
   if (checkCache(userId, CACHE_TYPE.AUDIO_PATHS, month, year)) {
     console.log("cache hit");
