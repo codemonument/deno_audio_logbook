@@ -25,7 +25,8 @@
     "preact-render-to-string": "https://esm.sh/v110/*preact-render-to-string@5.2.6",
     "preact-render-to-string/": "https://esm.sh/v110/*preact-render-to-string@5.2.6/",
     "preact": "https://esm.sh/v110/preact@10.11.3",
-    "preact/": "https://esm.sh/v110/preact@10.11.3/"
+    "preact/": "https://esm.sh/v110/preact@10.11.3/",
+    "optionals": "https://deno.land/x/optionals@v3.0.0/mod.ts"
   },
   "scopes": {
     "https://esm.sh/v110/": {
