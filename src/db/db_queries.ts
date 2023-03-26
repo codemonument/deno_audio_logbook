@@ -1,4 +1,6 @@
 import { dbPromise } from "@/src/db/db.ts";
+import { None, Option, Some } from "optionals";
+import { UserSession } from "./db_schema.ts";
 
 const db = await dbPromise;
 
@@ -63,4 +65,24 @@ export async function getSavedRecordingTimestamps(
   return recordings;
 }
 
-// TODO: Add a function to get the user session from the DB
+// a function to get the user session from the DB
+export async function getUserSession(
+  accessToken: string,
+): Promise<Option<UserSession>> {
+  const db = await dbPromise;
+  const maybeUserQuery = db
+    .selectFrom("audiobook_sessions")
+    .selectAll()
+    .where(
+      "hash",
+      "=",
+      accessToken,
+    );
+  const maybeUser = await maybeUserQuery.executeTakeFirst();
+  const userParse = UserSession.safeParse(maybeUser);
+
+  if (userParse.success) {
+    return Some(userParse.data);
+  }
+  return None();
+}
