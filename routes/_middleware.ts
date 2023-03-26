@@ -18,11 +18,22 @@ export async function handler(
   const origin = new URL(req.url).origin;
   ctx.state.serverOrigin = origin;
 
+  // ----------------------------------------
+  // Handle special requests
+
   // Do not alter requests to the telegram bot
   if (new URL(req.url).pathname.startsWith("/bot")) {
     // console.debug(`Bot Request, doing nothing in middleware`);
     return ctx.next();
   }
+
+  // If user is on the login page, do not redirect to login (bc.this would be endless loop)
+  if (new URL(req.url).pathname.startsWith(`/auth/login`)) {
+    return ctx.next();
+  }
+
+  // Special requests end here
+  // ----------------------------------------
 
   // When in dev mode,
   // - get auth token from doppler secrets for local mocking, or
@@ -47,11 +58,6 @@ export async function handler(
       );
     const maybeUser = await maybeUserQuery.executeTakeFirst();
     const userParse = UserSession.safeParse(maybeUser);
-
-    // If user is on the login page, do not redirect to login (bc.this would be endless loop)
-    if (new URL(req.url).pathname.startsWith(`/auth/login`)) {
-      return ctx.next();
-    }
 
     // Redirect to login page when UserSession is not available
     if (!userParse.success) {
