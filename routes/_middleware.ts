@@ -33,7 +33,7 @@ export async function handler(
   const maybeAccessToken =
     (secrets.get("ENV_NAME") === "dev" || url.host.includes(DEPLOYMENT_ID))
       ? secrets.get("MOCK_AUTH_TOKEN")
-      : getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME];
+      : getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME]; //return undefined if no cookie is set
 
   if (maybeAccessToken) {
     const db = await dbPromise;
@@ -53,7 +53,7 @@ export async function handler(
       return ctx.next();
     }
 
-    // Redirect to login page when no UserSession is not available
+    // Redirect to login page when UserSession is not available
     if (!userParse.success) {
       return gotoLogin();
     }
@@ -62,4 +62,7 @@ export async function handler(
     ctx.state.user = userParse.data;
     return ctx.next();
   }
+
+  // Redirect to login page when Auth Cookie is not available
+  return gotoLogin();
 }
