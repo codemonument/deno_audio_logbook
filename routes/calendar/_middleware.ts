@@ -22,7 +22,4 @@ export async function handler(
   // Happy Path to the normal App
   ctx.state.user = userSession.unwrap();
   return ctx.next();
-
-  // Redirect to login page when Auth Cookie is not available
-  return gotoLogin();
 }
