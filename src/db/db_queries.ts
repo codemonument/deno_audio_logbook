@@ -140,7 +140,7 @@ function writeCache({ userId, cacheType, data }: writeCacheParams) {
   }
 
   if (!DB_CACHE[userId][cacheType]) {
-    DB_CACHE[userId][cacheType] = {} as any;
+    DB_CACHE[userId][cacheType] = {} as any; // FIXME: dunno how it can be made properly typed
   }
 
   if (cacheType === CACHE_TYPE.AUDIO_META) {
