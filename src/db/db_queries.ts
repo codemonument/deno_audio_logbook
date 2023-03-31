@@ -12,7 +12,7 @@ const INVALIDATE_TIME_10 = 1000 * 60 * 10;
 enum CACHE_TYPE {
   SESSION = "session",
   RECORDINGS = "recordings",
-  AUDIO_META = "audioPaths",
+  AUDIO_META = "audioMeta",
 }
 
 type recordings = {
@@ -31,8 +31,6 @@ type audioMetaMonth = {
   unixTimestamp_fetched: unixTimestamp_ms;
   data: Awaited<ReturnType<typeof queryAudioMeta>>;
 };
-
-type path = string;
 
 type audioMeta = {
   [key: year]: {
@@ -80,7 +78,7 @@ function checkCache(
   if (cacheType === CACHE_TYPE.AUDIO_META) {
     if (!month || !year) {
       throw new Error(
-        "month and year must be defined for CACHE_TYPE.AUDIO_PATHS",
+        "month and year must be defined for CACHE_TYPE.AUDIO_META",
       );
     }
     if (
@@ -113,11 +111,52 @@ function checkCache(
   return false;
 }
 
-function writeCache(
-  userId: userId,
-  cacheType: CACHE_TYPE,
-  data: audioMeta[] | UserSession | unixTimestamp_s[],
-) {
+type writeCacheParams_Session = {
+  userId: userId;
+  cacheType: CACHE_TYPE.SESSION;
+  data: UserSession;
+};
+
+type writeCacheParams_Recordings = {
+  userId: userId;
+  cacheType: CACHE_TYPE.RECORDINGS;
+  data: unixTimestamp_s[];
+};
+
+type writeCacheParams_AudioMeta = {
+  userId: userId;
+  cacheType: CACHE_TYPE.AUDIO_META;
+  data: audioMeta;
+};
+
+type writeCacheParams =
+  | writeCacheParams_Session
+  | writeCacheParams_Recordings
+  | writeCacheParams_AudioMeta;
+
+function writeCache({ userId, cacheType, data }: writeCacheParams) {
+  if (!DB_CACHE[userId]) {
+    DB_CACHE[userId] = {};
+  }
+
+  if (!DB_CACHE[userId][cacheType]) {
+    DB_CACHE[userId][cacheType] = {} as any;
+  }
+
+  if (cacheType === CACHE_TYPE.AUDIO_META) {
+    const year = parseInt(Object.keys(data)[0]);
+    const month = parseInt(Object.keys(data[year])[0]);
+
+    if (!DB_CACHE[userId][cacheType]![year]) {
+      DB_CACHE[userId][cacheType]![year] = {};
+    }
+
+    DB_CACHE[userId][cacheType]![year] = {
+      ...DB_CACHE[userId][cacheType]![year],
+      [month]: data[year][month],
+    };
+  }
+
   DB_CACHE[userId] = {
     ...DB_CACHE[userId],
     [cacheType]: {
@@ -159,7 +198,7 @@ export async function getSavedRecordingTimestamps(
   _params: string,
 ): Promise<number[]> {
   if (checkCache(userId, CACHE_TYPE.RECORDINGS)) {
-    console.log("cache hit");
+    console.log("cache hit for recordings");
     return DB_CACHE[userId][CACHE_TYPE.RECORDINGS]!.data;
   }
 
@@ -174,7 +213,7 @@ export async function getSavedRecordingTimestamps(
       )
     );
 
-  writeCache(userId, CACHE_TYPE.RECORDINGS, recordings);
+  writeCache({ userId, cacheType: CACHE_TYPE.RECORDINGS, data: recordings });
 
   // recordings = timestamps of saved recordings
   return recordings;
@@ -191,10 +230,18 @@ export async function getAudioMetadataForMonth(
     return DB_CACHE[userId][CACHE_TYPE.AUDIO_META]![year][month].data;
   }
 
-  const recordings = await queryAudioMeta(userId, year, month);
-  writeCache(userId, CACHE_TYPE.AUDIO_META, recordings);
+  const fileMeta = await queryAudioMeta(userId, year, month);
+  const audioMeta = {
+    [year]: {
+      [month]: {
+        unixTimestamp_fetched: Date.now(),
+        data: fileMeta,
+      },
+    },
+  };
+  writeCache({ userId, cacheType: CACHE_TYPE.AUDIO_META, data: audioMeta });
 
-  return recordings;
+  return fileMeta;
 }
 
 async function queryAudioMeta(userId: number, year: number, month: number) {
@@ -230,7 +277,7 @@ export async function getUserSession(
   ) {
     const userId = TOKEN_USERID[accessToken].userId;
     if (checkCache(userId, CACHE_TYPE.SESSION)) {
-      console.log("cache hit");
+      console.log("cache hit SESSION");
       return Some(DB_CACHE[userId][CACHE_TYPE.SESSION]!.data);
     }
   }
@@ -248,7 +295,11 @@ export async function getUserSession(
   const userParse = UserSession.safeParse(maybeUser);
 
   if (userParse.success) {
-    writeCache(userParse.data.userId, CACHE_TYPE.SESSION, userParse.data);
+    writeCache({
+      userId: userParse.data.userId,
+      cacheType: CACHE_TYPE.SESSION,
+      data: userParse.data,
+    });
     TOKEN_USERID[accessToken] = {
       userId: userParse.data.userId,
       unixTimestamp_fetched: Date.now(),
