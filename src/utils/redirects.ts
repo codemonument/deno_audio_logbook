@@ -23,7 +23,7 @@ export function gotoCalendar() {
   const currentMonth = MONTH_NUMBER_STRING[new Date().getMonth()];
   const currentYear = new Date().getFullYear().toString();
 
-  return gotoInternal(`/calendar/${currentYear}/${currentMonth}`);
+  return gotoInternal(`/userarea/calendar/${currentYear}/${currentMonth}`);
 }
 
 export function gotoLogin() {

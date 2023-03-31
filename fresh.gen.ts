@@ -3,15 +3,15 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" };
-import * as $0 from "./routes/api/fetchData.tsx";
-import * as $1 from "./routes/auth/callback.tsx";
-import * as $2 from "./routes/auth/login.tsx";
-import * as $3 from "./routes/bot/[...path].ts";
-import * as $4 from "./routes/calendar/[year]/[month].tsx";
-import * as $5 from "./routes/calendar/_middleware.ts";
-import * as $6 from "./routes/errors/date-parsing.tsx";
-import * as $7 from "./routes/index.tsx";
-import * as $8 from "./routes/postcss/[...path].ts";
+import * as $0 from "./routes/auth/callback.tsx";
+import * as $1 from "./routes/auth/login.tsx";
+import * as $2 from "./routes/bot/[...path].ts";
+import * as $3 from "./routes/errors/date-parsing.tsx";
+import * as $4 from "./routes/index.tsx";
+import * as $5 from "./routes/postcss/[...path].ts";
+import * as $6 from "./routes/userarea/_middleware.ts";
+import * as $7 from "./routes/userarea/api/fetchData.tsx";
+import * as $8 from "./routes/userarea/calendar/[year]/[month].tsx";
 import * as $$0 from "./islands/Audio.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/DateChanger.tsx";
@@ -21,15 +21,15 @@ import * as $$5 from "./islands/ThemeSwitcher.tsx";
 
 const manifest = {
   routes: {
-    "./routes/api/fetchData.tsx": $0,
-    "./routes/auth/callback.tsx": $1,
-    "./routes/auth/login.tsx": $2,
-    "./routes/bot/[...path].ts": $3,
-    "./routes/calendar/[year]/[month].tsx": $4,
-    "./routes/calendar/_middleware.ts": $5,
-    "./routes/errors/date-parsing.tsx": $6,
-    "./routes/index.tsx": $7,
-    "./routes/postcss/[...path].ts": $8,
+    "./routes/auth/callback.tsx": $0,
+    "./routes/auth/login.tsx": $1,
+    "./routes/bot/[...path].ts": $2,
+    "./routes/errors/date-parsing.tsx": $3,
+    "./routes/index.tsx": $4,
+    "./routes/postcss/[...path].ts": $5,
+    "./routes/userarea/_middleware.ts": $6,
+    "./routes/userarea/api/fetchData.tsx": $7,
+    "./routes/userarea/calendar/[year]/[month].tsx": $8,
   },
   islands: {
     "./islands/Audio.tsx": $$0,

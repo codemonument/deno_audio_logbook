@@ -56,7 +56,7 @@ export default function AudioBacklogSidebar(
                 return (
                   <li>
                     <a
-                      href={`/calendar/${year}/${
+                      href={`/userarea/calendar/${year}/${
                         MONTH_NUMBER_STRING[monthInt]
                       }`}
                     >
