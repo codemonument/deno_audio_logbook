@@ -1,6 +1,7 @@
 import { dbPromise } from "@/src/db/db.ts";
-import { UserSession } from "@/src/db/db_schema.ts";
-import { LogbookDate } from "../calendar/LogbookDate.ts";
+import { None, Option, Some } from "optionals";
+import { UserSession } from "./db_schema.ts";
+import { LogbookDate } from "@/src/calendar/LogbookDate.ts";
 
 const db = await dbPromise;
 
@@ -196,4 +197,24 @@ async function queryAudioMeta(userId: number, year: number, month: number) {
   return recordings;
 }
 
-// TODO: Add a function to get the user session from the DB
+// a function to get the user session from the DB
+export async function getUserSession(
+  accessToken: string,
+): Promise<Option<UserSession>> {
+  const db = await dbPromise;
+  const maybeUserQuery = db
+    .selectFrom("audiobook_sessions")
+    .selectAll()
+    .where(
+      "hash",
+      "=",
+      accessToken,
+    );
+  const maybeUser = await maybeUserQuery.executeTakeFirst();
+  const userParse = UserSession.safeParse(maybeUser);
+
+  if (userParse.success) {
+    return Some(userParse.data);
+  }
+  return None();
+}
