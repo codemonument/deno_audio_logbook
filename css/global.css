@@ -193,7 +193,7 @@ footer {
     width: 400px;
     height: 300px;
     margin: 0 auto;
-    background: var(--gray-0);
+    background: white;
     border-radius: var(--radius-3);
 
     /* Animation */
