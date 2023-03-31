@@ -46,13 +46,30 @@ type month = number;
 
 type DB_CACHE = {
   [key: userId]: {
-    [CACHE_TYPE.SESSION]?: session;
+    [CACHE_TYPE.SESSION]?: session; // contains the full user session object
     [CACHE_TYPE.RECORDINGS]?: recordings;
     [CACHE_TYPE.AUDIO_META]?: audioMeta;
   };
 };
 
+type accessToken = string;
+type reverseMatchTokenToUserId = {
+  [key: accessToken]: {
+    userId: userId;
+    unixTimestamp_fetched: unixTimestamp_ms;
+  };
+};
+
 const DB_CACHE: DB_CACHE = {};
+
+const TOKEN_USERID: reverseMatchTokenToUserId = {};
+
+function isInvalid(
+  unixTimestamp_fetched: unixTimestamp_ms,
+  invalidateTime: number,
+) {
+  return Date.now() - unixTimestamp_fetched > invalidateTime;
+}
 
 function checkCache(
   userId: userId,
@@ -72,10 +89,11 @@ function checkCache(
       DB_CACHE[userId][CACHE_TYPE.AUDIO_META] &&
       DB_CACHE[userId][CACHE_TYPE.AUDIO_META]![year] &&
       DB_CACHE[userId][CACHE_TYPE.AUDIO_META]![year][month] &&
-      Date.now() -
-            DB_CACHE[userId][CACHE_TYPE.AUDIO_META]![year][month]
-              .unixTimestamp_fetched <
-        INVALIDATE_TIME_5
+      !isInvalid(
+        DB_CACHE[userId][CACHE_TYPE.AUDIO_META]![year][month]!
+          .unixTimestamp_fetched,
+        INVALIDATE_TIME_5,
+      )
     ) {
       return true;
     }
@@ -85,8 +103,10 @@ function checkCache(
   if (
     DB_CACHE[userId] &&
     DB_CACHE[userId][cacheType] &&
-    Date.now() - DB_CACHE[userId][cacheType]!.unixTimestamp_fetched <
-      INVALIDATE_TIME_5
+    !isInvalid(
+      DB_CACHE[userId][cacheType]!.unixTimestamp_fetched,
+      INVALIDATE_TIME_5,
+    )
   ) {
     return true;
   }
@@ -201,6 +221,20 @@ async function queryAudioMeta(userId: number, year: number, month: number) {
 export async function getUserSession(
   accessToken: string,
 ): Promise<Option<UserSession>> {
+  if (
+    TOKEN_USERID[accessToken] &&
+    !isInvalid(
+      TOKEN_USERID[accessToken].unixTimestamp_fetched,
+      INVALIDATE_TIME_1,
+    )
+  ) {
+    const userId = TOKEN_USERID[accessToken].userId;
+    if (checkCache(userId, CACHE_TYPE.SESSION)) {
+      console.log("cache hit");
+      return Some(DB_CACHE[userId][CACHE_TYPE.SESSION]!.data);
+    }
+  }
+
   const db = await dbPromise;
   const maybeUserQuery = db
     .selectFrom("audiobook_sessions")
@@ -214,6 +248,11 @@ export async function getUserSession(
   const userParse = UserSession.safeParse(maybeUser);
 
   if (userParse.success) {
+    writeCache(userParse.data.userId, CACHE_TYPE.SESSION, userParse.data);
+    TOKEN_USERID[accessToken] = {
+      userId: userParse.data.userId,
+      unixTimestamp_fetched: Date.now(),
+    };
     return Some(userParse.data);
   }
   return None();
