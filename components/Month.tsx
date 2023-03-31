@@ -1,6 +1,10 @@
 import Day from "@/components/Day.tsx";
 import type { Audio } from "@/components/Day.tsx";
 
+type AudioDayMap = {
+  [day: number]: Audio[];
+};
+
 export default function Month(
   props: { month: number; year: number; audios: Audio[] },
 ) {
@@ -11,6 +15,16 @@ export default function Month(
 
   // TODO: Map Audios to <Day>s @Bloodiko
   // Array<Tag des Monats 0-30, Audio[]>
+  const audioDayMap: AudioDayMap = {};
+
+  props.audios.forEach((audio) => {
+    const day = new Date(audio.unixTimestamp * 1000).getDate();
+    if (!audioDayMap[day]) {
+      audioDayMap[day] = [];
+    }
+
+    audioDayMap[day].push(audio);
+  });
 
   return (
     <table>
@@ -39,7 +53,7 @@ export default function Month(
                       return (
                         <td>
                           {day > 0 && day <= daysInMonth
-                            ? <Day day={day} />
+                            ? <Day day={day} audios={audioDayMap[day]} />
                             : <span></span>}
                         </td>
                       );
