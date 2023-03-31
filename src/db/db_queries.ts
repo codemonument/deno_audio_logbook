@@ -155,6 +155,7 @@ function writeCache({ userId, cacheType, data }: writeCacheParams) {
       ...DB_CACHE[userId][cacheType]![year],
       [month]: data[year][month],
     };
+    return;
   }
 
   DB_CACHE[userId] = {
