@@ -245,7 +245,7 @@ export async function getAudioMetadataForMonth(
 }
 
 async function queryAudioMeta(userId: number, year: number, month: number) {
-  const recordings = await db
+  const audioMeta = await db
     .selectFrom("audiobook_recordings")
     .select(["filePath", "unixTimestamp"])
     .where("userId", "=", userId)
@@ -260,8 +260,8 @@ async function queryAudioMeta(userId: number, year: number, month: number) {
       Math.floor(new Date(year, month + 1, 1).getTime() / 1000),
     )
     .execute();
-  // recordings = timestamps of saved recordings
-  return recordings;
+
+  return audioMeta;
 }
 
 // a function to get the user session from the DB
