@@ -120,6 +120,7 @@ a:visited {
 .day {
     display: inline-block;
     width: max-content;
+    min-width: 10em;
     aspect-ratio: 1 / 1;
     border: 1px solid var(--gray-9);
     font-size: var(--font-size-0);
