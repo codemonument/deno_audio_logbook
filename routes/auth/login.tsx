@@ -4,7 +4,6 @@ import TelegramLogin from "../../islands/TelegramLogin.tsx";
 import { secretsPromise } from "@/src/utils/secrets.ts";
 
 const secrets = await secretsPromise;
-//add_preview_bot_environment
 export async function handler(
   req: Request,
   ctx: HandlerContext,
