@@ -29,6 +29,7 @@ export async function handler(
 export default function Login(props: PageProps<{ telegramBotUser: string }>) {
   return (
     <Layout h1Override="Audio Logbook - Login">
+      <h2>Test</h2>
       <div style="margin: 0 auto; width: min-content; ">
         <script
           async
