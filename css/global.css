@@ -201,6 +201,7 @@ footer {
         var(--animation-fade-in-bloom),
         var(--animation-slide-in-down);
     animation-timing-function: var(--ease-squish-3);
-    animation-duration: 0.15s;
+    animation-duration: 0.55s;
 
+    overflow: hidden;
 }
