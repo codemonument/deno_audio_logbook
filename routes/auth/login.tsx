@@ -1,9 +1,10 @@
-import { HandlerContext, Handlers } from "$fresh/server.ts";
-import { Head } from "$fresh/runtime.ts";
-import { DEPLOYMENT_ID } from "@/src/const/server_constants.ts";
+import { HandlerContext, PageProps } from "$fresh/server.ts";
 import Layout from "@/components/Layout.tsx";
 import TelegramLogin from "../../islands/TelegramLogin.tsx";
+import { secretsPromise } from "@/src/utils/secrets.ts";
 
+const secrets = await secretsPromise;
+//add_preview_bot_environment
 export async function handler(
   req: Request,
   ctx: HandlerContext,
@@ -21,13 +22,15 @@ export async function handler(
   //     }
   //   }
 
-  return await ctx.render();
+  return await ctx.render({
+    telegramBotUser: secrets.get("TELEGRAM_BOT_USER"),
+  });
 }
 
-export default function Login() {
+export default function Login(props: PageProps<{ telegramBotUser: string }>) {
   return (
     <Layout h1Override="Audio Logbook - Login">
-      <TelegramLogin></TelegramLogin>
+      <TelegramLogin telegramBotUser={props.data.telegramBotUser} />
     </Layout>
   );
 }

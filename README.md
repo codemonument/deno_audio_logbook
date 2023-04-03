@@ -18,6 +18,15 @@ deno task start
 
 This will watch the project directory and restart as necessary.
 
+### Deploy to Preview 
+
+1. Make changes in some branch 
+2. Run `deno task deploy-preview` to push changes to the preview system 
+3. Find the changes here: [https://deno-audio-logbook-preview.deno.dev/auth/login](https://deno-audio-logbook-preview.deno.dev/auth/login)
+
+Note: This Preview system is mostly intendend to test stuff related to the telegram bot functions, 
+because it has a second bot attached to it's url, named: audio_logbook_preview_bot
+
 ### Connect to DB locally 
 
 Prerequisites: 
@@ -49,7 +58,10 @@ Now you can connect to `localhost:3306` with user root and no password with any 
 ## Infrastructure 
 
 - Dev Environment: http://localhost:8000/
-- Prod Environemtn: https://deno-audio-logbook.deno.dev/
+- Prod Environment: https://deno-audio-logbook.deno.dev/
+- Prod Telegram Bot Name: audio_logbook_bot
+- Explicit Preview Environment: https://deno-audio-logbook-preview.deno.dev/auth/login
+- Explicit Preview Telegram Bot Name: audio_logbook_preview_bot
 
 
 - Deno Deploy Dashboard: https://dash.deno.com/projects/deno-audio-logbook
