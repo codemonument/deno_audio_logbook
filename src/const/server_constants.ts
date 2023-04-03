@@ -7,5 +7,5 @@ export const IS_SERVER = Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined;
 export enum CACHE_TYPE {
   SESSION = "session",
   RECORDINGS = "recordings",
-  AUDIO_PATHS = "audioPaths",
+  AUDIO_META = "audioMeta",
 }

@@ -2,18 +2,13 @@ import { dbPromise } from "@/src/db/db.ts";
 import { None, Option, Some } from "optionals";
 import { UserSession } from "./db_schema.ts";
 import { LogbookDate } from "@/src/calendar/LogbookDate.ts";
+import { CACHE_TYPE } from "@/src/const/server_constants.ts";
 
 const db = await dbPromise;
 
 const INVALIDATE_TIME_5 = 1000 * 60 * 5;
 const INVALIDATE_TIME_1 = 1000 * 60 * 1;
 const INVALIDATE_TIME_10 = 1000 * 60 * 10;
-
-enum CACHE_TYPE {
-  SESSION = "session",
-  RECORDINGS = "recordings",
-  AUDIO_META = "audioMeta",
-}
 
 type recordings = {
   unixTimestamp_fetched: unixTimestamp_ms;

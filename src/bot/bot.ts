@@ -125,7 +125,7 @@ async function initBot() {
     invalidateCache(userIDSender, CACHE_TYPE.RECORDINGS);
 
     // invalidate audio paths cache for this user
-    invalidateCache(userIDSender, CACHE_TYPE.AUDIO_PATHS);
+    invalidateCache(userIDSender, CACHE_TYPE.AUDIO_META);
 
     ctx.reply(reply);
   });
