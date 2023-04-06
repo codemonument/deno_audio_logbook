@@ -7,11 +7,13 @@ import { isUserAuthorized } from "./is-user-authorized.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { invalidateCache } from "@/src/db/db_queries.ts";
 
-// Create bot object
 /*console.debug(
   `Memory usage before init bot: ${Deno.memoryUsage().rss / 1024}kb`,
-);*/
+  );*/
+// Create bot object
 export const botPromise = initBot();
+
+const secrets = await secretsPromise;
 
 /**
  * Telegram API Guide for Bots:
@@ -23,14 +25,20 @@ export const botPromise = initBot();
  * TODO: Read and follow!
  */
 async function initBot() {
-  const secrets = await secretsPromise;
   const telegramToken = secrets.get("TELEGRAM_TOKEN");
-
   const bot = new Bot(z.string().parse(telegramToken));
+  const botUser = secrets.get("TELEGRAM_BOT_USER");
 
-  // Register the Bot's Webhook at telegram
+  let botWebhookUrl =
+    `https://deno-audio-logbook.deno.dev/bot/${telegramToken}`;
+  if (botUser?.includes("preview")) {
+    botWebhookUrl =
+      `https://deno-audio-logbook-preview.deno.dev/bot/${telegramToken}`;
+  }
+
+  // Register the Bot's Webhook at telegram, based on the bots name
   await fetch(
-    `https://api.telegram.org/bot${telegramToken}/setWebhook?url=https://deno-audio-logbook.deno.dev/bot/${telegramToken}`,
+    `https://api.telegram.org/bot${telegramToken}/setWebhook?url=${botWebhookUrl}`,
   );
 
   // Listen for messages
