@@ -7,13 +7,11 @@ import { isUserAuthorized } from "./is-user-authorized.ts";
 import { dbPromise } from "@/src/db/db.ts";
 import { invalidateCache } from "@/src/db/db_queries.ts";
 
-/*console.debug(
-  `Memory usage before init bot: ${Deno.memoryUsage().rss / 1024}kb`,
-  );*/
+// Resolve async dependencies
+const secrets = await secretsPromise;
+
 // Create bot object
 export const botPromise = initBot();
-
-const secrets = await secretsPromise;
 
 /**
  * Telegram API Guide for Bots:
