@@ -188,3 +188,29 @@ footer {
         transform: rotate(360deg);
     }
 }
+
+.login-card {
+    /* General Look */
+    width: 400px;
+    height: 300px;
+    margin: 33vh auto;
+    /* background: white; */
+    /* border-radius: var(--radius-3); */
+
+    /* Animation */
+    animation:
+        var(--animation-fade-in-bloom),
+        var(--animation-slide-in-down);
+    animation-timing-function: var(--ease-squish-3);
+    animation-duration: 0.55s;
+
+    /* TODO: Design not optimal, work in Progress by @bjesuiter */
+    /* TODO: Improve background color  */
+    /* TODO: Move Login Headinge from top left into this card! */
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}

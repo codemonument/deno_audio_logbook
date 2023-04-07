@@ -1,8 +1,9 @@
-import { HandlerContext, Handlers } from "$fresh/server.ts";
-import { Head } from "$fresh/runtime.ts";
-import { DEPLOYMENT_ID } from "@/src/const/server_constants.ts";
+import { HandlerContext, PageProps } from "$fresh/server.ts";
 import Layout from "@/components/Layout.tsx";
+import { secretsPromise } from "@/src/utils/secrets.ts";
+import TelegramLogin from "@/components/TelegramLogin.tsx";
 
+const secrets = await secretsPromise;
 export async function handler(
   req: Request,
   ctx: HandlerContext,
@@ -20,23 +21,15 @@ export async function handler(
   //     }
   //   }
 
-  return await ctx.render();
+  return await ctx.render({
+    telegramBotUser: secrets.get("TELEGRAM_BOT_USER"),
+  });
 }
 
-export default function Login() {
+export default function Login(props: PageProps<{ telegramBotUser: string }>) {
   return (
     <Layout h1Override="Audio Logbook - Login">
-      <div style="margin: 0 auto; width: min-content; ">
-        <script
-          async
-          src="https://telegram.org/js/telegram-widget.js?21"
-          data-telegram-login="audio_logbook_bot"
-          data-size="large"
-          data-auth-url="/auth/callback"
-          data-request-access="write"
-        >
-        </script>
-      </div>
+      <TelegramLogin telegramBotUser={props.data.telegramBotUser} />
     </Layout>
   );
 }
