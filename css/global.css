@@ -190,8 +190,8 @@ footer {
 
 .login-card {
     /* General Look */
-    width: 200;
-    height: 100;
+    width: 200px;
+    height: 100px;
     margin: 33vh auto;
     /* background: white; */
     /* border-radius: var(--radius-3); */
