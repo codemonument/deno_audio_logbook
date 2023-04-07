@@ -1,7 +1,7 @@
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 import Layout from "@/components/Layout.tsx";
-import TelegramLogin from "../../islands/TelegramLogin.tsx";
 import { secretsPromise } from "@/src/utils/secrets.ts";
+import TelegramLogin from "@/components/TelegramLogin.tsx";
 
 const secrets = await secretsPromise;
 export async function handler(

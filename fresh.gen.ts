@@ -16,8 +16,7 @@ import * as $$0 from "./islands/Audio.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/DateChanger.tsx";
 import * as $$3 from "./islands/LoadSidebar.tsx";
-import * as $$4 from "./islands/TelegramLogin.tsx";
-import * as $$5 from "./islands/ThemeSwitcher.tsx";
+import * as $$4 from "./islands/ThemeSwitcher.tsx";
 
 const manifest = {
   routes: {
@@ -36,8 +35,7 @@ const manifest = {
     "./islands/Counter.tsx": $$1,
     "./islands/DateChanger.tsx": $$2,
     "./islands/LoadSidebar.tsx": $$3,
-    "./islands/TelegramLogin.tsx": $$4,
-    "./islands/ThemeSwitcher.tsx": $$5,
+    "./islands/ThemeSwitcher.tsx": $$4,
   },
   baseUrl: import.meta.url,
   config,
