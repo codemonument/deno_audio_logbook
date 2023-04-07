@@ -6,38 +6,36 @@ import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/auth/callback.tsx";
 import * as $1 from "./routes/auth/login.tsx";
 import * as $2 from "./routes/bot/[...path].ts";
-import * as $3 from "./routes/errors/date-parsing.tsx";
-import * as $4 from "./routes/index.tsx";
-import * as $5 from "./routes/postcss/[...path].ts";
-import * as $6 from "./routes/userarea/_middleware.ts";
-import * as $7 from "./routes/userarea/api/fetchData.tsx";
-import * as $8 from "./routes/userarea/calendar/[year]/[month].tsx";
+import * as $3 from "./routes/index.tsx";
+import * as $4 from "./routes/postcss/[...path].ts";
+import * as $5 from "./routes/userarea/_middleware.ts";
+import * as $6 from "./routes/userarea/api/fetchData.tsx";
+import * as $7 from "./routes/userarea/calendar/[year]/[month].tsx";
+import * as $8 from "./routes/userarea/errors/date-parsing.tsx";
 import * as $$0 from "./islands/Audio.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/DateChanger.tsx";
-import * as $$3 from "./islands/LoadAndPrepareAudio.tsx";
-import * as $$4 from "./islands/LoadSidebar.tsx";
-import * as $$5 from "./islands/ThemeSwitcher.tsx";
+import * as $$3 from "./islands/LoadSidebar.tsx";
+import * as $$4 from "./islands/ThemeSwitcher.tsx";
 
 const manifest = {
   routes: {
     "./routes/auth/callback.tsx": $0,
     "./routes/auth/login.tsx": $1,
     "./routes/bot/[...path].ts": $2,
-    "./routes/errors/date-parsing.tsx": $3,
-    "./routes/index.tsx": $4,
-    "./routes/postcss/[...path].ts": $5,
-    "./routes/userarea/_middleware.ts": $6,
-    "./routes/userarea/api/fetchData.tsx": $7,
-    "./routes/userarea/calendar/[year]/[month].tsx": $8,
+    "./routes/index.tsx": $3,
+    "./routes/postcss/[...path].ts": $4,
+    "./routes/userarea/_middleware.ts": $5,
+    "./routes/userarea/api/fetchData.tsx": $6,
+    "./routes/userarea/calendar/[year]/[month].tsx": $7,
+    "./routes/userarea/errors/date-parsing.tsx": $8,
   },
   islands: {
     "./islands/Audio.tsx": $$0,
     "./islands/Counter.tsx": $$1,
     "./islands/DateChanger.tsx": $$2,
-    "./islands/LoadAndPrepareAudio.tsx": $$3,
-    "./islands/LoadSidebar.tsx": $$4,
-    "./islands/ThemeSwitcher.tsx": $$5,
+    "./islands/LoadSidebar.tsx": $$3,
+    "./islands/ThemeSwitcher.tsx": $$4,
   },
   baseUrl: import.meta.url,
   config,
