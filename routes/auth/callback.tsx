@@ -5,6 +5,7 @@ import { z, ZodError } from "zod";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { AUDIO_LOGBOOK_AUTH_COOKIE_NAME } from "@/src/const/server_constants.ts";
+import { verifyBotAuth } from "@/src/bot/verifyBotAuth.ts";
 
 export const handler: Handlers = {
   async GET(req: Request, ctx: HandlerContext) {
@@ -36,7 +37,28 @@ export const handler: Handlers = {
       return ctx.render(payload.error);
     }
 
-    // TODO: Verify auth response https://core.telegram.org/widgets/login#checking-authorization
+    // verify auth date is not too old
+    const authDate = new Date(payload.data.unixAuthDate * 1000);
+    const now = new Date();
+    const authDateDiff = now.getTime() - authDate.getTime();
+
+    if (authDateDiff > 60 * 60 * 1000) {
+      const msg = `Auth Date is too old`;
+
+      return new Response(msg, { status: 403 });
+    }
+
+    // Verify auth response https://core.telegram.org/widgets/login#checking-authorization
+    const dataAuthVerified = await verifyBotAuth(
+      url.searchParams,
+      payload.data.hash,
+    );
+
+    if (!dataAuthVerified) {
+      const msg = `Problem while verifying oauth callback payload`;
+
+      return new Response(msg, { status: 403 });
+    }
 
     // store user in db
     const db = await dbPromise;
