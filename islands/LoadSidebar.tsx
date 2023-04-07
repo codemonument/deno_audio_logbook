@@ -9,7 +9,7 @@ export default function LoadSidebar() {
     const [entries, setEntries] = useState<AudioEntries | null>(null);
 
     if (!entries) {
-      fetch("/api/fetchData?whichData=sidebar")
+      fetch("/userarea/api/fetchData?whichData=sidebar")
         .then((response) => response.json())
         .then((entries) => setEntries({ entries: entries }));
       return (

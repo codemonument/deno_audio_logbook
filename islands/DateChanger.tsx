@@ -12,18 +12,18 @@ export default function DateChanger(
     switch (direction) {
       case Direction.NEXT:
         if (props.date.month > 10) {
-          window.location.href = `/calendar/${props.date.year + 1}/01`;
+          window.location.href = `/userarea/calendar/${props.date.year + 1}/01`;
         } else {
-          window.location.href = `/calendar/${props.date.year}/${
+          window.location.href = `/userarea/calendar/${props.date.year}/${
             MONTH_NUMBER_STRING[props.date.month + 1]
           }`;
         }
         break;
       case Direction.PREV:
         if (props.date.month < 1) {
-          window.location.href = `/calendar/${props.date.year - 1}/12`;
+          window.location.href = `/userarea/calendar/${props.date.year - 1}/12`;
         } else {
-          window.location.href = `/calendar/${props.date.year}/${
+          window.location.href = `/userarea/calendar/${props.date.year}/${
             MONTH_NUMBER_STRING[
               props.date.month - 1
             ]

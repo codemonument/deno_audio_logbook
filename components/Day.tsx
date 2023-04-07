@@ -2,7 +2,9 @@
 
 import Audio from "@/islands/Audio.tsx";
 
-// mock data TMP
+export type Audio = { unixTimestamp: number; url: string; filePath: string };
+
+// mock data TMP - UNUSED
 const audio = [
   {
     unixTimestamp: 1678211111,
@@ -16,8 +18,15 @@ const audio = [
   },
 ];
 
-export default function Day(props: { day: number }) {
-  // Save State for audio shown / loaded
+export default function Day(props: { day: number; audios?: Audio[] }) {
+  // remap Audio type to expected Audio type from Audio.tsx Island
+  const audiosNew = props.audios?.map((audio) => {
+    return {
+      unixTimestamp: audio.unixTimestamp,
+      audioFile: audio.url,
+      fileTitle: audio.filePath,
+    };
+  });
 
   return (
     <div className="day">
@@ -25,7 +34,7 @@ export default function Day(props: { day: number }) {
 
       {
         // map over audio array
-        audio.map((audio) => {
+        audiosNew?.map((audio) => {
           return <Audio audio={audio} />;
         })
       }

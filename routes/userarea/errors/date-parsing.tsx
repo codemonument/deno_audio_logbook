@@ -35,7 +35,7 @@ export default function DateParsingErrorPage(
         </ul>
         <br />
         ...or &nbsp;
-        <a href={`/calendar/${currentYear}/${currentMonth}`}>
+        <a href={`/userarea/calendar/${currentYear}/${currentMonth}`}>
           Go back to Calendar with current month
         </a>
       </div>
