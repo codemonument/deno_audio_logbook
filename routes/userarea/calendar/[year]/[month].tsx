@@ -38,7 +38,7 @@ export const handler: Handlers<unknown, ContextState> = {
 
     // Redirect to date error page when parsing failed
     if (!parsedDate.success) {
-      return gotoInternal("/errors/date-parsing");
+      return gotoInternal("/userarea/errors/date-parsing");
     }
 
     // DB Queries

@@ -28,8 +28,8 @@ type audioMetaMonth = {
 };
 
 type audioMeta = {
-  [key: year]: {
-    [key: month]: audioMetaMonth;
+  [year: year]: {
+    [month: month]: audioMetaMonth;
   };
 };
 

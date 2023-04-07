@@ -13,7 +13,6 @@ export default function Month(
   const daysInMonth = new Date(props.year, props.month, 0).getDate();
   const firstDayOfMonth = new Date(props.year, props.month, 1).getDay();
 
-  // TODO: Map Audios to <Day>s @Bloodiko
   // Array<Tag des Monats 0-30, Audio[]>
   const audioDayMap: AudioDayMap = {};
 
