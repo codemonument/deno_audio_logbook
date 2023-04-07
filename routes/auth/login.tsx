@@ -1,9 +1,9 @@
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 import Layout from "@/components/Layout.tsx";
 import { secretsPromise } from "@/src/utils/secrets.ts";
+import TelegramLogin from "@/components/TelegramLogin.tsx";
 
 const secrets = await secretsPromise;
-
 export async function handler(
   req: Request,
   ctx: HandlerContext,
@@ -29,17 +29,7 @@ export async function handler(
 export default function Login(props: PageProps<{ telegramBotUser: string }>) {
   return (
     <Layout h1Override="Audio Logbook - Login">
-      <div style="margin: 0 auto; width: min-content; ">
-        <script
-          async
-          src="https://telegram.org/js/telegram-widget.js?21"
-          data-telegram-login={props.data.telegramBotUser}
-          data-size="large"
-          data-auth-url="/auth/callback"
-          data-request-access="write"
-        >
-        </script>
-      </div>
+      <TelegramLogin telegramBotUser={props.data.telegramBotUser} />
     </Layout>
   );
 }
