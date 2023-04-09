@@ -20,7 +20,7 @@ export default function Layout(props: LayoutProps) {
         <h1>{(props.h1Override) ? props.h1Override : "Audio Logbook"}</h1>
         <div class="flex-gap"></div>
         {/* TODO: Put Date Seletor here? */}
-        <ThemeSwitcher />
+        <ThemeSwitcher theme={props.theme} />
         <UserInfo user={props.user} />
       </header>
 

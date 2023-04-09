@@ -2,8 +2,9 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
 import { useEffect, useState } from "preact/hooks";
 import cookies from "js-cookie";
 import { COOKIE_THEME } from "@/src/const/client_constants.ts";
+import { Theme } from "@/src/types/theme.ts";
 
-export default function ThemeSwitcher() {
+export default function ThemeSwitcher(props: { theme: Theme }) {
   // Simply return the <select> tag when server rendering
   // Simplifies conditional logic on client below
   if (!IS_BROWSER) {
@@ -11,6 +12,7 @@ export default function ThemeSwitcher() {
       <select
         name="theme"
         id="theme-switcher"
+        value={props.theme}
         // value binding
         // and onChange handler will be hydrated client side
       >
