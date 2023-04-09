@@ -69,3 +69,5 @@ Now you can connect to `localhost:3306` with user root and no password with any 
 - Doppler Dashboard: https://dashboard.doppler.com/workplace/e6fccc45622fbb7e71e5/projects/deno_audio_logbook
 - MinIO Bucket: https://dashboard-minio.storage1500.vserv.fun/buckets/deno-audio-logbook/browse
 - Axiom Dashboard ( only 1 user in free tier :/ ) : https://app.axiom.co/codemonument-fule/datasets
+
+.
