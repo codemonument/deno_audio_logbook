@@ -4,12 +4,13 @@ import { UserSession } from "@/src/db/db_schema.ts";
 import { DEPLOYMENT_ID } from "@/src/const/server_constants.ts";
 import UserInfo from "@/components/UserInfo.tsx";
 import type { ComponentChildren } from "preact";
+import type { Theme } from "@/src/types/theme.ts";
 
 type LayoutProps = {
   user?: UserSession;
   h1Override?: string;
   children: ComponentChildren;
-  theme: "light" | "dark";
+  theme: Theme;
 };
 
 export default function Layout(props: LayoutProps) {
