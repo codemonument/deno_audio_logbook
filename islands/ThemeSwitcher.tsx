@@ -1,5 +1,7 @@
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import { useEffect, useState } from "preact/hooks";
+import cookies from "js-cookie";
+import { COOKIE_THEME } from "@/src/const/client_constants.ts";
 
 export default function ThemeSwitcher() {
   // Simply return the <select> tag when server rendering
@@ -20,33 +22,28 @@ export default function ThemeSwitcher() {
 
   // Anything here runs on the client!
 
-  // get htmlTag
+  // get tags
   const htmlTag = document.firstElementChild;
+  const bodyTag = document.querySelector("body");
   if (!htmlTag) throw new Error(`<html> tag could not be found!`);
-
-  const storedTheme = localStorage.getItem("theme")?.trim() ?? "";
+  if (!bodyTag) throw new Error(`<body> tag could not be found!`);
 
   // applies the theme to the html tag
   const changeTheme = (newTheme: string) => {
-    htmlTag?.setAttribute(`theme`, newTheme);
-    localStorage.setItem("theme", newTheme);
+    bodyTag?.setAttribute(`data-theme`, newTheme);
+    cookies.set(COOKIE_THEME, newTheme, { secure: false, sameSite: "lax" });
   };
 
-  let theme = storedTheme;
+  let theme = cookies.get(COOKIE_THEME);
 
-  if (theme === "") {
+  if (theme === undefined) {
     // read system color scheme
-    const systemColorScheme = getComputedStyle(htmlTag)
+    const defaultTheme = getComputedStyle(htmlTag)
       .getPropertyValue("--system-color-scheme").trim();
-
-    // set system color scheme to localStorage
-    localStorage.setItem("theme", systemColorScheme);
-
-    // apply the system color scheme theme
-    theme = systemColorScheme;
+    theme = defaultTheme;
   }
 
-  // apply theme
+  // apply theme & save it to the cookie
   changeTheme(theme);
 
   return (
