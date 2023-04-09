@@ -6,6 +6,8 @@ import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { COOKIE_AUDIO_LOGBOOK_AUTH } from "@/src/const/server_constants.ts";
 import { verifyBotAuth } from "@/src/bot/verifyBotAuth.ts";
+import { getThemeOnServer } from "@/src/utils/getThemeOnServer.ts";
+import { Theme } from "@/src/types/theme.ts";
 
 export const handler: Handlers = {
   async GET(req: Request, ctx: HandlerContext) {
@@ -13,6 +15,8 @@ export const handler: Handlers = {
     // log.debug(msg, req);
     // log.flush();
     console.log(msg, req);
+
+    const theme = getThemeOnServer(req);
 
     /**
      * Extract Telegram Sign On Data
@@ -34,7 +38,7 @@ export const handler: Handlers = {
       console.error(msg, payload);
       // log.error(msg, payload.error);
       // await log.flush();
-      return ctx.render(payload.error);
+      return ctx.render({ error: payload.error, theme });
     }
 
     // verify auth date is not too old
@@ -90,12 +94,12 @@ export const handler: Handlers = {
 };
 
 export default function OauthCallbackPage(
-  { data: error }: PageProps<ZodError>,
+  { data }: PageProps<{ error: ZodError; theme: Theme }>,
 ) {
   return (
     <>
-      <h1>Auth Failed {error ? "!" : "?"}</h1>
-      <pre>{JSON.stringify(error, undefined,  ' \t')}</pre>
+      <h1>Auth Failed {data.error ? "!" : "?"}</h1>
+      <pre>{JSON.stringify(data.error, undefined,  ' \t')}</pre>
 
       <a href="/auth/login">Go back to Login</a>
     </>

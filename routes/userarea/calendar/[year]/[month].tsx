@@ -15,12 +15,14 @@ import { gotoInternal } from "@/src/utils/redirects.ts";
 import AudioBacklogSidebar from "@/components/AudioBacklogSidebar.tsx";
 import LoadSidebar from "@/islands/LoadSidebar.tsx";
 import { s3Promise } from "@/src/s3/s3.ts";
+import { Theme } from "@/src/types/theme.ts";
 
 type HomeProps = PageProps<
   {
     user: UserSession;
     date: LogbookDate;
     monthAudios: Audio[];
+    theme: Theme;
   }
 >;
 
@@ -62,13 +64,13 @@ export const handler: Handlers<unknown, ContextState> = {
     const monthAudios = await Promise.all(monthAudiosPromises);
 
     // Render calendar with audio and user objects
-    return ctx.render({ user, date: parsedDate.data, monthAudios });
+    return ctx.render({ user, date: parsedDate.data, monthAudios, theme: ctx.state.theme });
   },
 };
 
 export default function Home({ data }: HomeProps) {
   return (
-    <Layout user={data.user}>
+    <Layout user={data.user} theme={data.theme}>
       <LoadSidebar />
       <Control date={data.date} audios={data.monthAudios} />
     </Layout>
