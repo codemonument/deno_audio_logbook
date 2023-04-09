@@ -6,6 +6,8 @@ const secrets = await secretsPromise;
 const telegramToken = z.string().parse(secrets.get("TELEGRAM_TOKEN"));
 
 /**
+ * See this issue for details: https://github.com/codemonument/deno_audio_logbook/issues/22
+ * 
  * @param urlParams
  * @returns <string> authString - The string containing userdata to be hashed with hmac sha256
  */
