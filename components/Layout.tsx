@@ -14,11 +14,6 @@ type LayoutProps = {
 export default function Layout(props: LayoutProps) {
   return (
     <>
-      <Head>
-        <title>Audio Logbook</title>
-        <link rel="stylesheet" href="/reset.css" />
-        <link rel="stylesheet" href="/postcss/global.css" />
-      </Head>
       <header>
         <h1>{(props.h1Override) ? props.h1Override : "Audio Logbook"}</h1>
         <div class="flex-gap"></div>
