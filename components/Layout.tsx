@@ -9,11 +9,12 @@ type LayoutProps = {
   user?: UserSession;
   h1Override?: string;
   children: ComponentChildren;
+  theme: "light" | "dark";
 };
 
 export default function Layout(props: LayoutProps) {
   return (
-    <>
+    <body data-theme={props.theme}>
       <header>
         <h1>{(props.h1Override) ? props.h1Override : "Audio Logbook"}</h1>
         <div class="flex-gap"></div>
@@ -29,6 +30,6 @@ export default function Layout(props: LayoutProps) {
       <footer>
         <pre>Deployment: {DEPLOYMENT_ID}</pre>
       </footer>
-    </>
+    </body>
   );
 }
