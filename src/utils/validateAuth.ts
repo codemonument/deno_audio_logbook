@@ -1,6 +1,6 @@
 import { secretsPromise } from "./secrets.ts";
 import {
-  AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
+  COOKIE_AUDIO_LOGBOOK_AUTH,
   DEPLOYMENT_ID,
 } from "@/src/const/server_constants.ts";
 
@@ -21,7 +21,7 @@ export async function validateAuth(req: Request) {
   const maybeAccessToken =
     (secrets.get("ENV_NAME") === "dev" || url.host.includes(DEPLOYMENT_ID))
       ? secrets.get("MOCK_AUTH_TOKEN")
-      : getCookies(req.headers)[AUDIO_LOGBOOK_AUTH_COOKIE_NAME]; //return undefined if no cookie is set
+      : getCookies(req.headers)[COOKIE_AUDIO_LOGBOOK_AUTH]; //return undefined if no cookie is set
 
   if (!maybeAccessToken) {
     return None<UserSession>();
