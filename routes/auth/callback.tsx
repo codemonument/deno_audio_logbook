@@ -64,7 +64,6 @@ export const handler: Handlers = {
     const db = await dbPromise;
     await db.insertInto("audiobook_sessions").values(payload.data).execute();
 
-    // TODO: generate user login cookie
     const response = new Response("", {
       status: 302,
       headers: new Headers([
