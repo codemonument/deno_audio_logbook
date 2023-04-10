@@ -4,15 +4,16 @@
 
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_app.tsx";
-import * as $1 from "./routes/auth/callback.tsx";
-import * as $2 from "./routes/auth/login.tsx";
-import * as $3 from "./routes/bot/[...path].ts";
-import * as $4 from "./routes/index.tsx";
-import * as $5 from "./routes/postcss/[...path].ts";
-import * as $6 from "./routes/userarea/_middleware.ts";
-import * as $7 from "./routes/userarea/api/fetchData.tsx";
-import * as $8 from "./routes/userarea/calendar/[year]/[month].tsx";
-import * as $9 from "./routes/userarea/errors/date-parsing.tsx";
+import * as $1 from "./routes/_middleware.ts";
+import * as $2 from "./routes/auth/callback.tsx";
+import * as $3 from "./routes/auth/login.tsx";
+import * as $4 from "./routes/bot/[...path].ts";
+import * as $5 from "./routes/index.tsx";
+import * as $6 from "./routes/postcss/[...path].ts";
+import * as $7 from "./routes/userarea/_middleware.ts";
+import * as $8 from "./routes/userarea/api/fetchData.tsx";
+import * as $9 from "./routes/userarea/calendar/[year]/[month].tsx";
+import * as $10 from "./routes/userarea/errors/date-parsing.tsx";
 import * as $$0 from "./islands/Audio.tsx";
 import * as $$1 from "./islands/Counter.tsx";
 import * as $$2 from "./islands/DateChanger.tsx";
@@ -22,15 +23,16 @@ import * as $$4 from "./islands/ThemeSwitcher.tsx";
 const manifest = {
   routes: {
     "./routes/_app.tsx": $0,
-    "./routes/auth/callback.tsx": $1,
-    "./routes/auth/login.tsx": $2,
-    "./routes/bot/[...path].ts": $3,
-    "./routes/index.tsx": $4,
-    "./routes/postcss/[...path].ts": $5,
-    "./routes/userarea/_middleware.ts": $6,
-    "./routes/userarea/api/fetchData.tsx": $7,
-    "./routes/userarea/calendar/[year]/[month].tsx": $8,
-    "./routes/userarea/errors/date-parsing.tsx": $9,
+    "./routes/_middleware.ts": $1,
+    "./routes/auth/callback.tsx": $2,
+    "./routes/auth/login.tsx": $3,
+    "./routes/bot/[...path].ts": $4,
+    "./routes/index.tsx": $5,
+    "./routes/postcss/[...path].ts": $6,
+    "./routes/userarea/_middleware.ts": $7,
+    "./routes/userarea/api/fetchData.tsx": $8,
+    "./routes/userarea/calendar/[year]/[month].tsx": $9,
+    "./routes/userarea/errors/date-parsing.tsx": $10,
   },
   islands: {
     "./islands/Audio.tsx": $$0,

@@ -1,5 +1,4 @@
 import { AppProps, Handlers } from "$fresh/server.ts";
-import { ContextState } from "@/src/context_state.ts";
 import { asset, Head } from "$fresh/runtime.ts";
 
 // TODO: Experiment more with getting props into the App Component below

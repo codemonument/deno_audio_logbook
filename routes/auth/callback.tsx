@@ -6,17 +6,15 @@ import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
 import { COOKIE_AUDIO_LOGBOOK_AUTH } from "@/src/const/server_constants.ts";
 import { verifyBotAuth } from "@/src/bot/verifyBotAuth.ts";
-import { getThemeOnServer } from "@/src/utils/getThemeOnServer.ts";
-import { Theme } from "@/src/types/theme.ts";
+import type { Theme } from "@/src/types/theme.ts";
+import type { ToplevelContext } from "@/src/types/contexts.ts";
 
-export const handler: Handlers = {
-  async GET(req: Request, ctx: HandlerContext) {
+export const handler: Handlers<unknown, ToplevelContext> = {
+  async GET(req: Request, ctx) {
     const msg = `Received Auth Callback via GET`;
     // log.debug(msg, req);
     // log.flush();
     console.log(msg, req);
-
-    const theme = getThemeOnServer(req);
 
     /**
      * Extract Telegram Sign On Data
@@ -38,7 +36,7 @@ export const handler: Handlers = {
       console.error(msg, payload);
       // log.error(msg, payload.error);
       // await log.flush();
-      return ctx.render({ error: payload.error, theme });
+      return ctx.render({ error: payload.error, theme: ctx.state.theme });
     }
 
     // verify auth date is not too old
@@ -84,12 +82,6 @@ export const handler: Handlers = {
       httpOnly: true,
     });
     return response;
-
-    // const msg = `Received Auth Callback via POST`;
-    // log.debug(msg, req);
-    // log.flush();
-    // console.log(msg, req);
-    // return new Response(msg, { status: 200 });
   },
 };
 
