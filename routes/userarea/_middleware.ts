@@ -1,18 +1,13 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
-
+import { UserareaContext } from "@/src/types/contexts.ts";
 import { gotoLogin } from "@/src/utils/redirects.ts";
-import { ContextState } from "@/src/context_state.ts";
 import { validateAuth } from "@/src/utils/validateAuth.ts";
-import { getThemeOnServer } from "@/src/utils/getThemeOnServer.ts";
 
 export async function handler(
   req: Request,
-  ctx: MiddlewareHandlerContext<ContextState>,
+  ctx: MiddlewareHandlerContext<UserareaContext>,
 ) {
-  // Initialize serverOrigin deferred promise
-  const origin = new URL(req.url).origin;
-  ctx.state.serverOrigin = origin;
-
+  // Initialize UserSession inside Context
   const userSession = await validateAuth(req);
 
   // Redirect to login page when UserSession is not available
@@ -22,6 +17,5 @@ export async function handler(
 
   // Happy Path to the normal App
   ctx.state.user = userSession.unwrap();
-  ctx.state.theme = getThemeOnServer(req)
   return ctx.next();
 }
