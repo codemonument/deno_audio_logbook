@@ -1,11 +1,11 @@
 import { Handlers } from "$fresh/server.ts";
 import { gotoCalendar, gotoLogin } from "@/src/utils/redirects.ts";
-import { ContextState } from "@/src/context_state.ts";
 
 import {
   getAudioMetadataForMonth,
   getSavedRecordingTimestamps,
 } from "@/src/db/db_queries.ts";
+import { UserareaContext } from "@/src/types/contexts.ts";
 
 type FetchDataMap = {
   [key: string]: (userId: number, params: string) => Promise<unknown>;
@@ -15,7 +15,7 @@ const FetchData: FetchDataMap = {
   sidebar: getSavedRecordingTimestamps,
 };
 
-export const handler: Handlers<unknown, ContextState> = {
+export const handler: Handlers<unknown, UserareaContext> = {
   /**
    * @requires ctx.state.user
    */

@@ -20,3 +20,5 @@ export const MONTH_NUMBER_STRING = [
   "11",
   "12",
 ];
+
+export const COOKIE_THEME = "audio_logbook_theme";

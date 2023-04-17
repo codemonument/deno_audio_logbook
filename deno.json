@@ -7,9 +7,10 @@
     "db-connect": "pscale connect jbscratch_planetscale-in-deno",
     "test-s3": "doppler run -- deno run -A ./src/s3/s3.ts",
     "db-base": "doppler run -- deno run --unstable --allow-env=DOPPLER_TOKEN --allow-net=aws.connect.psdb.cloud,api.doppler.com ",
-    "esm:add": "deno run -A https://esm.sh/v110 add",
-    "esm:update": "deno run -A https://esm.sh/v110 update",
-    "esm:remove": "deno run -A https://esm.sh/v110 remove",
+    "esm:add": "deno run -A https://esm.sh/v114 add",
+    "esm:update": "deno run -A https://esm.sh/v114 update",
+    "esm:remove": "deno run -A https://esm.sh/v114 remove",
+    "fresh:update": "deno run -A -r https://fresh.deno.dev/update .",
     "download-openprops": "deno run --allow-net --allow-write --allow-read ./scripts/download-openprops.ts",
     "deploy-preview": "deno run -A https://deno.land/x/git_deploy@2.0.0-preview.6/cli.ts --target origin --branch preview"
   },

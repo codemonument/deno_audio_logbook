@@ -26,7 +26,7 @@ pre {
     }
 }
 
-[theme="light"] {
+[data-theme="light"] {
     --main-bg: var(--gray-1);
     --main-font-color: var(--gray-10);
     --main-outline: var(--gray-3);
@@ -35,7 +35,7 @@ pre {
     --main-link-visited: var(--gray-8);
 }
 
-[theme="dark"] {
+[data-theme="dark"] {
     --main-bg: var(--gray-8);
     --main-font-color: var(--gray-0);
     --main-outline: var(--gray-6);

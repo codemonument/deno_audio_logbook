@@ -4,11 +4,13 @@ import { log } from "axiom";
 import { z, ZodError } from "zod";
 import { dbPromise } from "@/src/db/db.ts";
 import { UserSession } from "@/src/db/db_schema.ts";
-import { AUDIO_LOGBOOK_AUTH_COOKIE_NAME } from "@/src/const/server_constants.ts";
+import { COOKIE_AUDIO_LOGBOOK_AUTH } from "@/src/const/server_constants.ts";
 import { verifyBotAuth } from "@/src/bot/verifyBotAuth.ts";
+import type { Theme } from "@/src/types/theme.ts";
+import type { ToplevelContext } from "@/src/types/contexts.ts";
 
-export const handler: Handlers = {
-  async GET(req: Request, ctx: HandlerContext) {
+export const handler: Handlers<unknown, ToplevelContext> = {
+  async GET(req: Request, ctx) {
     const msg = `Received Auth Callback via GET`;
     // log.debug(msg, req);
     // log.flush();
@@ -34,7 +36,7 @@ export const handler: Handlers = {
       console.error(msg, payload);
       // log.error(msg, payload.error);
       // await log.flush();
-      return ctx.render(payload.error);
+      return ctx.render({ error: payload.error, theme: ctx.state.theme });
     }
 
     // verify auth date is not too old
@@ -73,29 +75,23 @@ export const handler: Handlers = {
 
     // Cookie Instructions: https://medium.com/deno-the-complete-reference/handling-cookies-in-deno-df42df28d222
     setCookie(response.headers, {
-      name: AUDIO_LOGBOOK_AUTH_COOKIE_NAME,
+      name: COOKIE_AUDIO_LOGBOOK_AUTH,
       value: payload.data.hash,
       path: "/",
       maxAge: 60 * 60 * 24 * 7,
       httpOnly: true,
     });
     return response;
-
-    // const msg = `Received Auth Callback via POST`;
-    // log.debug(msg, req);
-    // log.flush();
-    // console.log(msg, req);
-    // return new Response(msg, { status: 200 });
   },
 };
 
 export default function OauthCallbackPage(
-  { data: error }: PageProps<ZodError>,
+  { data }: PageProps<{ error: ZodError; theme: Theme }>,
 ) {
   return (
     <>
-      <h1>Auth Failed {error ? "!" : "?"}</h1>
-      <pre>{JSON.stringify(error, undefined,  ' \t')}</pre>
+      <h1>Auth Failed {data.error ? "!" : "?"}</h1>
+      <pre>{JSON.stringify(data.error, undefined,  ' \t')}</pre>
 
       <a href="/auth/login">Go back to Login</a>
     </>
