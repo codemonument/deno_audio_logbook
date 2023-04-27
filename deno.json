@@ -12,7 +12,7 @@
     "esm:update": "deno run -A https://esm.sh/v114 update",
     "esm:remove": "deno run -A https://esm.sh/v114 remove",
     "fresh:update": "deno run -A -r https://fresh.deno.dev/update .",
-    "download-openprops": "deno run --allow-net --allow-write --allow-read ./scripts/download-openprops.ts 1.5.8",
+    "download-openprops": "deno run --allow-net --allow-write --allow-read https://deno.land/x/fresh_openprops/download-openprops.ts 1.5.8",
     "deploy-preview": "deno run -A https://deno.land/x/git_deploy@2.0.0-preview.6/cli.ts --target origin --branch preview"
   },
   "importMap": "./import_map.json",
