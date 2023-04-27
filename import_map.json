@@ -29,7 +29,8 @@
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@5.2.6",
     "preact-render-to-string/": "https://esm.sh/v114/*preact-render-to-string@5.2.6/",
     "preact": "https://esm.sh/preact@10.13.1",
-    "preact/": "https://esm.sh/preact@10.13.1/"
+    "preact/": "https://esm.sh/preact@10.13.1/",
+    "fresh-openprops": "https://deno.land/x/fresh_openprops@1.0.1/mod.ts"
   },
   "scopes": {
     "https://esm.sh/v114/": {
