@@ -3,6 +3,7 @@
     "start": "doppler run -- deno run -A --cached-only --watch=static/,routes/ dev.ts",
     "start-update": "doppler run -- deno run -A --watch=static/,routes/ dev.ts",
     "cache": "doppler run -- deno cache dev.ts main.ts",
+    "cache-write": "doppler run -- deno cache --lock-write dev.ts main.ts",
     "db-reset": "deno task db-base ./scripts/db/reset-db.ts",
     "db-connect": "pscale connect jbscratch_planetscale-in-deno",
     "test-s3": "doppler run -- deno run -A ./src/s3/s3.ts",
