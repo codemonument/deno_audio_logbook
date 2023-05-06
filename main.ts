@@ -7,8 +7,5 @@
 import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 
-import { prefillCssCache } from "./src/css-cache/prefillCssCache.ts";
-await prefillCssCache();
-
 // console.log(`Debug: Memory usage init: ${Deno.memoryUsage().rss / 1024}kb`);
 await start(manifest);
