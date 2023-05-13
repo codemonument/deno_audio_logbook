@@ -168,6 +168,10 @@ export function invalidateCache(
 ) {
   //function to invalidate the cache for the given type for the given user.
 
+  if (!DB_CACHE[userId]) {
+    DB_CACHE[userId] = {};
+  }
+
   switch (cacheType) {
     case CACHE_TYPE.SESSION:
       break;
